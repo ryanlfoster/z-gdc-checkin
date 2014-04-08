@@ -6,8 +6,8 @@
 <entry key="version">1.0-SNAPSHOT</entry>
 <entry key="dependencies" />
 <entry key="packageFormatVersion">2</entry>
-<entry key="description">ACS AEM Checkin - Reactor Project Package</entry>
-<entry key="group">ACS</entry>
-<entry key="name">acs-aem-checkin-content</entry>
-<entry key="path">/etc/packages/ACS/acs-aem-checkin-content-1.0-SNAPSHOT.zip</entry>
+<entry key="description">GDC Checkin - Reactor Project Package</entry>
+<entry key="group">GDC</entry>
+<entry key="name">gdc-checkin-content</entry>
+<entry key="path">/etc/packages/GDC/gdc-checkin-content-1.0-SNAPSHOT.zip</entry>
 </properties>
