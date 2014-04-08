@@ -1,4 +1,4 @@
-package com.adobe.acs.checkin;
+package com.adobe.gdc.checkin;
 
 import static org.junit.Assert.*;
 

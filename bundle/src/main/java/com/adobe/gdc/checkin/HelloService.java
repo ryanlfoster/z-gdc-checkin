@@ -1,4 +1,4 @@
-package com.adobe.acs.checkin;
+package com.adobe.gdc.checkin;
 
 /**
  * A simple service interface

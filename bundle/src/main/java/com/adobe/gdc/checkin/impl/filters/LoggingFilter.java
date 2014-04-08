@@ -1,4 +1,4 @@
-package com.adobe.acs.checkin.impl.filters;
+package com.adobe.gdc.checkin.impl.filters;
 
 import java.io.IOException;
 

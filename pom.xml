@@ -5,13 +5,13 @@
     <!-- P A R E N T P R O J E C T D E S C R I P T I O N -->
     <!-- ====================================================================== -->
 
-    <groupId>acs-aem-checkin</groupId>
-    <artifactId>acs-aem-checkin</artifactId>
+    <groupId>gdc-checkin</groupId>
+    <artifactId>gdc-checkin</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>ACS AEM Checkin - Reactor Project - Reactor Project</name>
-    <description>Maven Multimodule project for ACS AEM Checkin - Reactor Project.</description>
+    <name>GDC Checkin - Reactor Project - Reactor Project</name>
+    <description>Maven Multimodule project for GDC Checkin - Reactor Project.</description>
 
     <prerequisites>
         <maven>3.0.2</maven>
