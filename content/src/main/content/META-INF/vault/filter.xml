@@ -2,4 +2,5 @@
 <workspaceFilter version="1.0">
     <filter root="/apps/gdc-checkin"/>
     <filter root="/etc/designs/gdc-checkin"/>
+    <filter root="/etc/notification/email"/>
 </workspaceFilter>

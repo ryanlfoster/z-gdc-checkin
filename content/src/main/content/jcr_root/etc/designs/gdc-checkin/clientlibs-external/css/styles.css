@@ -1,0 +1,187 @@
+body{
+    font-size:12px;
+    background-color: #ccc;
+   
+}
+
+/***************LOGIN - START***************************************/
+
+.login-panel {
+    margin-top: 250px;
+    border: 2px solid #007CB1;
+    border-radius: 8px;
+    width: 725px;
+    margin-left: 215px;
+    height: 195px;
+    background-color: #fff;
+    box-shadow: 0 0 6px 2px rgba(0, 0, 0, 0.1);
+}
+
+.login-form {
+    padding: 35px 40px 30px 35px;
+}
+
+.login-action-panel {
+    margin-top: 20px;
+}
+
+.login-bg {
+    height:191px;
+    border-right:2px solid #007CB1;
+    background-image:url(../images/login-logo.png);
+    background-repeat:no-repeat;
+}
+
+.gray-bg {
+    background-color: #006dcc;
+    background-image: -webkit-linear-gradient(left, #E0E2E4, #C9C9CA);
+    background-image: -o-linear-gradient(left, #E0E2E4, #C9C9CA);
+    background-image: linear-gradient(to right, #E0E2E4, #C9C9CA);
+    background-image: -moz-linear-gradient(left, #E0E2E4, #C9C9CA);
+    padding-left: 0px;
+    padding-right: 0px;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.login-panel-row {
+    margin-left:0px;
+    margin-right:0px;
+}
+
+.login-header {
+    position: absolute;
+    top: 77px;
+    left: 300px;
+    background: #fff;
+    font-size: 20px;
+    padding: 5px 10px 1px 10px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border: 2px solid #007CB1;
+    border-bottom: 0px;
+    color: #007CB1;
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+}
+
+/***************LOGIN - END***************************************/
+/***************INDEX - START***************************************/
+.navbar .nav > li {
+    float: left;
+}
+
+.navbar .brand {
+    display: block;
+    float: left;
+    padding: 10px 20px 10px;
+    font-size: 20px;
+    font-weight: 200;
+    text-shadow: 0 1px 0 #ffffff;
+    padding-left: -20px;
+    text-transform: uppercase;
+}
+
+#page-wrap{
+    min-height:680px;
+    margin: -15px 10px;
+}
+
+#main-sidebar{
+    width:250px;
+}
+
+#main-sidebar .user-profile{
+    padding-left: 40px;
+    height:50px;
+}
+
+#main-content {
+    margin: 0 0 0 250px;
+    padding: 0;
+    color: #454545;
+   
+}
+
+.tab-pane {
+    min-height:680px;
+}
+
+.panel-default > .panel-heading{
+    min-height: 40px;
+    padding-right: 20px;
+    padding-left: 20px;
+    background-color: #fafafa;
+    background-image: -moz-linear-gradient(top, #ffffff, #f2f2f2);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#f2f2f2));
+    background-image: -webkit-linear-gradient(top, #ffffff, #f2f2f2);
+    background-image: -o-linear-gradient(top, #ffffff, #f2f2f2);
+    background-image: linear-gradient(to bottom, #ffffff, #f2f2f2);
+    background-repeat: repeat-x;
+    border: 1px solid #d4d4d4;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    filter: progid:dximagetransform.microsoft.gradient(startColorstr='#ffffffff', endColorstr='#fff2f2f2', GradientType=0);
+    -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+    -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+    -webkit-border-radius: 6px 6px 0 0;
+    -moz-border-radius: 6px 6px 0 0;
+    border-radius: 6px 6px 0 0;
+}
+
+.panel {
+    margin-bottom: 20px;
+    background-color: #fff;
+    border: 0px solid transparent;
+    border-radius: 6px;
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+}
+
+.panel-body{
+     -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+    -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+    -webkit-border-radius: 0px 0px 6px 6px;
+    -moz-border-radius: 0px 0px 6px 6px;
+    border-radius: 0px 0px 6px 6px;
+    border: 1px solid #d4d4d4;
+    border-top:0px;
+}
+
+.jqplot-target{
+    color:#fff;
+}
+
+.jqplot-table-legend{
+    color:#000;
+}
+
+.jqplot-table-legend td{
+    padding:5px!important;
+}
+/***************INDEX - END***************************************/
+.copyright {
+    padding-top:8px;
+}
+
+.quarter-steps {
+    margin-top: 30px;
+    margin-bottom: 80px;
+}
+
+.wizard-steps li.done .step {
+    border: 2px solid #008837;
+    color: #fff;
+    background-color: #5CB85C;
+    font-weight: bold;
+   
+}
+
+.wizard-steps li.active .step{
+}

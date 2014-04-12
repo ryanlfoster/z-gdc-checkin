@@ -85,7 +85,11 @@
                 <extensions>true</extensions>
                 <configuration>
                     <instructions>
-                        <Bundle-SymbolicName>acs-aem-checkin.acs-aem-checkin-bundle</Bundle-SymbolicName>
+                    <Export-Package>com.adobe.gdc.checkin.*</Export-Package>
+					<Import-Package>*</Import-Package>
+                    <Bundle-SymbolicName>acs-aem-checkin.acs-aem-checkin-bundle</Bundle-SymbolicName>
+                    <Bundle-Vendor>Adobe Systems, Inc.</Bundle-Vendor>
+					<Bundle-Category>GDC Checkin</Bundle-Category>
                     </instructions>
                 </configuration>
             </plugin>
