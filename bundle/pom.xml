@@ -85,9 +85,9 @@
                 <extensions>true</extensions>
                 <configuration>
                     <instructions>
-                    <Export-Package>com.adobe.gdc.checkin.*</Export-Package>
+                    <Export-Package>com.adobe.gdc.checkin,com.adobe.gdc.checkin.constants.*</Export-Package>
 					<Import-Package>*</Import-Package>
-                    <Bundle-SymbolicName>acs-aem-checkin.acs-aem-checkin-bundle</Bundle-SymbolicName>
+                    <Bundle-SymbolicName>gdc-checkin-bundle</Bundle-SymbolicName>
                     <Bundle-Vendor>Adobe Systems, Inc.</Bundle-Vendor>
 					<Bundle-Category>GDC Checkin</Bundle-Category>
                     </instructions>
@@ -97,7 +97,7 @@
                 <groupId>org.apache.sling</groupId>
                 <artifactId>maven-sling-plugin</artifactId>
                 <configuration>
-                    <slingUrl>http://${crx.host}:${crx.port}/apps/acs-aem-checkin/install</slingUrl>
+                    <slingUrl>http://${crx.host}:${crx.port}/apps/gdc-checkin/install</slingUrl>
                     <usePut>true</usePut>
                 </configuration>
             </plugin>
