@@ -1,0 +1,45 @@
+.bdo-objective-panel-row,.bdo-achievement-panel-row {
+	margin-bottom: 5px;
+}
+
+.align-right {
+	text-align: right;
+}
+
+.button-wrapper {
+	padding-left: 0px;
+}
+
+.bdo-form textarea,select {
+	-webkit-box-shadow: 0 0 7px rgba(0, 0, 0, 0.3) inset;
+	-moz-box-shadow: 0 0 7px rgba(0, 0, 0, 0.3) inset;
+}
+
+.quarterly-bdo-tracker .panel-body {
+	padding: 0px;
+}
+
+.bdo-form select {
+	height: 30px;
+	border-radius: 3px;
+}
+
+.bdo-form .objective-desc {
+	color: #808080;
+}
+
+.bdo-form .error-img {
+	border-radius: 50%;
+	padding-left: 8px;
+	padding-right: 8px;
+	color: white;
+	text-align: center;
+	font: 17px Arial, sans-serif;
+	background: #D00000;
+}
+
+.bdo-form .error {
+	font-style: italic;
+	font-weight: bold;
+	color: #D00000;
+}

@@ -42,7 +42,7 @@
 						<c:when test = "${isLoggedIn eq true}" >
 							<div class="tab-content">
 								<div id="checkin_tab1" class="tab-pane active"> 
-                                    <cq:include path="quarterly-bdo-tracker" resourceType= "gdc-checkin/components/content/quarterly-bdo-tracker" />
+                                    <cq:include path="quarterly-bdo-tracker" resourceType= "gdc-checkin/components/content/quarterly-bdo" />
 								</div>
 
 								<div id="checkin_tab2" class="tab-pane"> 

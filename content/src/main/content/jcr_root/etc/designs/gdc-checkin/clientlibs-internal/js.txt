@@ -1,5 +1,7 @@
 #base=js
 
+bdo.goals.achievement.form.js
+bdo.achievement.tracker.js
 
 
 

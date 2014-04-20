@@ -1,7 +1,7 @@
-$(document).ready(function(){
-  var s1 = [['Achieved',4000], ['Yet to Achieve',6000]];
-  
-        
+GDC.bdo.achievement={};
+
+GDC.bdo.achievement.tracker = function(s1) {
+
   var plot3 = $.jqplot('achievementChart', [s1], {
     seriesDefaults: {
           // make this a donut chart.
@@ -32,4 +32,5 @@ $(document).ready(function(){
       }, 
       legend: {show:true,location:'s'}
   });
-});
+
+}

@@ -32,19 +32,19 @@
                             <c:choose>
                                 <c:when test="${quarterStatus eq previous}"> 
                                     <li class="done">
-                                        <a class="step" href="#bdo_quarter${i}" data-toggle="tab">${i}</a>
+                                        <a class="step" href="#bdo_quarter${i}" data-toggle="tab">Q<sub>${i}</sub></a>
                                     </li>
                                 </c:when>
 
                                 <c:when test="${quarterStatus eq current}"> 
                                     <li class="done active">
-                                        <a class="step" href="#bdo_quarter${i}" data-toggle="tab">${i}</a>
+                                        <a class="step" href="#bdo_quarter${i}" data-toggle="tab">Q<sub>${i}</sub></a>
                                     </li>
                                 </c:when>
                                 
                                 <c:otherwise> 
                                     <li class="">
-                                        <a class="step" >${i}</a>
+                                        <a class="step" >Q<sub>${i}</sub></a>
                                     </li>
                                 </c:otherwise>
                             </c:choose>
@@ -58,14 +58,12 @@
 </div>
 
 
-
 <div class="tab-content">
     <c:forEach var="i" begin="1" end="4">
 
        <% 
         Calendar quarterStartCalendarDate = allQuartersDateRangeMap.get("startDateQuarter"+pageContext.getAttribute("i"));
 		Calendar quarterEndCalendarDate = allQuartersDateRangeMap.get("endDateQuarter"+pageContext.getAttribute("i"));
-
 		%>
 
         <c:set var="quarterStatus" value="<%=quarterlyBDOService.getQuarterStatus(quarterStartCalendarDate, quarterEndCalendarDate)%>" />
@@ -75,15 +73,15 @@
                 <div id="bdo_quarter${i}" class="tab-pane active">  
                     <c:set var="quarterNumber" value="${i}" scope="request"/>
 					<c:set var="currentQuarter" value="true" scope="request"/>
-
-                    <cq:include path="nav-login" resourceType= "gdc-checkin/components/content/bdo-goals-achievement-form" />
+                    <cq:include path="bdo-goals-achievement-form" resourceType= "gdc-checkin/components/content/bdo-goals-achievement-form" />
                 </div>
             </c:when>
 
             <c:otherwise>
                 <div id="bdo_quarter${i}" class="tab-pane"> 
                     <c:set var="quarterNumber" value="${i}" scope="request"/>
-                    <cq:include path="nav-login" resourceType= "gdc-checkin/components/content/bdo-goals-achievement-form" />
+                    <c:set var="currentQuarter" value="false" scope="request"/>
+                    <cq:include path="bdo-goals-achievement-form" resourceType= "gdc-checkin/components/content/bdo-goals-achievement-form" />
         		</div>
             </c:otherwise>
         </c:choose>
