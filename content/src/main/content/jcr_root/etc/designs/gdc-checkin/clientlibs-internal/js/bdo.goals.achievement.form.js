@@ -73,7 +73,7 @@ GDC.bdo.form = function(bdoObjectives,bdoAchievements) {
             		}
             		
             		//Refresh the BDO Achievement tracker to reflect new values
-            		GDC.bdo.achievement.tracker(requestParams.percentageAchieved);
+            		GDC.bdo.achievement.tracker(parseInt(requestParams.percentageAchieved));
             	}
             	else {
 
