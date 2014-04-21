@@ -20,11 +20,6 @@
 <script>
     $(document).ready(function(){
         var bdoAchieved = <c:out value='${percentageAchieved}' />; 
-
-        var bdoYettoAchieve = 100 - bdoAchieved;
-
-        var s1 = [['Achieved',bdoAchieved], ['Yet to Achieve',bdoYettoAchieve]];
-
-        GDC.bdo.achievement.tracker(s1);
+        GDC.bdo.achievement.tracker(bdoAchieved);
     });
 </script>

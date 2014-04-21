@@ -63,21 +63,23 @@ GDC.bdo.form = function(bdoObjectives,bdoAchievements) {
             data: requestParams,
 
             success: function (data) {
-
-                if((data.success == "true") && (selector == "save")) {
-					notifySuccess("Saved Successfully !");
-                } 
-
-                else if((data.success == "true") && (selector == "submit")) {
-					notifySuccess("Submitted Successfully !");
-                }
-
-                else {
+            	
+            	if(data.success == "true") {
+            		if(selector == "save") {
+            			notifySuccess("Saved Successfully !");
+            		}
+            		else if(selector == "submit") {
+            			notifySuccess("Submitted Successfully !");
+            		}
+            		
+            		//Refresh the BDO Achievement tracker to reflect new values
+            		GDC.bdo.achievement.tracker(requestParams.percentageAchieved);
+            	}
+            	else {
 
 					notifyError("Unable to process your request due to an unknown technical error. Please try after sometime");
                 }
-
-				$( ".bdo-form-container" ).load( targetURL );
+               
             },
 
             error: function (jqXHR, textStatus, errorThrown) {
@@ -90,8 +92,8 @@ GDC.bdo.form = function(bdoObjectives,bdoAchievements) {
 
 
     var getRequestParams = function() {
-		var objectives  = getObjectives();
-        var achievements = getAchievements();
+		var objectives  = getObjectives().toString();
+        var achievements = getAchievements().toString();
         var percentageAchieved = $('.quarterly-bdo-form #percentageAchieved').val();
         var designation = $('.quarterly-bdo-form #designation').val();
 		var quarterNumber = $('.quarterly-bdo-form #quarterNumber').val();

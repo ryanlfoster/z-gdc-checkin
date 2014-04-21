@@ -85,7 +85,7 @@
                 <extensions>true</extensions>
                 <configuration>
                     <instructions>
-                    <Export-Package>com.adobe.gdc.checkin,com.adobe.gdc.checkin.constants.*</Export-Package>
+                    <Export-Package>com.adobe.gdc.checkin,com.adobe.gdc.checkin.constants.*,com.adobe.gdc.checkin.servlet.*</Export-Package>
 					<Import-Package>*</Import-Package>
                     <Bundle-SymbolicName>gdc-checkin-bundle</Bundle-SymbolicName>
                     <Bundle-Vendor>Adobe Systems, Inc.</Bundle-Vendor>
