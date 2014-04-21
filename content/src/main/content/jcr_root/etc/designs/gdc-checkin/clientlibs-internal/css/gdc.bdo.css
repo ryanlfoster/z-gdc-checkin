@@ -24,6 +24,9 @@
 	border-radius: 3px;
 }
 
+.bdo-form textarea {
+	height: 60px;
+}
 .bdo-form .objective-desc {
 	color: #808080;
 }
@@ -42,4 +45,8 @@
 	font-style: italic;
 	font-weight: bold;
 	color: #D00000;
+}
+
+.button-wrapper {
+	padding-top: 15px;
 }
