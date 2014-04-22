@@ -19,7 +19,7 @@
 
 <script>
     $(document).ready(function(){
-        var bdoAchieved = <c:out value='${percentageAchieved}' />; 
+        var bdoAchieved = "${percentageAchieved}"; 
         GDC.bdo.achievement.tracker(bdoAchieved);
     });
 </script>

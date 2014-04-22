@@ -2,6 +2,14 @@ GDC.bdo.achievement={};
 
 
 GDC.bdo.achievement.tracker = function(bdoAchieved) {
+	
+	 if(GDC.bdo.isEmpty(bdoAchieved)) {
+		 bdoAchieved = 0;
+      }
+     else {
+    	 bdoAchieved = parseInt(bdoAchieved);
+     }
+	
 	var bdoYettoAchieve = 100 - bdoAchieved;
 
 	var s1 = [['Achieved',bdoAchieved], ['Yet to Achieve',bdoYettoAchieve]]; 

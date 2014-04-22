@@ -1,15 +1,15 @@
 <%@ page contentType="text/html; charset=utf-8" %>
 <%@include file="/libs/foundation/global.jsp" %>
 <%@page session="false" %>
-<%@page import="com.adobe.gdc.checkin.QuarterlyBDOService,java.util.Calendar, java.util.Map" %>
+<%@page import="com.adobe.gdc.checkin.QuarterlyBDOCalendarService,java.util.Calendar, java.util.Map" %>
 
 <c:set var="previous" value="previous" />
 <c:set var="current" value="current" />
 
-<% QuarterlyBDOService quarterlyBDOService = sling.getService(QuarterlyBDOService.class);
+<% QuarterlyBDOCalendarService quarterlyBDOService = sling.getService(QuarterlyBDOCalendarService.class);
    Map<String, Calendar> allQuartersDateRangeMap = quarterlyBDOService.getAllQuartersDateRangeMap();
-
 %>
+<c:set var="annualYear" value="<%=quarterlyBDOService.getcurrentQuarterAnnualYear()%>" scope="request" />
 
 <div class="row">
 	<div class="col-md-9 col-xs-9">

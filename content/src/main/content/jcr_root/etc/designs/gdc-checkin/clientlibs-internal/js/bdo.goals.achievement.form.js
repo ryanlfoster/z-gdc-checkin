@@ -9,11 +9,16 @@ GDC.bdo.isEmpty = function(value) {
 GDC.bdo.form = function(bdoObjectives,bdoAchievements) {
 
 	GDC.bdo.form.multifield('.bdo-objective-panel','.bdo-objective-active'); 
-    GDC.bdo.form.edit(bdoObjectives, 'objective', '.bdo-objective-panel .bdo-objective-active');
-
+	
+	if(!GDC.bdo.isEmpty(bdoObjectives)) {
+		GDC.bdo.form.edit(bdoObjectives, 'objective', '.bdo-objective-panel .bdo-objective-active');
+	}
+	
     GDC.bdo.form.multifield('.bdo-achievement-panel','.bdo-achievement-active');
-    GDC.bdo.form.edit(bdoAchievements, 'achievement', '.bdo-achievement-panel .bdo-achievement-active');
-
+    
+    if(!GDC.bdo.isEmpty(bdoAchievements)) {
+    	GDC.bdo.form.edit(bdoAchievements, 'achievement', '.bdo-achievement-panel .bdo-achievement-active');
+    }
 
 	$(".bdo-form").on("click", ".btn-save",function(){
 
@@ -64,7 +69,7 @@ GDC.bdo.form = function(bdoObjectives,bdoAchievements) {
 
             success: function (data) {
             	
-            	if(data.success == "true") {
+            	if(data.success == true) {
             		if(selector == "save") {
             			notifySuccess("Saved Successfully !");
             		}
@@ -73,7 +78,7 @@ GDC.bdo.form = function(bdoObjectives,bdoAchievements) {
             		}
             		
             		//Refresh the BDO Achievement tracker to reflect new values
-            		GDC.bdo.achievement.tracker(parseInt(requestParams.percentageAchieved));
+            		GDC.bdo.achievement.tracker(requestParams.percentageAchieved);
             	}
             	else {
 
@@ -89,11 +94,9 @@ GDC.bdo.form = function(bdoObjectives,bdoAchievements) {
 
     };
 
-
-
     var getRequestParams = function() {
-		var objectives  = getObjectives().toString();
-        var achievements = getAchievements().toString();
+		var objectives  = getObjectives();
+        var achievements = getAchievements();
         var percentageAchieved = $('.quarterly-bdo-form #percentageAchieved').val();
         var designation = $('.quarterly-bdo-form #designation').val();
 		var quarterNumber = $('.quarterly-bdo-form #quarterNumber').val();
@@ -237,9 +240,8 @@ GDC.bdo.form.multifield = function(panelSelector, activeSelector) {
 
 }
 
-GDC.bdo.form.edit = function(valueString, field, activePanelSelector) {
+GDC.bdo.form.edit = function(valueArray, field, activePanelSelector) {
 
-    var valueArray = valueString.split(",");
 	document.getElementById(field+"_1").value=valueArray[0];
 
 	for(var i=1;i<valueArray.length;i++){

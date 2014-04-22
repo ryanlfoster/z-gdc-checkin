@@ -1,6 +1,6 @@
 package com.adobe.gdc.checkin.constants;
 
-public class Constants {
+public class QuartelyBDOConstants {
 
 	public static final String START_DATE_QUARTER1 = "startDateQuarter1";
 	public static final String END_DATE_QUARTER1 = "endDateQuarter1";
@@ -15,4 +15,5 @@ public class Constants {
 	public static final String PREVIOUS_QUARTER = "previous";
 	public static final String FUTURE_QUARTER = "future";
 	
+	public static final String GDC_CHECKIN_REPOSITORY_BASE_PATH = "/var/gdc-checkin";
 }

@@ -1,18 +1,40 @@
 <%@ page contentType="text/html; charset=utf-8" %>
 <%@include file="/libs/foundation/global.jsp" %>
 <%@page session="false" %>
+<%@page import="com.adobe.gdc.checkin.QuarterlyBDORepositoryClient, com.adobe.gdc.checkin.UserManagementService,java.util.Map, javax.jcr.Session" %>
 
-<c:set var="quarterNumber" value="${quarterNumber}" scope="request"/>
-<c:set var="bdoObjectives" value="my first objective, objective2, objective3" scope="request"/>
-<c:set var="bdoAchievements" value="achievement1, achievement2" scope="request"/>
-<c:set var="percentageAchieved" value="30" scope="request"/>
 <c:set var="percentageList" value="${fn:split('10,20,30,40,50,60,70,80,90,100', ',')}" scope="application" />
-<c:set var="designation" value="Senior Manager" scope="request"/>
+<c:set var="quarterNumber" value="${quarterNumber}" />
+<c:set var="annualYear" value="${annualYear}" />
+
+<%
+QuarterlyBDORepositoryClient quarterlyBDORepositoryClient = sling.getService(QuarterlyBDORepositoryClient.class);
+UserManagementService userManagementService = sling.getService(UserManagementService.class);
+
+Session session = resourceResolver.adaptTo(Session.class);
+int quarterNumber = ((Integer) pageContext.getAttribute("quarterNumber")).intValue();
+int annualYear = ((Integer) pageContext.getAttribute("annualYear")).intValue();
+
+Map<String, String[]> quarterlyBDODataMap = quarterlyBDORepositoryClient.getQuarterlyBDOData(quarterNumber,annualYear,session);
+%>
+
+<c:set var="bdoObjectives" value="<%=quarterlyBDODataMap.get("objectives")%>" scope="request"/>
+<c:set var="bdoAchievements" value="<%=quarterlyBDODataMap.get("achievements")%>" scope="request"/>
+<c:set var="percentageAchieved" value="<%=quarterlyBDODataMap.get("percentageAchieved") != null ? quarterlyBDODataMap.get("percentageAchieved")[0] : ""%>" scope="request"/>
+
+<c:choose>
+  <c:when test = "${currentQuarter eq 'true'}">
+  	<c:set var="designation" value="<%=userManagementService.getEmployeeDesignation(session)%>" scope="request"/>
+  </c:when>
+  <c:otherwise>
+  	<c:set var="designation" value="<%=quarterlyBDODataMap.get("designation")!= null ? quarterlyBDODataMap.get("designation")[0] : ""%>" scope="request"/>
+  </c:otherwise>
+</c:choose>
+
 
 <div class="row">
 
     <div class="col-md-9 col-xs-9">
-
         <div class="bdo-form">
             <div class="row">
                 <div class="col-md-4 col-xs-4"></div>                
@@ -163,12 +185,20 @@
 <script>
     $(document).ready(function() {
 
-        var bdoObjectives = "<c:out value='${bdoObjectives}' />"; 
-        var bdoAchievements = "<c:out value='${bdoAchievements}' />";
+		var bdoObjectivesArray = [];
+        var bdoAchievementsArray = [];
 
-        if(<c:out value='${currentQuarter}' /> == true) {
+		<c:forEach items="${bdoObjectives}" var="objective">
+   			 bdoObjectivesArray.push('${objective}'); 
+		</c:forEach>
 
-			GDC.bdo.form(bdoObjectives,bdoAchievements);
+		<c:forEach items="${bdoAchievements}" var="achievement">
+   			 bdoAchievementsArray.push('${achievement}'); 
+		</c:forEach>
+
+        if(${currentQuarter} == true) {
+
+			GDC.bdo.form(bdoObjectivesArray,bdoAchievementsArray);
        }
 });
 </script>

@@ -47,6 +47,12 @@
 	color: #D00000;
 }
 
+.bdo-form .success-msg {
+	font-size: medium;
+	font-style: italic;
+	color: #339900;
+}
+
 .button-wrapper {
 	padding-top: 15px;
 }
