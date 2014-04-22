@@ -75,8 +75,7 @@ Map<String, String[]> quarterlyBDODataMap = quarterlyBDORepositoryClient.getQuar
                             <div class="col-md-8 col-xs-8  bdo-objective-panel">
                                 <div class="row bdo-objective-active bdo-objective-panel-row">
                                     <div class="col-sm-10  col-xs-10 col-md-10">
-                                        <textarea id="objective_1" type="text" name="objective" placeholder="Objective" class="form-control objective" rows="1" cols="50">
-                                        </textarea>
+                                        <textarea id="objective_1" name="objective" placeholder="Objective" class="form-control objective" rows="1" cols="50"></textarea>
                                     </div>
                                     <div class="col-sm-2  col-xs-2 col-md-2 align-left button-wrapper">
                                         <button class="btn btn-danger btn-remove" type="button" style="display:none">
@@ -103,8 +102,7 @@ Map<String, String[]> quarterlyBDODataMap = quarterlyBDORepositoryClient.getQuar
                             <div class="col-md-8 col-xs-8 bdo-achievement-panel">
                                 <div class="row bdo-achievement-active bdo-achievement-panel-row">
                                     <div class="col-sm-10  col-xs-10 col-md-10">
-                                        <textarea id="achievement_1" type="text" name="achievement" placeholder="Achievement" class="form-control achievement" rows="1" cols="50">
-                                        </textarea>
+                                        <textarea id="achievement_1" name="achievement" placeholder="Achievement" class="form-control achievement" rows="1" cols="50"></textarea>
                                     </div>
                                     <div class="col-sm-2  col-xs-2 col-md-2  align-left button-wrapper">
                                         <button class="btn btn-danger btn-remove" type="button" style="display:none">

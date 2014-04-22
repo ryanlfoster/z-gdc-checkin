@@ -6,9 +6,6 @@
 	text-align: right;
 }
 
-.button-wrapper {
-	padding-left: 0px;
-}
 
 .bdo-form textarea,select {
 	-webkit-box-shadow: 0 0 7px rgba(0, 0, 0, 0.3) inset;
@@ -55,4 +52,6 @@
 
 .button-wrapper {
 	padding-top: 15px;
+    padding-left: 0px;
 }
+
