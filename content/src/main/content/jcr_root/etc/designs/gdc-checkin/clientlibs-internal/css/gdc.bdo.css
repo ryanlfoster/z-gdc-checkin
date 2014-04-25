@@ -6,7 +6,6 @@
 	text-align: right;
 }
 
-
 .bdo-form textarea,select {
 	-webkit-box-shadow: 0 0 7px rgba(0, 0, 0, 0.3) inset;
 	-moz-box-shadow: 0 0 7px rgba(0, 0, 0, 0.3) inset;
@@ -24,6 +23,7 @@
 .bdo-form textarea {
 	height: 60px;
 }
+
 .bdo-form .objective-desc {
 	color: #808080;
 }
@@ -52,6 +52,21 @@
 
 .button-wrapper {
 	padding-top: 15px;
-    padding-left: 0px;
+	padding-left: 0px;
 }
 
+.bdo-form .status-msg {
+	color: #d2322d;
+	font-style: italic;
+}
+
+.bdo-form .status-msg .status {
+	font-weight: bold;
+	font-style: normal;
+}
+
+.checkin_tabs .tab_title {
+	font-size: 18px;
+	line-height: 24px;
+	text-align: left;
+}

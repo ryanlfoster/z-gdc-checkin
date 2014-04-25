@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.adobe.gdc.checkin.UserManagementService;
+import com.adobe.gdc.checkin.constants.QuartelyBDOConstants;
 
 @Component(metatype = true)
 @Service(UserManagementService.class)
@@ -24,15 +25,14 @@ public class UserManagementServiceImpl implements UserManagementService{
 		return session.getUserID();
 	}
 
-	
 	@Override
-	public String getEmployeeID(Session session) throws Exception {
+	public String getEmployeeID(String userID, Session session) throws Exception {
 		UserManager userManager = getUserManager(session);
-		String employeeID = "";
-		final Authorizable authorizable = userManager.getAuthorizable(session.getUserID());
+		String employeeID = QuartelyBDOConstants.EMPTY_STRING;
+		final Authorizable authorizable = userManager.getAuthorizable(userID);
 		
-		if(authorizable.hasProperty("profile/employeeID"))
-			employeeID =  authorizable.getProperty("profile/employeeID")[0].getString();
+		if(authorizable.hasProperty(QuartelyBDOConstants.PROFILE_EMPLOYEE_ID))
+			employeeID =  authorizable.getProperty(QuartelyBDOConstants.PROFILE_EMPLOYEE_ID)[0].getString();
 		
 		return employeeID;
 	}
@@ -40,31 +40,45 @@ public class UserManagementServiceImpl implements UserManagementService{
 	@Override
 	public String getManagersEmailId(Session session) throws Exception {
 		UserManager userManager = getUserManager(session);
-		String managersEmailId = "";
+		String managersEmailId = QuartelyBDOConstants.EMPTY_STRING;
 		final Authorizable authorizable = userManager.getAuthorizable(session.getUserID());
-		if(authorizable.hasProperty("profile/managersID"))
-			managersEmailId =  authorizable.getProperty("profile/managersID")[0].getString() + "@adobe.com";
+		if(authorizable.hasProperty(QuartelyBDOConstants.PROFILE_MANAGER_ID))
+			managersEmailId =  authorizable.getProperty(QuartelyBDOConstants.PROFILE_MANAGER_ID)[0].getString() 
+														+ QuartelyBDOConstants.ADOBE_EMAIL_EXTENTION;
 		
 		return managersEmailId;
 	}
 
 
 	@Override
-	public String getEmployeeDesignation(Session session) throws Exception {
+	public String getEmployeeDesignation(String userID,Session session) throws Exception {
 		UserManager userManager = getUserManager(session);
-		String designation = "";
-		final Authorizable authorizable = userManager.getAuthorizable(session.getUserID());
-		if(authorizable.hasProperty("profile/designation"))
-			designation =  authorizable.getProperty("profile/designation")[0].getString();
+		String designation = QuartelyBDOConstants.EMPTY_STRING;
+		final Authorizable authorizable = userManager.getAuthorizable(userID);
+		if(authorizable.hasProperty(QuartelyBDOConstants.PROFILE_DESIGNATION))
+			designation =  authorizable.getProperty(QuartelyBDOConstants.PROFILE_DESIGNATION)[0].getString();
 		
 		return designation;
 	}
+	
+	@Override
+	public String getEmployeeName(String userID, Session session) throws Exception {
+		UserManager userManager = getUserManager(session);
+		String name = QuartelyBDOConstants.EMPTY_STRING;
+		final Authorizable authorizable = userManager.getAuthorizable(userID);
+		if(authorizable.hasProperty(QuartelyBDOConstants.PROFILE_FULL_NAME))
+			name =  authorizable.getProperty(QuartelyBDOConstants.PROFILE_FULL_NAME)[0].getString();
+		
+		return name;
+	}
+
 	
 	private UserManager getUserManager(Session session) throws UnsupportedRepositoryOperationException, RepositoryException {
 		 UserManager userManager = ((JackrabbitSession) session).getUserManager();	
 		 return userManager;
 	}
 
+	
 
 	
 	

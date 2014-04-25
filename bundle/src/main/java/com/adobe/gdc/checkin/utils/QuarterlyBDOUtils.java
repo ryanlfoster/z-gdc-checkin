@@ -10,8 +10,6 @@ import javax.jcr.PropertyIterator;
 import javax.jcr.RepositoryException;
 import javax.jcr.Value;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.jackrabbit.commons.JcrUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 
 import com.adobe.gdc.checkin.constants.QuartelyBDOConstants;
@@ -19,7 +17,7 @@ import com.adobe.gdc.checkin.constants.QuartelyBDOConstants;
 public class QuarterlyBDOUtils {
 
 	/**
-	 * This reads the request paramters and wrap it inside a HashMap
+	 * This reads the request parameters and wrap it inside a HashMap
 	 * @param request
 	 * @return requestParamMap
 	 */
@@ -62,9 +60,7 @@ public class QuarterlyBDOUtils {
 			else {
 				node.setProperty(key, propertyValues);
 			}
-		}
-			
-		
+		}	
 	}
 	
 	public static Map<String, String[]> readNodeproperties(Node quarterlyBDONode) throws RepositoryException {
@@ -91,9 +87,7 @@ public class QuarterlyBDOUtils {
 			
 			nodePropertyMap.put(propertyName, propertyValue);
 			}
-			 
-			
-		 
+
 		return nodePropertyMap;
 	}
 	

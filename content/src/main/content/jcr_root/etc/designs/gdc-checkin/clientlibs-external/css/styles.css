@@ -176,7 +176,7 @@ body{
 }
 
 .wizard-steps li.done .step {
-    border: 2px solid #008837;
+    border: 3px solid #008837;
     color: #fff;
     background-color: #5CB85C;
     font-weight: bold;

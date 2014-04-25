@@ -4,3 +4,5 @@ jquery.js
 bootstrap.min.js
 jquery.jqplot.min.js
 jqplot.donutRenderer.min.js
+jquery.dataTables.js
+dataTables.bootstrap.js

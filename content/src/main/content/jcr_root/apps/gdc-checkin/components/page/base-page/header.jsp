@@ -9,4 +9,4 @@
             <a class="brand" href="/content/gdc-check-in/en/check-in-home.html">Check In</a>
         </div>
     </div><!-- ./ top navbar -->
- </div>   
+</div>   

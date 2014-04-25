@@ -1,0 +1,43 @@
+.dataTables_filter {
+	position: relative;
+}
+
+.dataTables_filter input {
+	border-radius: 5px;
+	height: 28px;
+	background: url("../images/search.png") top right no-repeat;
+}
+
+.bdo-direct-reports {
+	width: 75%;
+}
+
+.quarterly-bdo-direct-reports .panel-default {
+	margin-bottom: 0px;
+}
+
+.tab-content .bdo-direct-reports {
+	padding-left: 0px;
+}
+
+.tab-content .dataTables_wrapper {
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.quarterly-bdo-direct-reports .bdo-direct-reports {
+	border: none;
+}
+
+.pagination>.disabled>span,.pagination>.disabled>span:hover,.pagination>.disabled>span:focus,.pagination>.disabled>a,.pagination>.disabled>a:hover,.pagination>.disabled>a:focus
+	{
+	cursor: default;
+}
+
+div.dataTables_paginate.pagination ul li a {
+	border: 1px solid #51a351;
+}
+
+.pagination [class^="icon-"], .pagination [class*=" icon-"] {
+	line-height: 25px;
+}

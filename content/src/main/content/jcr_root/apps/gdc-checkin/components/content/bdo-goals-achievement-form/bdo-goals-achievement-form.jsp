@@ -1,46 +1,40 @@
 <%@ page contentType="text/html; charset=utf-8" %>
 <%@include file="/libs/foundation/global.jsp" %>
 <%@page session="false" %>
-<%@page import="com.adobe.gdc.checkin.QuarterlyBDORepositoryClient, com.adobe.gdc.checkin.UserManagementService,java.util.Map, javax.jcr.Session" %>
+<%@page import="com.adobe.gdc.checkin.QuarterlyBDORepositoryClient,com.adobe.gdc.checkin.UserManagementService, java.util.Map, javax.jcr.Session" %>
 
 <c:set var="percentageList" value="${fn:split('10,20,30,40,50,60,70,80,90,100', ',')}" scope="application" />
 <c:set var="quarterNumber" value="${quarterNumber}" />
 <c:set var="annualYear" value="${annualYear}" />
+<c:set var="userID" value="${userID}" />
 
 <%
 QuarterlyBDORepositoryClient quarterlyBDORepositoryClient = sling.getService(QuarterlyBDORepositoryClient.class);
 UserManagementService userManagementService = sling.getService(UserManagementService.class);
 
-Session session = resourceResolver.adaptTo(Session.class);
 int quarterNumber = ((Integer) pageContext.getAttribute("quarterNumber")).intValue();
 int annualYear = ((Integer) pageContext.getAttribute("annualYear")).intValue();
-
-Map<String, String[]> quarterlyBDODataMap = quarterlyBDORepositoryClient.getQuarterlyBDOData(quarterNumber,annualYear,session);
+String userID = (String)pageContext.getAttribute("userID");
+Session session = resourceResolver.adaptTo(Session.class);
+Map<String, String[]> quarterlyBDODataMap = quarterlyBDORepositoryClient.getQuarterlyBDOData(quarterNumber,annualYear,userID,session);
 %>
 
 <c:set var="bdoObjectives" value="<%=quarterlyBDODataMap.get("objectives")%>" scope="request"/>
 <c:set var="bdoAchievements" value="<%=quarterlyBDODataMap.get("achievements")%>" scope="request"/>
 <c:set var="percentageAchieved" value="<%=quarterlyBDODataMap.get("percentageAchieved") != null ? quarterlyBDODataMap.get("percentageAchieved")[0] : ""%>" scope="request"/>
-
-<c:choose>
-  <c:when test = "${currentQuarter eq 'true'}">
-  	<c:set var="designation" value="<%=userManagementService.getEmployeeDesignation(session)%>" scope="request"/>
-  </c:when>
-  <c:otherwise>
-  	<c:set var="designation" value="<%=quarterlyBDODataMap.get("designation")!= null ? quarterlyBDODataMap.get("designation")[0] : ""%>" scope="request"/>
-  </c:otherwise>
-</c:choose>
-
+<c:set var="status" value="<%=quarterlyBDODataMap.get("status") != null ? quarterlyBDODataMap.get("status")[0] : "NOT SUBMITTED"%>" scope="request"/>
+<c:set var="name" value="<%=userManagementService.getEmployeeName(userID, session)%>" scope="request"/>
+<c:set var="designation" value="<%=quarterlyBDODataMap.get("designation")!= null ? quarterlyBDODataMap.get("designation")[0] : userManagementService.getEmployeeDesignation(userID, session)%>" scope="request"/>
 
 <div class="row">
 
     <div class="col-md-9 col-xs-9">
         <div class="bdo-form">
             <div class="row">
-                <div class="col-md-4 col-xs-4"></div>                
+                <div class="col-md-4 col-xs-4"></div>               
                 <div class="col-md-7 col-xs-7 align-right">
                     <div class="col-sm-10  col-xs-10 col-md-10">
-                        <label for="EmployeeId"> Designation:  </label>
+                        ${name},<br/>
                         ${designation}<br/><br/>
                     </div>
                     <div class="col-sm-2  col-xs-2 col-md-2  align-left"></div>
@@ -49,7 +43,7 @@ Map<String, String[]> quarterlyBDODataMap = quarterlyBDORepositoryClient.getQuar
             </div>
 
             <c:choose>
-                <c:when test = "${currentQuarter eq 'true'}">
+                <c:when test = "${editForm eq 'true'}">
 
                     <div class="row">
                         <div class="col-md-1 col-xs-1"></div>
@@ -61,12 +55,14 @@ Map<String, String[]> quarterlyBDODataMap = quarterlyBDORepositoryClient.getQuar
 
                         <input type="hidden" name="designation" id="designation" value="${designation}" />
                         <input type="hidden" name="quarterNumber" id="quarterNumber" value="${quarterNumber}" />
+                        <input type="hidden" name="userID" id="userID" value="${userID}" />
+                        <input type="hidden" name="annualYear" id="annualYear" value="${annualYear}" />
 
                         <div class="row">
                             <div class="col-md-1 col-xs-1"></div>
                             <div class="col-md-2 col-xs-2">
                                 <label for="objective">
-                                    Set your Objectives
+                                    Set BDO Objectives
                                 </label><br/>
                                 <span class="objective-desc">
                                     Delight the Company<br/>Delight the Customer<br/>Delight the Employee
@@ -151,6 +147,15 @@ Map<String, String[]> quarterlyBDODataMap = quarterlyBDORepositoryClient.getQuar
                             <div class="col-md-1 col-xs-1"></div>
                         </div>
 
+                        <br/>
+
+                        <div class="row">
+                            <div class="col-md-1 col-xs-1"></div>
+                            <div class="col-md-6 col-xs-6">
+                                <div class="status-msg">status : <span class="status">${status}</span></div>
+                            </div>
+                        </div>
+
                     </form>
 
                 </c:when>
@@ -171,13 +176,12 @@ Map<String, String[]> quarterlyBDODataMap = quarterlyBDORepositoryClient.getQuar
     </div>
 
     <div class="col-md-3 col-xs-3">
-        <c:if test = "${currentQuarter eq 'true'}">
+        <c:if test = "${displayGraph eq 'true'}">
             <cq:include path="bdo-achievement-tracker" resourceType= "gdc-checkin/components/content/bdo-achievement-tracker" />
         </c:if>
     </div>
 
 </div>
-
 
 
 <script>
@@ -194,8 +198,7 @@ Map<String, String[]> quarterlyBDODataMap = quarterlyBDORepositoryClient.getQuar
    			 bdoAchievementsArray.push('${achievement}'); 
 		</c:forEach>
 
-        if(${currentQuarter} == true) {
-
+        if(${editForm} == true) {
 			GDC.bdo.form(bdoObjectivesArray,bdoAchievementsArray);
        }
 });

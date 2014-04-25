@@ -1,11 +1,12 @@
 GDC.bdo.achievement={};
 
+var plot1;
 
 GDC.bdo.achievement.tracker = function(bdoAchieved) {
 	
 	 if(GDC.bdo.isEmpty(bdoAchieved)) {
 		 bdoAchieved = 0;
-      }
+     }
      else {
     	 bdoAchieved = parseInt(bdoAchieved);
      }
@@ -47,7 +48,7 @@ GDC.bdo.achievement.tracker = function(bdoAchieved) {
               legend: {show:true,location:'s'}
       };
 
-    $.jqplot('achievementChart', data, options);
+ 	plot1 = $.jqplot('achievementChart', data, options);
 
 }
 

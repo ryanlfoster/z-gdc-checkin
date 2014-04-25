@@ -18,8 +18,27 @@
 
 
 <script>
+
     $(document).ready(function(){
+
+        $("#checkin_tab li").click(function(){
+
+            var interval = setInterval(drawAchivementChart, 100);
+
+            function drawAchivementChart() {
+                var plotted = plot1._drawCount != 0;
+				if(!plotted){
+                	plot1.replot();
+            	} 
+            	else {
+                    clearInterval(interval);
+            	}
+            }
+
+        });
+
         var bdoAchieved = "${percentageAchieved}"; 
         GDC.bdo.achievement.tracker(bdoAchieved);
+
     });
 </script>

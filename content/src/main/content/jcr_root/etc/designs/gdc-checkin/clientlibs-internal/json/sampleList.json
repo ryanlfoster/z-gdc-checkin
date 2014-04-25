@@ -1,0 +1,195 @@
+{
+    "iTotalRecords": 21,
+    "aaData": [
+            {
+                "index" : "1",
+                "name" : "Harry",
+                "designation" : "Technical Consultant",
+                "employeeid" : "53490",
+                "percent" : "80%",
+                "status" : "SUBMITTED",
+                "ldap" : "harry"
+
+            },
+            {
+                "index" : "2",
+                "name" : "Rajesh",
+                "designation" : "Senior Technical Consultant",
+                "employeeid" : "53003",
+                "percent" : "70%",
+                "status" : "NOT SUBMITTED",
+                "ldap" : "rajesh"
+            },
+            {
+                "index" : "3",
+                "name" : "Tom",
+                "designation" : "Technical Consultant",
+                "employeeid" : "53001",
+                "percent" : "60%",
+                "status" : "SUBMITTED",
+                "ldap" : "tom"
+            },
+            {
+                "index" : "4",
+                "name" : "Ron",
+                "designation" : "Senior Technical Consultant",
+                "employeeid" : "53000",
+                "percent" : "50%",
+                "status" : "NOT SUBMITTED",
+                "ldap" : "ron"
+            },
+            {
+                "index" : "5",
+                "name" : "Shirley",
+                "designation" : "Assoicate Technical Consultant",
+                "employeeid" : "50890",
+                "percent" : "20%",
+                "status" : "SUBMITTED",
+                "ldap" : "shirley"
+            },
+            {
+                "index" : "6",
+                "name" : "Jones",
+                "designation" : "Assoicate Technical Consultant",
+                "employeeid" : "53090",
+                "percent" : "0%",
+                "status" : "NOT SUBMITTED",
+                "ldap" : "jones"
+            },
+            {
+                "index" : "7",
+                "name" : "Johnson",
+                "designation" : "Technical Consultant",
+                "employeeid" : "13890",
+                "percent" : "10%",
+                "status" : "SUBMITTED",
+                "ldap" : "johnson"
+            },
+            {
+                "index" : "8",
+               "name" : "Thomas",
+                "designation" : "Senior Technical Consultant",
+                "employeeid" : "13890",
+                "percent" : "100%",
+                "status" : "NOT SUBMITTED",
+                "ldap" : "thomas"
+            },
+            {
+                "index" : "9",
+               "name" : "Nigel",
+                "designation" : "Technical Consultant",
+                "employeeid" : "33890",
+                "percent" : "90%",
+                "status" : "SUBMITTED",
+                "ldap" : "nigel"
+            },
+            {
+                "index" : "10",
+               "name" : "Jackey",
+                "designation" : "Senior Technical Consultant",
+                "employeeid" : "53190",
+                "percent" : "80%",
+                "status" : "SUBMITTED",
+                "ldap" : "jackey"
+            },
+            {
+                "index" : "11",
+                "name" : "John",
+                "designation" : "Technical Consultant",
+                "employeeid" : "53898",
+                "percent" : "20%",
+                "status" : "SUBMITTED",
+                "ldap" : "john"
+            },
+            {
+                "index" : "12",
+                "name" : "Kelly",
+                "designation" : "Senior Technical Consultant",
+                "employeeid" : "53899",
+                "percent" : "100%",
+                "status" : "NOT SUBMITTED",
+                "ldap" : "kelly"
+            },
+            {
+                "index" : "13",
+                "name" : "Kim",
+                "designation" : "Technical Consultant",
+                "employeeid" : "52890",
+                "percent" : "80%",
+                "status" : "NOT SUBMITTED",
+                "ldap" : "kim"
+            },
+            {
+                "index" : "14",
+                "name" : "Dim",
+                "designation" : "Assoicate Technical Consultant",
+                "employeeid" : "53543",
+                "percent" : "70%",
+                "status" : "SUBMITTED",
+                "ldap" : "dim"
+            },
+            {
+                "index" : "15",
+                "name" : "Pearson",
+                "designation" : "Technical Consultant",
+                "employeeid" : "53690",
+                "percent" : "60%",
+                "status" : "SUBMITTED",
+                "ldap" : "pearson"
+            },
+            {
+                "index" : "16",
+                "name" : "Radison",
+                "designation" : "Technical Consultant",
+                "employeeid" : "53890",
+                "percent" : "50%",
+                "status" : "NOT SUBMITTED",
+                "ldap" : "radison"
+            },
+            {
+                "index" : "17",
+                "name" : "Toni",
+                "designation" : "Technical Consultant",
+                "employeeid" : "53730",
+                "percent" : "40%",
+                "status" : "SUBMITTED",
+                "ldap" : "toni"
+            },
+        	{
+                "index" : "18",
+                "name" : "Michel",
+                "designation" : "Technical Consultant",
+                "employeeid" : "53734",
+                "percent" : "30%",
+                "status" : "NOT SUBMITTED",
+                "ldap" : "michel"
+            },
+        	{
+                "index" : "19",
+                "name" : "James Carton",
+                "designation" : "Technical Consultant",
+                "employeeid" : "53766",
+                "percent" : "30%",
+                "status" : "NOT SUBMITTED",
+                "ldap" : "james"
+            },
+        	{
+                "index" : "20",
+                "name" : "Scott",
+                "designation" : "Technical Consultant",
+                "employeeid" : "53734",
+                "percent" : "30%",
+                "status" : "NOT SUBMITTED",
+                "ldap" : "scott"
+            },
+            {
+                "index" : "21",
+                "name" : "Abi",
+                "designation" : "Senior Consultant",
+                "employeeid" : "53134",
+                "percent" : "30%",
+                "status" : "SUBMITTED",
+                "ldap" : "abi"
+            }
+        ]
+}

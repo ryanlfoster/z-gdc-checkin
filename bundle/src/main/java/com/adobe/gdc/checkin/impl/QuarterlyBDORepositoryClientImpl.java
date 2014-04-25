@@ -11,6 +11,7 @@ import org.apache.jackrabbit.commons.JcrUtils;
 import com.adobe.gdc.checkin.QuarterlyBDOCalendarService;
 import com.adobe.gdc.checkin.QuarterlyBDORepositoryClient;
 import com.adobe.gdc.checkin.UserManagementService;
+import com.adobe.gdc.checkin.constants.QuartelyBDOConstants;
 import com.adobe.gdc.checkin.utils.QuarterlyBDOUtils;
 import com.day.cq.commons.jcr.JcrConstants;
 
@@ -20,30 +21,25 @@ import com.day.cq.commons.jcr.JcrConstants;
 public class QuarterlyBDORepositoryClientImpl  implements QuarterlyBDORepositoryClient{
 
 	@Reference
-	UserManagementService userManagementService;
-	
-	@Reference
 	QuarterlyBDOCalendarService quarterlyBDOCalendarService;
 	
-	@Override
-	public boolean createOrUpdateQuarterlyBDOData(String action, Map<String, String[]> params, Session session) throws Exception {
+	@Reference
+	UserManagementService userManagementService;
 	
-		String userID = userManagementService.getCurrentUser(session);
-		int quarterNumber = Integer.parseInt(params.get("quarterNumber")[0]);
-		int currentYear = quarterlyBDOCalendarService.getcurrentQuarterAnnualYear();
-		
+	@Override
+	public boolean createOrUpdateQuarterlyBDOData(String action, Map<String, String[]> params,  Session session) throws Exception {
+	
+		int quarterNumber = Integer.parseInt(params.get(QuartelyBDOConstants.QUARTER_NUMBER)[0]);
+		int annualYear = Integer.parseInt(params.get(QuartelyBDOConstants.ANNUAL_YEAR)[0]);
+		String userID = params.get(QuartelyBDOConstants.USER_ID)[0];
 		//First get the repository base-path
-		String repositoryPath = QuarterlyBDOUtils.getQuarterlyBDORepositoryPath(currentYear, quarterNumber, userID);
+		String repositoryPath = QuarterlyBDOUtils.getQuarterlyBDORepositoryPath(annualYear, quarterNumber, userID);
 		
 		//Get or create the Quarterly BDO node to store data
 		Node quarterlyBDONode = JcrUtils.getOrCreateByPath(repositoryPath, JcrConstants.NT_UNSTRUCTURED, session);	
 		
 		//Now save the BDO data as the node properties
 		QuarterlyBDOUtils.setNodeProperties(quarterlyBDONode, getQuarterlyBDOProperties(action, params, session));
-		 
-		//Set a default status for the stored BDO form data until it is submitted 
-		if(!quarterlyBDONode.hasProperty("status"))
-			quarterlyBDONode.setProperty("status", "NOT SUBMITTED");
 		
 		if(session.hasPendingChanges()) {
 			session.save();
@@ -53,10 +49,9 @@ public class QuarterlyBDORepositoryClientImpl  implements QuarterlyBDORepository
 	}
 
 	@Override
-	public Map<String, String[]> getQuarterlyBDOData(int quarterNumber, int annualYear, Session session) throws Exception {
+	public Map<String, String[]> getQuarterlyBDOData(int quarterNumber, int annualYear, String userID, Session session) throws Exception {
 
 		Map<String, String[]> bdoDataMap = new HashMap<String, String[]>();
-		String userID = userManagementService.getCurrentUser(session);
 		String repositoryPath = QuarterlyBDOUtils.getQuarterlyBDORepositoryPath(annualYear, quarterNumber, userID);
 		//Get the quarterly BDO node from the repository
 		Node quarterlyBDONode = JcrUtils.getNodeIfExists(repositoryPath, session);
@@ -73,14 +68,15 @@ public class QuarterlyBDORepositoryClientImpl  implements QuarterlyBDORepository
 	{
 		Map<String,String[]> properties = new HashMap<String,String[]>();
 		
-		properties.put("objectives", params.get("objectives[]"));
-		properties.put("achievements", params.get("achievements[]"));
-		properties.put("designation", params.get("designation"));
-		properties.put("percentageAchieved", params.get("percentageAchieved"));
-		properties.put("employeeID", new String[] {userManagementService.getEmployeeID(session)});
-		if(action.equals("submit")) {
-			properties.put("status", new String[] {"SUBMITTED"});
-		}
+		properties.put(QuartelyBDOConstants.OBJECTIVES, params.get(QuartelyBDOConstants.OBJECTIVES_ARRAY));
+		properties.put(QuartelyBDOConstants.ACHIEVEMENTS, params.get(QuartelyBDOConstants.ACHIEVEMENTS_ARRAY));
+		properties.put(QuartelyBDOConstants.DESIGNATION, params.get(QuartelyBDOConstants.DESIGNATION));
+		properties.put(QuartelyBDOConstants.PERCENTAGE_ACHIEVED, params.get(QuartelyBDOConstants.PERCENTAGE_ACHIEVED));
+		properties.put(QuartelyBDOConstants.EMPLOYEE_ID, new String[] {userManagementService.getEmployeeID(params.get(QuartelyBDOConstants.USER_ID)[0],session)});
+		properties.put(QuartelyBDOConstants.STATUS, action.equals(QuartelyBDOConstants.SUBMIT) 
+													? new String[] {QuartelyBDOConstants.SUBMITTED} 
+													: new String[] {QuartelyBDOConstants.NOT_SUBMITTED});
+		
 		return properties; 
 	}
 

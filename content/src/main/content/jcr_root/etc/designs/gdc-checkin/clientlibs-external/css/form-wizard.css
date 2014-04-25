@@ -47,10 +47,10 @@
 }
 .wizard-steps li .step {
   text-align: center;
-  border: 2px solid #e5e8ed;
+  border: 3px solid #e5e8ed;
   color: #fff;
   font-size: 19px;
-  border-radius: 32px;
+  border-radius: 29px;
   line-height: 12px;
   padding: 12px 12px;
   background-color: #D8D8D8;

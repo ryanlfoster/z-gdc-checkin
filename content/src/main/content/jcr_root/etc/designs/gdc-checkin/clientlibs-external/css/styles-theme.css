@@ -8,7 +8,7 @@ BASE
 body {background:url(../images/line-pattern.png) #091e30;font-size:11px;color:#75787a;}
 p {line-height:1.6;}
 small {font-size:11px;}
-.dropdown-menu li > a:hover, .dropdown-menu li > a:focus, .dropdown-submenu:hover > a,.dropdown-menu .active > a,.dropdown-menu .active > a:hover,.nav-list > .active > a,.nav-list > .active > a:hover,.nav-pills > .active > a,.nav-pills > .active > a:hover,.nav-tabs.nav-stacked > .active > a,.nav-tabs.nav-stacked > .active > a:hover {background:url(../images/line-pattern3.png) #ff4a4f;}
+.dropdown-menu li > a:hover, .dropdown-menu li > a:focus, .dropdown-submenu:hover > a,.dropdown-menu .active > a,.dropdown-menu .active > a:hover,.nav-list > .active > a,.nav-list > .active > a:hover,.nav-pills > .active > a,.nav-pills > .active > a:hover,.nav-tabs.nav-stacked > .active > a,.nav-tabs.nav-stacked > .active > a:hover {}
 
 /**========= 
 MAIN LAYOUT

@@ -1,15 +1,14 @@
 package com.adobe.gdc.checkin.impl;
 
+import java.util.Calendar;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.Calendar;
-import com.adobe.gdc.checkin.constants.QuartelyBDOConstants;
-
 import com.adobe.gdc.checkin.QuarterlyBDOCalendarService;
+import com.adobe.gdc.checkin.constants.QuartelyBDOConstants;
 
 @Component (metatype = true)
 @Service(QuarterlyBDOCalendarService.class)
@@ -69,7 +68,7 @@ public class QuarterlyBDOCalendarServiceImpl implements QuarterlyBDOCalendarServ
 	@Override
 	public String getQuarterStatus(Calendar quarterStartDate, Calendar quarterEndDate) {
 		
-		String quarterStatus = null;
+		String quarterStatus = QuartelyBDOConstants.EMPTY_STRING;
 		
 		Calendar today = Calendar.getInstance();
 		
