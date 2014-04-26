@@ -28,28 +28,34 @@
                 <tbody>
                 </tbody>
             </table>
-
     </div>
 </div>
 
+
 <script>
- $(document).ready(function() {
- 	var oTable =  GDC.bdo.directReports.initTable("#bdoReportList${quarterNumber}");
 
-	$('#bdoReportList${quarterNumber}_length').html($('.bdo-status-filter-container${quarterNumber}').html());
+	var bdoReportServiceSrcPath = '';
 
-    $('.dataTables_paginate').addClass("pagination green");
+	$(document).ready(function() {
+		var managersID = '${managersID}';
+   		var quarterNumber = '${quarterNumber}';
+   		var annualYear = '${annualYear}';
+   		bdoReportServiceSrcPath = '<%=currentPage.getPath()%>.bdoreport.html?managersID='+managersID+'&quarterNumber='+quarterNumber+'&annualYear='+annualYear;
 
-     $('.pagination .prev a').html('<i class="icon-caret-left">');
-      $('.pagination .next a').html('<i class="icon-caret-right">');
+   		var oTable =  GDC.bdo.directReports.initTable("#bdoReportList${quarterNumber}");
 
-    $('.bdo-status-filter${quarterNumber}').change(function () {
+	   	GDC.bdo.directReports.addStatusFilterDropdown(quarterNumber);
+	   	GDC.bdo.directReports.stylePagination();
 
-        if($(this).val() != "") {
-            oTable.fnFilter("^"+$(this).val()+"$", 4, true);
-        } else {
-            oTable.fnFilter('', 4, true);
-        }
-    });
+	   //Filter the datatable based on status coloumn- which is the 4th column in the table
+	   $('.bdo-status-filter${quarterNumber}').change(function () {
+	       if($(this).val() != "") {
+	           oTable.fnFilter("^"+$(this).val()+"$", 4, true);
+	       } else {
+	           //Reset the filter
+	           oTable.fnFilter('', 4, true);
+	       }
+	   });
+
 });
 </script>

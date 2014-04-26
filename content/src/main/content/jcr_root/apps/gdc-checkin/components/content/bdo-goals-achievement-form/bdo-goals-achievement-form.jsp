@@ -57,6 +57,7 @@ Map<String, String[]> quarterlyBDODataMap = quarterlyBDORepositoryClient.getQuar
                         <input type="hidden" name="quarterNumber" id="quarterNumber" value="${quarterNumber}" />
                         <input type="hidden" name="userID" id="userID" value="${userID}" />
                         <input type="hidden" name="annualYear" id="annualYear" value="${annualYear}" />
+                        <input type="hidden" name="name" id="name" value="${name}" />
 
                         <div class="row">
                             <div class="col-md-1 col-xs-1"></div>
@@ -201,11 +202,11 @@ Map<String, String[]> quarterlyBDODataMap = quarterlyBDORepositoryClient.getQuar
 		    status = '${status}';
 	
 			<c:forEach items="${bdoObjectives}" var="objective">
-	  			 	bdoObjectivesArray.push('${objective}'); 
+	  			 	bdoObjectivesArray.push('${fn:escapeXml(objective)}'); 
 			</c:forEach>
 	
 			<c:forEach items="${bdoAchievements}" var="achievement">
-	  			 	bdoAchievementsArray.push('${achievement}'); 
+	  			 	bdoAchievementsArray.push('${fn:escapeXml(achievement)}'); 
 			</c:forEach>
 	
 			GDC.bdo.form(bdoObjectivesArray,bdoAchievementsArray);

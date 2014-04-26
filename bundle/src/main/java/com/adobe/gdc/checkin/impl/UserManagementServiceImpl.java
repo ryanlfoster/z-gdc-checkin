@@ -3,6 +3,8 @@ package com.adobe.gdc.checkin.impl;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.jcr.UnsupportedRepositoryOperationException;
+import javax.jcr.Value;
+
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Service;
 import org.apache.jackrabbit.api.JackrabbitSession;
@@ -49,6 +51,24 @@ public class UserManagementServiceImpl implements UserManagementService{
 		return managersEmailId;
 	}
 
+	
+	@Override
+	public String[] getManagersDirectReportees(String managersID, Session session) throws Exception {
+		UserManager userManager = getUserManager(session);
+		String[] directReports = {};
+		Value[] directReportsValue = {};
+		final Authorizable authorizable = userManager.getAuthorizable(managersID);
+		if(authorizable.hasProperty(QuartelyBDOConstants.PROFILE_DIRECT_REPORTS)) {
+			directReportsValue =  authorizable.getProperty(QuartelyBDOConstants.PROFILE_DIRECT_REPORTS);
+			directReports=new String[directReportsValue.length];
+			for(int i=0; i<directReportsValue.length; i++) {
+				directReports[i] = directReportsValue[i].getString();
+			}
+		}
+		return directReports;
+	}
+
+	
 
 	@Override
 	public String getEmployeeDesignation(String userID,Session session) throws Exception {
@@ -78,8 +98,5 @@ public class UserManagementServiceImpl implements UserManagementService{
 		 return userManager;
 	}
 
-	
-
-	
 	
 }

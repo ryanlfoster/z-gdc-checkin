@@ -8,6 +8,9 @@ import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Reference;
 import org.apache.felix.scr.annotations.Service;
 import org.apache.jackrabbit.commons.JcrUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.adobe.gdc.checkin.QuarterlyBDOCalendarService;
 import com.adobe.gdc.checkin.QuarterlyBDORepositoryClient;
 import com.adobe.gdc.checkin.UserManagementService;
@@ -20,6 +23,8 @@ import com.day.cq.commons.jcr.JcrConstants;
 
 public class QuarterlyBDORepositoryClientImpl  implements QuarterlyBDORepositoryClient{
 
+	Logger log = LoggerFactory.getLogger(QuarterlyBDORepositoryClientImpl.class);
+	
 	@Reference
 	QuarterlyBDOCalendarService quarterlyBDOCalendarService;
 	
@@ -72,6 +77,7 @@ public class QuarterlyBDORepositoryClientImpl  implements QuarterlyBDORepository
 		properties.put(QuartelyBDOConstants.ACHIEVEMENTS, params.get(QuartelyBDOConstants.ACHIEVEMENTS_ARRAY));
 		properties.put(QuartelyBDOConstants.DESIGNATION, params.get(QuartelyBDOConstants.DESIGNATION));
 		properties.put(QuartelyBDOConstants.PERCENTAGE_ACHIEVED, params.get(QuartelyBDOConstants.PERCENTAGE_ACHIEVED));
+		properties.put(QuartelyBDOConstants.NAME, params.get(QuartelyBDOConstants.NAME));
 		properties.put(QuartelyBDOConstants.EMPLOYEE_ID, new String[] {userManagementService.getEmployeeID(params.get(QuartelyBDOConstants.USER_ID)[0],session)});
 		properties.put(QuartelyBDOConstants.STATUS, action.equals(QuartelyBDOConstants.SUBMIT) 
 													? new String[] {QuartelyBDOConstants.SUBMITTED} 

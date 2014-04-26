@@ -30,22 +30,30 @@ public class QuartelyBDOConstants {
 	
 	//BDO form params
 	public static final String USER_ID = "userID";
+	public static final String MANAGERS_ID = "managersID";
 	public static final String QUARTER_NUMBER = "quarterNumber";
 	public static final String ANNUAL_YEAR = "annualYear";
 	public static final String OBJECTIVES = "objectives";
 	public static final String ACHIEVEMENTS = "achievements";
 	public static final String DESIGNATION = "designation";
 	public static final String PERCENTAGE_ACHIEVED = "percentageAchieved";
+	public static final String NAME = "name";
 	public static final String EMPLOYEE_ID = "employeeID";
 	public static final String STATUS = "status";
 	public static final String OBJECTIVES_ARRAY = "objectives[]";
 	public static final String ACHIEVEMENTS_ARRAY = "achievements[]";
+	
+	//BDO Report JSON params
+	public static final String INDEX = "index";
+	public static final String TOTAL_RECORDS = "iTotalRecords";
+	public static final String AA_DATA = "aaData";
 	
 	//User profile properties
 	public static final String PROFILE_EMPLOYEE_ID = "profile/employeeID";
 	public static final String PROFILE_MANAGER_ID = "profile/managersID";
 	public static final String PROFILE_DESIGNATION =  "profile/designation";
 	public static final String PROFILE_FULL_NAME = "profile/fullName";
+	public static final String PROFILE_DIRECT_REPORTS = "profile/directReports";
 	
 	//ADOBE_EMAIL_MAIL
 	public static final String ADOBE_EMAIL_EXTENTION = "@adobe.com";

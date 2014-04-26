@@ -13,4 +13,6 @@ public interface UserManagementService {
 	String getManagersEmailId(Session session) throws Exception;
 	
 	String getEmployeeDesignation(String userID, Session session) throws Exception;
+	
+	String[] getManagersDirectReportees(String managersID, Session session) throws Exception;
 }

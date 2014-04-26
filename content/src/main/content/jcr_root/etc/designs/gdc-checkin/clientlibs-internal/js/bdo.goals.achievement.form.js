@@ -114,6 +114,7 @@ GDC.bdo.form.getRequestParams = function() {
 	var quarterNumber = $('.quarterly-bdo-form #quarterNumber').val();
 	var userID = $('.quarterly-bdo-form #userID').val();
 	var annualYear = $('.quarterly-bdo-form #annualYear').val();
+	var name = $('.quarterly-bdo-form #name').val();
 
     var json = {"objectives" : objectives,
                 "achievements" : achievements,
@@ -121,7 +122,8 @@ GDC.bdo.form.getRequestParams = function() {
                 "designation" : designation,
                 "quarterNumber" : quarterNumber,
                 "userID" : userID,
-                "annualYear" : annualYear
+                "annualYear" : annualYear,
+                "name": name
     			};
 
     return json;
@@ -252,12 +254,19 @@ GDC.bdo.form.multifield = function(panelSelector, activeSelector) {
 
 GDC.bdo.form.edit = function(valueArray, field, activePanelSelector) {
 
-	document.getElementById(field+"_1").value=valueArray[0];
+	document.getElementById(field+"_1").value=GDC.bdo.form.unescapeHtml(valueArray[0]);
 
 	for(var i=1;i<valueArray.length;i++){
 		$(activePanelSelector).find(".btn-add").trigger("click");
-        document.getElementById(field+"_"+(i+1)).value=valueArray[i];
+        document.getElementById(field+"_"+(i+1)).value=GDC.bdo.form.unescapeHtml(valueArray[i]);
 	}
 
 }
 
+GDC.bdo.form.unescapeHtml = function(safe) {
+        return safe.replace(/&amp;/g, '&')
+        		   .replace(/&lt;/g, '<')
+        		   .replace(/&gt;/g, '>')
+        		   .replace(/&#034;/g, '"')
+                   .replace(/&#039;/g, "'");
+ }
