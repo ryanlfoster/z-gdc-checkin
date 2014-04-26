@@ -55,6 +55,6 @@ public class QuartelyBDOConstants {
 	public static final String NOT_SUBMITTED = "NOT SUBMITTED";
 	
 	//Repository root-path where BDO data is stored 
-	public static final String GDC_CHECKIN_REPOSITORY_BASE_PATH = "/content/gdc-checkin";
+	public static final String GDC_CHECKIN_REPOSITORY_BASE_PATH = "/content/gdc-check-in-store";
 	
 }
