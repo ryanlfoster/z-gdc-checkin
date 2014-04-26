@@ -23,8 +23,8 @@ GDC.bdo.form = function(bdoObjectives,bdoAchievements) {
 }
 
 GDC.bdo.form.detectAnyFormChange = function(bdoObjectives,bdoAchievements,percentageAchieved) {
-	if((bdoObjectives.toString() === GDC.bdo.form.getObjectives().toString()) 
-        && (bdoAchievements.toString() === GDC.bdo.form.getAchievements().toString()) 
+	if((GDC.bdo.form.unescapeHtml(bdoObjectives.toString()) === GDC.bdo.form.getObjectives().toString()) 
+        && (GDC.bdo.form.unescapeHtml(bdoAchievements.toString()) === GDC.bdo.form.getAchievements().toString()) 
         && (percentageAchieved === GDC.bdo.form.getRequestParams().percentageAchieved)) {
             return false;
         }
@@ -32,7 +32,6 @@ GDC.bdo.form.detectAnyFormChange = function(bdoObjectives,bdoAchievements,percen
 		return true;
     }
 }
-
 
 GDC.bdo.form.disableForm = function(button) {
 	$(button).text('Please wait Processing');
