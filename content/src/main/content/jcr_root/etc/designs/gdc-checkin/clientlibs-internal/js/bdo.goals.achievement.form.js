@@ -20,47 +20,35 @@ GDC.bdo.form = function(bdoObjectives,bdoAchievements) {
     	GDC.bdo.form.edit(bdoAchievements, 'achievement', '.bdo-achievement-panel .bdo-achievement-active');
     }
 
-	$(".bdo-form").on("click", ".btn-save",function(){
+}
 
-        var validateForm = validateOnSave();
-		var buttonLabel = $(this).html();
-
-        if(validateForm == true) {
-            disableForm(this);
-        	saveOrSubmitBDO("save");
-
+GDC.bdo.form.detectAnyFormChange = function(bdoObjectives,bdoAchievements,percentageAchieved) {
+		if((bdoObjectives.toString() === GDC.bdo.form.getObjectives().toString()) 
+            && (bdoAchievements.toString() === GDC.bdo.form.getAchievements().toString()) 
+            && (percentageAchieved === GDC.bdo.form.getRequestParams().percentageAchieved)) {
+                return false;
+            }
+        else {
+			return true;
         }
-        enableForm(this, buttonLabel);
+}
 
-    });  
 
-	$(".bdo-form").on("click", ".btn-submit",function(){
-
-        var validateForm = validateOnSubmit();
-        var buttonLabel = $(this).html();
-
-        if(validateForm == true) {
-			disableForm(this);
-            saveOrSubmitBDO("submit");
-        }
-        enableForm(this, buttonLabel);
-    });  
-
-    var disableForm = function(button) {
+GDC.bdo.form.disableForm = function(button) {
 		$(button).text('Please wait Processing');
 		$('#quarterly-bdo-form').find('input, textarea, button, select').attr('disabled',true);
-    };
+}
 
-    var enableForm = function(button, buttonLabel) {
+GDC.bdo.form.enableForm = function(button, buttonLabel) {
 		$(button).text(buttonLabel);
         $('#quarterly-bdo-form').find('input, textarea, button, select').attr('disabled',false);
-    };
+}
 
-    var saveOrSubmitBDO = function(selector) {
+GDC.bdo.form.saveOrSubmitBDO = function(selector) {
 
 		 var targetURL = $('#quarterly-bdo-form').attr("action")+ "." +selector+ ".html?nocache=1";
          var requestType= $('#quarterly-bdo-form').attr("method");
-		 var requestParams = getRequestParams();
+		 var requestParams = GDC.bdo.form.getRequestParams();
 
          $.ajax({
         	url: targetURL,
@@ -68,24 +56,27 @@ GDC.bdo.form = function(bdoObjectives,bdoAchievements) {
             data: requestParams,
 
             success: function (data) {
-            	
+
             	if(data.success == true) {
             		if(selector == "save") {
-            			notifySuccess("Saved Successfully !");
+            			GDC.bdo.form.notifySuccess("Saved Successfully !");
             		}
             		else if(selector == "submit") {
-            			notifySuccess("Submitted Successfully !");
+            			GDC.bdo.form.notifySuccess("Submitted Successfully !");
             		}
             		
             		//Refresh the BDO Achievement tracker to reflect new values
             		GDC.bdo.achievement.tracker(requestParams.percentageAchieved);
 
                     //Refresh the status message
-                    displayUpdatedStatus(selector);
+                    GDC.bdo.form.displayUpdatedStatus(selector);
+
+                    //Update form values
+                    GDC.bdo.form.updateFormFieldValues(requestParams, selector);
             	}
             	else {
 
-					notifyError("Unable to process your request due to an unknown technical error. Please try after sometime");
+					GDC.bdo.form.notifyError("Unable to process your request due to an unknown technical error. Please try after sometime");
                 }
                
             },
@@ -95,17 +86,29 @@ GDC.bdo.form = function(bdoObjectives,bdoAchievements) {
             }
         });
 
-    };
+}
 
-    var displayUpdatedStatus = function(action) {
+GDC.bdo.form.updateFormFieldValues = function(updatedFormValues, newStatus) {
+	bdoObjectivesArray = updatedFormValues.objectives;
+    bdoAchievementsArray = updatedFormValues.achievements;
+    percentageAchieved = updatedFormValues.percentageAchieved;
 
+    if(newStatus == "save") {
+        status = 'NOT SUBMITTED';
+    }
+    else if(newStatus == "submit") {
+        status = 'SUBMITTED';
+    }
+}
+
+GDC.bdo.form.displayUpdatedStatus = function(action) {
         var message = (action == "submit") ? "SUBMITTED" : "NOT SUBMITTED";
         $('.quarterly-bdo-form .status-msg .status').html(message);
-    };
+}
 
-    var getRequestParams = function() {
-		var objectives  = getObjectives();
-        var achievements = getAchievements();
+GDC.bdo.form.getRequestParams = function() {
+		var objectives  = GDC.bdo.form.getObjectives();
+        var achievements = GDC.bdo.form.getAchievements();
         var percentageAchieved = $('.quarterly-bdo-form #percentageAchieved').val();
         var designation = $('.quarterly-bdo-form #designation').val();
 		var quarterNumber = $('.quarterly-bdo-form #quarterNumber').val();
@@ -122,9 +125,9 @@ GDC.bdo.form = function(bdoObjectives,bdoAchievements) {
         			};
 
         return json;
-    };
+}
 
-    var getObjectives = function() {
+GDC.bdo.form.getObjectives = function() {
 		var objectives = [];
 		$('.quarterly-bdo-form .bdo-objective-panel').find('textarea').each(function() {
             var value = $(this).val();
@@ -134,10 +137,10 @@ GDC.bdo.form = function(bdoObjectives,bdoAchievements) {
 		});
 
         return objectives;
-    };
+}
 
 
-	var getAchievements = function() {
+GDC.bdo.form.getAchievements = function() {
 		var achievements = [];
 		$('.quarterly-bdo-form .bdo-achievement-panel').find('textarea').each(function() {
             var value = $(this).val();
@@ -147,51 +150,48 @@ GDC.bdo.form = function(bdoObjectives,bdoAchievements) {
 		});
 
         return achievements;
-    };
+}
 
 
-    var notifyError = function(errorMsg) {
+GDC.bdo.form.notifyError = function(errorMsg) {
 		var errDiv = document.getElementById("form-message");
         errDiv.innerHTML = '<div class="error"><span class="error-img">!</span>&nbsp;'+errorMsg+'</div>';
         $("#form-message").show();
 
-    };
+}
 
-     var notifySuccess = function(successMsg) {
+GDC.bdo.form.notifySuccess = function(successMsg) {
 		var successDiv = document.getElementById("form-message");
         successDiv.innerHTML = '<div class="success-msg">'+successMsg+'</div>';
         $("#form-message").show();
 
-    };
+}
 
-    var validateOnSave = function() {
-
+GDC.bdo.form.validateOnSave = function() {
 		var errorMsg="";
 
-		if(GDC.bdo.isEmpty(getObjectives()) ) {
-        	errorMsg += 'Please set your BDO Objective !<br>';
+		if(GDC.bdo.isEmpty(GDC.bdo.form.getObjectives()) ) {
+        	errorMsg += 'Please set BDO Objective !<br>';
         }
 
         if(errorMsg != "") {
-			notifyError(errorMsg);
+			GDC.bdo.form.notifyError(errorMsg);
             return false;
         }
         else {
 			$("#form-message").hide();
             return true;
         }
+}
 
-
-    };
-
-	var validateOnSubmit = function() {
+GDC.bdo.form.validateOnSubmit = function() {
 		var errorMsg="";
 
-        if(GDC.bdo.isEmpty(getObjectives()) ) {
+        if(GDC.bdo.isEmpty(GDC.bdo.form.getObjectives()) ) {
         	errorMsg += 'Please set BDO Objective !<br>';
         }
 
-        if(GDC.bdo.isEmpty(getAchievements()) ) {
+        if(GDC.bdo.isEmpty(GDC.bdo.form.getAchievements()) ) {
         	errorMsg += 'Please set BDO Achievement self-inputs !<br>';
         }
 
@@ -201,16 +201,15 @@ GDC.bdo.form = function(bdoObjectives,bdoAchievements) {
 
 
         if(errorMsg != "") {
-			notifyError(errorMsg);            
+			GDC.bdo.form.notifyError(errorMsg);            
             return false;
         }
 		 else {
 			$("#form-message").hide();
              return true;
         }
-
-    };
 }
+
 
 GDC.bdo.form.multifield = function(panelSelector, activeSelector) {
 

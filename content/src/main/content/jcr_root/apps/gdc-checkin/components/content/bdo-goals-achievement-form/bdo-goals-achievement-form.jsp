@@ -185,21 +185,72 @@ Map<String, String[]> quarterlyBDODataMap = quarterlyBDORepositoryClient.getQuar
 
 
 <script>
-    $(document).ready(function() {
 
-		var bdoObjectivesArray = [];
-        var bdoAchievementsArray = [];
-
-		<c:forEach items="${bdoObjectives}" var="objective">
-   			 bdoObjectivesArray.push('${objective}'); 
-		</c:forEach>
-
-		<c:forEach items="${bdoAchievements}" var="achievement">
-   			 bdoAchievementsArray.push('${achievement}'); 
-		</c:forEach>
-
-        if(${editForm} == true) {
+	var bdoObjectivesArray = [];
+	var bdoAchievementsArray = [];
+	var percentageAchieved = '';
+	var status = '';
+	
+	$(document).ready(function() {
+	
+		if(${editForm} == true) {
+			
+		    bdoObjectivesArray = [];
+		    bdoAchievementsArray = [];
+		    percentageAchieved = '${percentageAchieved}';
+		    status = '${status}';
+	
+			<c:forEach items="${bdoObjectives}" var="objective">
+	  			 	bdoObjectivesArray.push('${objective}'); 
+			</c:forEach>
+	
+			<c:forEach items="${bdoAchievements}" var="achievement">
+	  			 	bdoAchievementsArray.push('${achievement}'); 
+			</c:forEach>
+	
 			GDC.bdo.form(bdoObjectivesArray,bdoAchievementsArray);
-       }
-});
+	
+	
+			$(".bdo-form").on("click", ".btn-save",function() {
+				
+	           var changeInFormValues = GDC.bdo.form.detectAnyFormChange(bdoObjectivesArray,bdoAchievementsArray,percentageAchieved);
+	
+	           if(changeInFormValues) {
+	               var validateForm = GDC.bdo.form.validateOnSave();
+	               var buttonLabel = $(this).html();
+	
+	               if(validateForm == true) {
+	                   GDC.bdo.form.disableForm(this);
+	                   GDC.bdo.form.saveOrSubmitBDO("save");
+	               }
+	               GDC.bdo.form.enableForm(this, buttonLabel);
+	           } 
+	           else {
+	               GDC.bdo.form.notifyError("Nothing to save");
+	           }
+	
+	   		});  
+	
+	        $(".bdo-form").on("click", ".btn-submit",function() {
+	
+	            var changeInFormValues = GDC.bdo.form.detectAnyFormChange(bdoObjectivesArray,bdoAchievementsArray,percentageAchieved);
+	
+	            if(changeInFormValues || (!changeInFormValues && status == 'NOT SUBMITTED')) {
+	                var validateForm = GDC.bdo.form.validateOnSubmit();
+	                var buttonLabel = $(this).html();
+	                
+	                if(validateForm == true) {
+	                    GDC.bdo.form.disableForm(this);
+	                    GDC.bdo.form.saveOrSubmitBDO("submit");
+	                }
+	                GDC.bdo.form.enableForm(this, buttonLabel);
+	            }  
+	            else {
+	                    GDC.bdo.form.notifyError("Already Submitted!");
+	            }
+	        });  
+	
+		}
+	
+	});
 </script>
