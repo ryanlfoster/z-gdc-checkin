@@ -37,7 +37,6 @@
 <script>
 
 	var bdoReportServiceSrcPath = '';
-    var oTable = '';
 
 	$(document).ready(function() {
 		var managersID = '${managersID}';
@@ -45,7 +44,7 @@
    		var annualYear = '${annualYear}';
    		bdoReportServiceSrcPath = '<%=currentPage.getPath()%>.bdoreport.html?managersID='+managersID+'&quarterNumber='+quarterNumber+'&annualYear='+annualYear;
 
-   		oTable =  GDC.bdo.directReports.initTable("#bdoReportList${quarterNumber}");
+   		var oTable =  GDC.bdo.directReports.initTable("#bdoReportList${quarterNumber}");
 
 	   	GDC.bdo.directReports.addStatusFilterDropdown(quarterNumber);
 	   	GDC.bdo.directReports.stylePagination();
@@ -60,7 +59,7 @@
 	       }
 	   });
 
-
+      //TO-DO
        $('.btn-download-report${quarterNumber}').click( function() { 
 			var sData = oTable.$('input').serialize();
 			console.log( "The following data would have been submitted to the server: \n\n"+sData );
