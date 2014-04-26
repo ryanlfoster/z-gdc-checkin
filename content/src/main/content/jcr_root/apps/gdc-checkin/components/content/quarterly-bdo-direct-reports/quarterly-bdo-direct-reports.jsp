@@ -29,12 +29,15 @@
                 </tbody>
             </table>
     </div>
+
+    <button class="btn btn-success btn-download-report${quarterNumber}">Download Report</button>
 </div>
 
 
 <script>
 
 	var bdoReportServiceSrcPath = '';
+    var oTable = '';
 
 	$(document).ready(function() {
 		var managersID = '${managersID}';
@@ -42,7 +45,7 @@
    		var annualYear = '${annualYear}';
    		bdoReportServiceSrcPath = '<%=currentPage.getPath()%>.bdoreport.html?managersID='+managersID+'&quarterNumber='+quarterNumber+'&annualYear='+annualYear;
 
-   		var oTable =  GDC.bdo.directReports.initTable("#bdoReportList${quarterNumber}");
+   		oTable =  GDC.bdo.directReports.initTable("#bdoReportList${quarterNumber}");
 
 	   	GDC.bdo.directReports.addStatusFilterDropdown(quarterNumber);
 	   	GDC.bdo.directReports.stylePagination();
@@ -56,6 +59,13 @@
 	           oTable.fnFilter('', 4, true);
 	       }
 	   });
+
+
+       $('.btn-download-report${quarterNumber}').click( function() { 
+			var sData = oTable.$('input').serialize();
+			console.log( "The following data would have been submitted to the server: \n\n"+sData );
+			return false;
+		}); 
 
 });
 </script>
