@@ -2,6 +2,7 @@ package com.adobe.gdc.checkin.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.Map;
 import javax.jcr.Session;
 import javax.servlet.Servlet;
@@ -95,6 +96,8 @@ public class QuarterlyBDOReportServlet extends SlingAllMethodsServlet{
 		employeeBDODataJson.put(QuartelyBDOConstants.NAME, employeeBDODataMap.get(QuartelyBDOConstants.NAME)[0]);
 		employeeBDODataJson.put(QuartelyBDOConstants.DESIGNATION, employeeBDODataMap.get(QuartelyBDOConstants.DESIGNATION)[0]);
 		employeeBDODataJson.put(QuartelyBDOConstants.EMPLOYEE_ID, employeeBDODataMap.get(QuartelyBDOConstants.EMPLOYEE_ID)[0]);
+		employeeBDODataJson.put(QuartelyBDOConstants.OBJECTIVES, new JSONArray(Arrays.asList(employeeBDODataMap.get(QuartelyBDOConstants.OBJECTIVES))));
+		employeeBDODataJson.put(QuartelyBDOConstants.ACHIEVEMENTS,new JSONArray(Arrays.asList(employeeBDODataMap.get(QuartelyBDOConstants.ACHIEVEMENTS))));
 		employeeBDODataJson.put(QuartelyBDOConstants.PERCENTAGE_ACHIEVED, employeeBDODataMap.get(QuartelyBDOConstants.PERCENTAGE_ACHIEVED)[0]);
 		employeeBDODataJson.put(QuartelyBDOConstants.STATUS, employeeBDODataMap.get(QuartelyBDOConstants.STATUS)[0]);
 		employeeBDODataJson.put(QuartelyBDOConstants.USER_ID, userID);
