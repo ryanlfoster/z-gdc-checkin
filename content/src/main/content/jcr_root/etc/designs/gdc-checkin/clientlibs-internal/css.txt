@@ -3,3 +3,4 @@
 login.css
 gdc.bdo.css
 gdc.bdo.reports.css
+fancy-box.css

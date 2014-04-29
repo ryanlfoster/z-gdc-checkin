@@ -21,7 +21,8 @@
 
     $(document).ready(function(){
 
-        $("#checkin_tab li").click(function(){
+    
+        $("#checkin_tab li").click(function() {
 
             var interval = setInterval(drawAchivementChart, 100);
 
@@ -37,6 +38,7 @@
 
         });
 
+        
         var bdoAchieved = "${percentageAchieved}"; 
         GDC.bdo.achievement.tracker(bdoAchieved);
 

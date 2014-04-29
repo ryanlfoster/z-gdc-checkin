@@ -1,0 +1,15 @@
+
+.fancybox-wrap {
+	width: 700px;
+	height: 700px;
+}
+
+.fancybox-wrap .fancybox-skin {
+	width: auto;
+	height: auto;
+}
+
+.fancybox-wrap .fancybox-inner {
+	width: auto;
+	height: auto;
+}

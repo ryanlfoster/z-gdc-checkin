@@ -43,7 +43,7 @@ GDC.bdo.form.enableForm = function(button, buttonLabel) {
     $('#quarterly-bdo-form').find('input, textarea, button, select').attr('disabled',false);
 }
 
-GDC.bdo.form.saveOrSubmitBDO = function(selector) {
+GDC.bdo.form.saveOrSubmitBDO = function(selector,plotGraph) {
 
 	 var targetURL = $('#quarterly-bdo-form').attr("action")+ "." +selector+ ".html?nocache=1";
      var requestType= $('#quarterly-bdo-form').attr("method");
@@ -64,9 +64,10 @@ GDC.bdo.form.saveOrSubmitBDO = function(selector) {
         			GDC.bdo.form.notifySuccess("Submitted Successfully !");
         		}
         		
-        		//Refresh the BDO Achievement tracker to reflect new values
-        		GDC.bdo.achievement.tracker(requestParams.percentageAchieved);
-
+        		 if(plotGraph == "true") {
+             		//Refresh the BDO Achievement tracker to reflect new values
+             		GDC.bdo.achievement.tracker(requestParams.percentageAchieved);
+                 }
                 //Refresh the status message
                 GDC.bdo.form.displayUpdatedStatus(selector);
 

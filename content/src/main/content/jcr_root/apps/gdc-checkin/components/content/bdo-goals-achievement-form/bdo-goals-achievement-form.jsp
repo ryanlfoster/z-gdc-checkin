@@ -1,19 +1,62 @@
 <%@ page contentType="text/html; charset=utf-8" %>
 <%@include file="/libs/foundation/global.jsp" %>
 <%@page session="false" %>
-<%@page import="com.adobe.gdc.checkin.QuarterlyBDORepositoryClient,com.adobe.gdc.checkin.UserManagementService, java.util.Map, javax.jcr.Session" %>
+<%@page import="org.apache.commons.lang.StringUtils,com.adobe.gdc.checkin.QuarterlyBDORepositoryClient,com.adobe.gdc.checkin.UserManagementService, java.util.Map, javax.jcr.Session" %>
 
 <c:set var="percentageList" value="${fn:split('10,20,30,40,50,60,70,80,90,100', ',')}" scope="application" />
-<c:set var="quarterNumber" value="${quarterNumber}" />
-<c:set var="annualYear" value="${annualYear}" />
-<c:set var="userID" value="${userID}" />
+
+<c:choose>
+	<c:when test="<%=StringUtils.isNotBlank(request.getParameter("quarterNumber"))%>">
+		<c:set var="quarterNumber" value="<%=Integer.parseInt(request.getParameter("quarterNumber"))%>" />
+	</c:when>
+	<c:otherwise>
+		<c:set var="quarterNumber" value="${quarterNumber}" />
+	</c:otherwise>
+</c:choose>
+
+<c:choose>
+	<c:when test="<%=StringUtils.isNotBlank(request.getParameter("annualYear"))%>">
+		<c:set var="annualYear" value="<%=Integer.parseInt(request.getParameter("annualYear"))%>" />
+	</c:when>
+	<c:otherwise>
+		<c:set var="annualYear" value="${annualYear}" />
+	</c:otherwise>
+</c:choose>
+
+<c:choose>
+	<c:when test="<%=StringUtils.isNotBlank(request.getParameter("userID"))%>">
+		<c:set var="userID" value="<%=request.getParameter("userID")%>" />
+	</c:when>
+	<c:otherwise>
+		<c:set var="userID" value="${userID}" />
+	</c:otherwise>
+</c:choose>
+
+<c:choose>
+	<c:when test="<%=StringUtils.isNotBlank(request.getParameter("editForm"))%>">
+		<c:set var="editForm" value="<%=request.getParameter("editForm")%>" />
+	</c:when>
+	<c:otherwise>
+		<c:set var="editForm" value="${editForm}" />
+	</c:otherwise>
+</c:choose>
+
+<c:choose>
+	<c:when test="<%=StringUtils.isNotBlank(request.getParameter("displayGraph"))%>">
+		<c:set var="displayGraph" value="<%=request.getParameter("displayGraph")%>" />
+	</c:when>
+	<c:otherwise>
+		<c:set var="displayGraph" value="${displayGraph}" />
+	</c:otherwise>
+</c:choose>
 
 <%
 QuarterlyBDORepositoryClient quarterlyBDORepositoryClient = sling.getService(QuarterlyBDORepositoryClient.class);
 UserManagementService userManagementService = sling.getService(UserManagementService.class);
 
-int quarterNumber = ((Integer) pageContext.getAttribute("quarterNumber")).intValue();
-int annualYear = ((Integer) pageContext.getAttribute("annualYear")).intValue();
+int quarterNumber = (Integer)pageContext.getAttribute("quarterNumber");
+int annualYear = (Integer)pageContext.getAttribute("annualYear");
+
 String userID = (String)pageContext.getAttribute("userID");
 Session session = resourceResolver.adaptTo(Session.class);
 Map<String, String[]> quarterlyBDODataMap = quarterlyBDORepositoryClient.getQuarterlyBDOData(quarterNumber,annualYear,userID,session);
@@ -30,20 +73,21 @@ Map<String, String[]> quarterlyBDODataMap = quarterlyBDORepositoryClient.getQuar
 
     <div class="col-md-9 col-xs-9">
         <div class="bdo-form">
-            <div class="row">
-                <div class="col-md-4 col-xs-4"></div>               
-                <div class="col-md-7 col-xs-7 align-right">
-                    <div class="col-sm-10  col-xs-10 col-md-10">
-                        ${name},<br/>
-                        ${designation}<br/><br/>
-                    </div>
-                    <div class="col-sm-2  col-xs-2 col-md-2  align-left"></div>
-                </div>
-                <div class="col-md-1 col-xs-1"></div>
-            </div>
-
+           
             <c:choose>
                 <c:when test = "${editForm eq 'true'}">
+
+					<div class="row">
+		                <div class="col-md-4 col-xs-4"></div>               
+		                <div class="col-md-7 col-xs-7 align-right">
+		                    <div class="col-sm-10  col-xs-10 col-md-10">
+		                        ${name},<br/>
+		                        ${designation}<br/><br/>
+		                    </div>
+		                    <div class="col-sm-2  col-xs-2 col-md-2  align-left"></div>
+		                </div>
+		                <div class="col-md-1 col-xs-1"></div>
+            		</div>
 
                     <div class="row">
                         <div class="col-md-1 col-xs-1"></div>
@@ -162,13 +206,7 @@ Map<String, String[]> quarterlyBDODataMap = quarterlyBDORepositoryClient.getQuar
                 </c:when>
             
                 <c:otherwise>
-                    <label for="objective">  Objectives </label>
-                        ${bdoObjectives}
-                    <label for="achievement"> BDO Achievements </label>
-                        ${bdoAchievements}
-
-                    ${percentageAchieved}
-                    
+                	<cq:include path="quarterly-bdo-view" resourceType= "gdc-checkin/components/content/quarterly-bdo-view" />
                 </c:otherwise>
 
             </c:choose>
@@ -191,7 +229,8 @@ Map<String, String[]> quarterlyBDODataMap = quarterlyBDORepositoryClient.getQuar
 	var bdoAchievementsArray = [];
 	var percentageAchieved = '';
 	var status = '';
-	
+    var plotGraph;
+    
 	$(document).ready(function() {
 	
 		if(${editForm} == true) {
@@ -200,7 +239,8 @@ Map<String, String[]> quarterlyBDODataMap = quarterlyBDORepositoryClient.getQuar
 		    bdoAchievementsArray = [];
 		    percentageAchieved = '${percentageAchieved}';
 		    status = '${status}';
-	
+            plotGraph = '${displayGraph}';
+            
 			<c:forEach items="${bdoObjectives}" var="objective">
 	  			 	bdoObjectivesArray.push('${fn:escapeXml(objective)}'); 
 			</c:forEach>
@@ -222,7 +262,7 @@ Map<String, String[]> quarterlyBDODataMap = quarterlyBDORepositoryClient.getQuar
 	
 	               if(validateForm == true) {
 	                   GDC.bdo.form.disableForm(this);
-	                   GDC.bdo.form.saveOrSubmitBDO("save");
+	                   GDC.bdo.form.saveOrSubmitBDO("save",plotGraph);
 	               }
 	               GDC.bdo.form.enableForm(this, buttonLabel);
 	           } 
@@ -242,7 +282,7 @@ Map<String, String[]> quarterlyBDODataMap = quarterlyBDORepositoryClient.getQuar
 	                
 	                if(validateForm == true) {
 	                    GDC.bdo.form.disableForm(this);
-	                    GDC.bdo.form.saveOrSubmitBDO("submit");
+	                    GDC.bdo.form.saveOrSubmitBDO("submit",plotGraph);
 	                }
 	                GDC.bdo.form.enableForm(this, buttonLabel);
 	            }  
