@@ -21,8 +21,8 @@
                         <th>Name</th>
                         <th>Designation</th>
                         <th>Employee ID</th>
-                        <th>BDO Score(%)</th>
                         <th>Status</th>
+                        <th>BDO Score(%)</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -53,10 +53,10 @@
 	   //Filter the datatable based on status coloumn- which is the 4th column in the table
 	   $('.bdo-status-filter${quarterNumber}').change(function () {
 	       if($(this).val() != "") {
-	           oTable.fnFilter("^"+$(this).val()+"$", 4, true);
+	           oTable.fnFilter("^"+$(this).val()+"$", 3, true);
 	       } else {
 	           //Reset the filter
-	           oTable.fnFilter('', 4, true);
+	           oTable.fnFilter('', 3, true);
 	       }
 	   });
 

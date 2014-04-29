@@ -14,8 +14,8 @@ GDC.bdo.directReports.initTable = function(selector,quarterNumber,annualYear) {
         "aoColumns": [{"mData":"name","sTitle": "Name"},
                       {"mData":"designation","sTitle": "Designation"},
                       {"mData":"employeeID","sTitle": "Employee ID"},
-                      {"mData":"bdoScore","sTitle": "BDO Score(%)"},
                       {"mData":"status","sTitle": "Status"},
+                      {"mData":"bdoScore","sTitle": "BDO Score(%)"},
                       {"mData":"userID","sTitle": "", "mRender":function(data,type,full){
 
 					  var html = "";
