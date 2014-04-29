@@ -66,7 +66,8 @@
 <c:if test="<%=StringUtils.isNotBlank(request.getParameter("userID"))%>">
 	<c:set var="userID" value="<%=request.getParameter("userID")%>" scope="request"/>
 </c:if>
-<c:set var="displayGraph" value="false" scope="request"/>
+
+<c:set var="editBdoScore" value="true" scope="request"/>
 
 ${name}
 ${designation}
@@ -77,5 +78,5 @@ ${percentageAchieved}
 ${status}
 
 <c:if test="<%=StringUtils.isNotBlank(request.getParameter("editForm"))%>">
-	<a class="btn btn-primary btn-edit fancybox fancybox.iframe" href="/content/gdc-check-in/en/dynamic-pages/edit-quartery-bdo.html?quarterNumber=${quarterNumber}&annualYear=${annualYear}&userID=${userID}&editForm=true&displayGraph=${displayGraph}">Edit</a>
+	<a class="btn btn-primary btn-edit fancybox fancybox.iframe" href="/content/gdc-check-in/en/dynamic-pages/edit-quartery-bdo.html?quarterNumber=${quarterNumber}&annualYear=${annualYear}&userID=${userID}&editForm=true&editBdoScore=true">Edit</a>
 </c:if>

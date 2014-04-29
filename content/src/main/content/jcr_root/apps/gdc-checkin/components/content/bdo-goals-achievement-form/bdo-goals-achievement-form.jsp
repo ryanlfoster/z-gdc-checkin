@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=utf-8" %>
 <%@include file="/libs/foundation/global.jsp" %>
 <%@page session="false" %>
-<%@page import="org.apache.commons.lang.StringUtils,com.adobe.gdc.checkin.QuarterlyBDORepositoryClient,com.adobe.gdc.checkin.UserManagementService, java.util.Map, javax.jcr.Session" %>
+<%@page import="org.apache.commons.lang.StringUtils,com.adobe.gdc.checkin.QuarterlyBDORepositoryClient,com.adobe.gdc.checkin.UserManagementService,java.util.Map,javax.jcr.Session" %>
 
 <c:set var="percentageList" value="${fn:split('10,20,30,40,50,60,70,80,90,100', ',')}" scope="application" />
 
@@ -41,15 +41,6 @@
 	</c:otherwise>
 </c:choose>
 
-<c:choose>
-	<c:when test="<%=StringUtils.isNotBlank(request.getParameter("displayGraph"))%>">
-		<c:set var="displayGraph" value="<%=request.getParameter("displayGraph")%>" />
-	</c:when>
-	<c:otherwise>
-		<c:set var="displayGraph" value="${displayGraph}" />
-	</c:otherwise>
-</c:choose>
-
 <%
 QuarterlyBDORepositoryClient quarterlyBDORepositoryClient = sling.getService(QuarterlyBDORepositoryClient.class);
 UserManagementService userManagementService = sling.getService(UserManagementService.class);
@@ -64,7 +55,7 @@ Map<String, String[]> quarterlyBDODataMap = quarterlyBDORepositoryClient.getQuar
 
 <c:set var="bdoObjectives" value="<%=quarterlyBDODataMap.get("objectives")%>" scope="request"/>
 <c:set var="bdoAchievements" value="<%=quarterlyBDODataMap.get("achievements")%>" scope="request"/>
-<c:set var="percentageAchieved" value="<%=quarterlyBDODataMap.get("percentageAchieved") != null ? quarterlyBDODataMap.get("percentageAchieved")[0] : ""%>" scope="request"/>
+<c:set var="bdoScore" value="<%=quarterlyBDODataMap.get("bdoScore") != null ? quarterlyBDODataMap.get("bdoScore")[0] : ""%>" scope="request"/>
 <c:set var="status" value="<%=quarterlyBDODataMap.get("status") != null ? quarterlyBDODataMap.get("status")[0] : "NOT SUBMITTED"%>" scope="request"/>
 <c:set var="name" value="<%=userManagementService.getEmployeeName(userID, session)%>" scope="request"/>
 <c:set var="designation" value="<%=quarterlyBDODataMap.get("designation")!= null ? quarterlyBDODataMap.get("designation")[0] : userManagementService.getEmployeeDesignation(userID, session)%>" scope="request"/>
@@ -159,42 +150,61 @@ Map<String, String[]> quarterlyBDODataMap = quarterlyBDORepositoryClient.getQuar
                         </div>
     
                         <br/>
-    
-                        <div class="row">
-                            <div class="col-md-1 col-xs-1"></div>
-                            <div class="col-md-2 col-xs-2">
-                                <label for="percentageAchieved">
-                                    Percentage Achieved
-                                </label>
-                            </div>
-                            <div class="col-md-8 col-xs-8">
-                                <select name="percentageAchieved" id="percentageAchieved">
-                                    <option value=""  selected}>Please select</option>
-                                    <c:forEach items="${percentageList}" var="percent">
-                                        <option value="${percent}" ${percent eq percentageAchieved ? 'selected' : ''}>${percent}</option>
-                                     </c:forEach>
-                                </select> %
-                            </div>
-                            <div class="col-md-1 col-xs-1"></div>
-                        </div>
-    
-                        <br/>
-    
-                        <div class="row">
-                            <div class="col-md-4 col-xs-4"></div>
-                            <div class="col-md-7 col-xs-7 align-right">
-                                <div class="col-sm-10  col-xs-10 col-md-10">
-                                    <button type="button" class="btn btn-primary btn-save">Save</button> &nbsp;
-                                    <button type="button" class="btn btn-primary btn-submit">Submit</button>
-                                </div>
-                                <div class="col-sm-2  col-xs-2 col-md-2  align-left"></div>
-                            </div>
-                            <div class="col-md-1 col-xs-1"></div>
-                        </div>
 
-                        <br/>
+						<c:choose>
+							<c:when test="<%=StringUtils.isNotBlank(request.getParameter("editBdoScore"))%>">
 
-                        <div class="row">
+								<div class="row">
+									<div class="col-md-1 col-xs-1"></div>
+									<div class="col-md-2 col-xs-2">
+										<label for="percentageAchieved"> BDO Score </label>
+									</div>
+									<div class="col-md-8 col-xs-8">
+										<select name="bdoScore" id="bdoScore">
+											<option value=""selected}>Please select</option>
+											<c:forEach items="${percentageList}" var="percent">
+												<option value="${percent}" ${percent eq bdoScore ? 'selected' : ''}>${percent}</option>
+											</c:forEach>
+										</select> %
+									</div>
+									<div class="col-md-1 col-xs-1"></div>
+								</div>
+
+								<br/>
+
+								<div class="row">
+									<div class="col-md-4 col-xs-4"></div>
+									<div class="col-md-7 col-xs-7 align-right">
+										<div class="col-sm-10  col-xs-10 col-md-10">
+											<button type="button" class="btn btn-primary btn-complete">Complete</button>
+											&nbsp;
+										</div>
+										<div class="col-sm-2  col-xs-2 col-md-2  align-left"></div>
+									</div>
+									<div class="col-md-1 col-xs-1"></div>
+								</div>
+
+								<br/>
+							</c:when>
+							<c:otherwise>
+								<div class="row">
+									<div class="col-md-4 col-xs-4"></div>
+									<div class="col-md-7 col-xs-7 align-right">
+										<div class="col-sm-10  col-xs-10 col-md-10">
+											<button type="button" class="btn btn-primary btn-save">Save</button>
+											&nbsp;
+											<button type="button" class="btn btn-primary btn-submit">Submit</button>
+										</div>
+										<div class="col-sm-2  col-xs-2 col-md-2  align-left"></div>
+									</div>
+									<div class="col-md-1 col-xs-1"></div>
+								</div>
+
+								<br />
+							</c:otherwise>
+						</c:choose>
+						
+						<div class="row">
                             <div class="col-md-1 col-xs-1"></div>
                             <div class="col-md-6 col-xs-6">
                                 <div class="status-msg">status : <span class="status">${status}</span></div>
@@ -213,13 +223,7 @@ Map<String, String[]> quarterlyBDODataMap = quarterlyBDORepositoryClient.getQuar
         </div>
 
     </div>
-
-    <div class="col-md-3 col-xs-3">
-        <c:if test = "${displayGraph eq 'true'}">
-            <cq:include path="bdo-achievement-tracker" resourceType= "gdc-checkin/components/content/bdo-achievement-tracker" />
-        </c:if>
-    </div>
-
+    
 </div>
 
 
@@ -227,9 +231,8 @@ Map<String, String[]> quarterlyBDODataMap = quarterlyBDORepositoryClient.getQuar
 
 	var bdoObjectivesArray = [];
 	var bdoAchievementsArray = [];
-	var percentageAchieved = '';
+	var bdoScore = '';
 	var status = '';
-    var plotGraph;
     
 	$(document).ready(function() {
 	
@@ -237,9 +240,8 @@ Map<String, String[]> quarterlyBDODataMap = quarterlyBDORepositoryClient.getQuar
 			
 		    bdoObjectivesArray = [];
 		    bdoAchievementsArray = [];
-		    percentageAchieved = '${percentageAchieved}';
+		    bdoScore = '${bdoScore}';
 		    status = '${status}';
-            plotGraph = '${displayGraph}';
             
 			<c:forEach items="${bdoObjectives}" var="objective">
 	  			 	bdoObjectivesArray.push('${fn:escapeXml(objective)}'); 
@@ -253,8 +255,8 @@ Map<String, String[]> quarterlyBDODataMap = quarterlyBDORepositoryClient.getQuar
 	
 	
 			$(".bdo-form").on("click", ".btn-save",function() {
-				
-	           var changeInFormValues = GDC.bdo.form.detectAnyFormChange(bdoObjectivesArray,bdoAchievementsArray,percentageAchieved);
+
+	           var changeInFormValues = GDC.bdo.form.detectAnyFormChange(bdoObjectivesArray,bdoAchievementsArray);
 	
 	           if(changeInFormValues) {
 	               var validateForm = GDC.bdo.form.validateOnSave();
@@ -262,7 +264,7 @@ Map<String, String[]> quarterlyBDODataMap = quarterlyBDORepositoryClient.getQuar
 	
 	               if(validateForm == true) {
 	                   GDC.bdo.form.disableForm(this);
-	                   GDC.bdo.form.saveOrSubmitBDO("save",plotGraph);
+	                   GDC.bdo.form.saveSubmitOrCompleteBDO("save");
 	               }
 	               GDC.bdo.form.enableForm(this, buttonLabel);
 	           } 
@@ -274,7 +276,7 @@ Map<String, String[]> quarterlyBDODataMap = quarterlyBDORepositoryClient.getQuar
 	
 	        $(".bdo-form").on("click", ".btn-submit",function() {
 	
-	            var changeInFormValues = GDC.bdo.form.detectAnyFormChange(bdoObjectivesArray,bdoAchievementsArray,percentageAchieved);
+	            var changeInFormValues = GDC.bdo.form.detectAnyFormChange(bdoObjectivesArray,bdoAchievementsArray);
 	
 	            if(changeInFormValues || (!changeInFormValues && status == 'NOT SUBMITTED')) {
 	                var validateForm = GDC.bdo.form.validateOnSubmit();
@@ -282,12 +284,31 @@ Map<String, String[]> quarterlyBDODataMap = quarterlyBDORepositoryClient.getQuar
 	                
 	                if(validateForm == true) {
 	                    GDC.bdo.form.disableForm(this);
-	                    GDC.bdo.form.saveOrSubmitBDO("submit",plotGraph);
+	                    GDC.bdo.form.saveSubmitOrCompleteBDO("submit");
 	                }
 	                GDC.bdo.form.enableForm(this, buttonLabel);
 	            }  
 	            else {
 	                    GDC.bdo.form.notifyError("Already Submitted!");
+	            }
+	        });  
+	        
+	        $(".bdo-form").on("click", ".btn-complete",function() {
+	        	
+	            var changeInFormValues = GDC.bdo.form.detectAnyFormChangeOnComplete(bdoObjectivesArray,bdoAchievementsArray,bdoScore);
+	
+	            if(changeInFormValues) {
+	                var validateForm = GDC.bdo.form.validateOnComplete();
+	                var buttonLabel = $(this).html();
+	                
+	                if(validateForm == true) {
+	                    GDC.bdo.form.disableForm(this);
+	                    GDC.bdo.form.saveSubmitOrCompleteBDO("complete");
+	                }
+	                GDC.bdo.form.enableForm(this, buttonLabel);
+	            }  
+	            else {
+	                    GDC.bdo.form.notifyError("Please update the form before COMPLETING your action !");
 	            }
 	        });  
 	

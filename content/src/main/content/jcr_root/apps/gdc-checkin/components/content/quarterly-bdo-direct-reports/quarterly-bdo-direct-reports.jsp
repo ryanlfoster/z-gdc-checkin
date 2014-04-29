@@ -9,6 +9,7 @@
                  <option value="">All</option>
                 <option value="SUBMITTED">Submitted</option>
                 <option value="NOT SUBMITTED">Not Submitted</option>
+                <option value="COMPLETED">Completed</option>
             </select>
         </div>
     </div>
@@ -20,7 +21,7 @@
                         <th>Name</th>
                         <th>Designation</th>
                         <th>Employee ID</th>
-                        <th>% Achieved</th>
+                        <th>BDO Score(%)</th>
                         <th>Status</th>
                         <th>Action</th>
                     </tr>

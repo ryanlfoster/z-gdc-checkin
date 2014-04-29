@@ -76,12 +76,21 @@ public class QuarterlyBDORepositoryClientImpl  implements QuarterlyBDORepository
 		properties.put(QuartelyBDOConstants.OBJECTIVES, params.get(QuartelyBDOConstants.OBJECTIVES_ARRAY));
 		properties.put(QuartelyBDOConstants.ACHIEVEMENTS, params.get(QuartelyBDOConstants.ACHIEVEMENTS_ARRAY));
 		properties.put(QuartelyBDOConstants.DESIGNATION, params.get(QuartelyBDOConstants.DESIGNATION));
-		properties.put(QuartelyBDOConstants.PERCENTAGE_ACHIEVED, params.get(QuartelyBDOConstants.PERCENTAGE_ACHIEVED));
+		properties.put(QuartelyBDOConstants.BDO_SCORE, params.get(QuartelyBDOConstants.BDO_SCORE));
 		properties.put(QuartelyBDOConstants.NAME, params.get(QuartelyBDOConstants.NAME));
 		properties.put(QuartelyBDOConstants.EMPLOYEE_ID, new String[] {userManagementService.getEmployeeID(params.get(QuartelyBDOConstants.USER_ID)[0],session)});
-		properties.put(QuartelyBDOConstants.STATUS, action.equals(QuartelyBDOConstants.SUBMIT) 
-													? new String[] {QuartelyBDOConstants.SUBMITTED} 
-													: new String[] {QuartelyBDOConstants.NOT_SUBMITTED});
+		String [] status = {};
+		if(action.equals(QuartelyBDOConstants.SUBMIT)) {
+			status = new String[] {QuartelyBDOConstants.SUBMITTED};
+		}
+		else if(action.equals(QuartelyBDOConstants.COMPLETE)) {
+			status = new String[] {QuartelyBDOConstants.COMPLETED};
+		}
+		else {
+			status = new String[] {QuartelyBDOConstants.NOT_SUBMITTED};
+		}
+		 
+		properties.put(QuartelyBDOConstants.STATUS, status);
 		
 		return properties; 
 	}

@@ -98,7 +98,7 @@ public class QuarterlyBDOReportServlet extends SlingAllMethodsServlet{
 		employeeBDODataJson.put(QuartelyBDOConstants.EMPLOYEE_ID, employeeBDODataMap.get(QuartelyBDOConstants.EMPLOYEE_ID)[0]);
 		employeeBDODataJson.put(QuartelyBDOConstants.OBJECTIVES, new JSONArray(Arrays.asList(employeeBDODataMap.get(QuartelyBDOConstants.OBJECTIVES))));
 		employeeBDODataJson.put(QuartelyBDOConstants.ACHIEVEMENTS,new JSONArray(Arrays.asList(employeeBDODataMap.get(QuartelyBDOConstants.ACHIEVEMENTS))));
-		employeeBDODataJson.put(QuartelyBDOConstants.PERCENTAGE_ACHIEVED, employeeBDODataMap.get(QuartelyBDOConstants.PERCENTAGE_ACHIEVED)[0]);
+		employeeBDODataJson.put(QuartelyBDOConstants.BDO_SCORE, employeeBDODataMap.get(QuartelyBDOConstants.BDO_SCORE) != null ? employeeBDODataMap.get(QuartelyBDOConstants.BDO_SCORE)[0] : ""); 
 		employeeBDODataJson.put(QuartelyBDOConstants.STATUS, employeeBDODataMap.get(QuartelyBDOConstants.STATUS)[0]);
 		employeeBDODataJson.put(QuartelyBDOConstants.USER_ID, userID);
 

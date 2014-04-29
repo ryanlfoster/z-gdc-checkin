@@ -20,6 +20,7 @@ public class QuartelyBDOConstants {
 	//BDO form actions
 	public static final String SAVE = "save";
 	public static final String SUBMIT = "submit";
+	public static final String COMPLETE = "complete";
 	
 	//BDO form save/submit actions response
 	public static final String SUCCESS = "success";
@@ -36,7 +37,7 @@ public class QuartelyBDOConstants {
 	public static final String OBJECTIVES = "objectives";
 	public static final String ACHIEVEMENTS = "achievements";
 	public static final String DESIGNATION = "designation";
-	public static final String PERCENTAGE_ACHIEVED = "percentageAchieved";
+	public static final String BDO_SCORE = "bdoScore";
 	public static final String NAME = "name";
 	public static final String EMPLOYEE_ID = "employeeID";
 	public static final String STATUS = "status";
@@ -61,6 +62,7 @@ public class QuartelyBDOConstants {
 	//BDO form statuses
 	public static final String SUBMITTED = "SUBMITTED";
 	public static final String NOT_SUBMITTED = "NOT SUBMITTED";
+	public static final String COMPLETED = "COMPLETED";
 	
 	//Repository root-path where BDO data is stored 
 	public static final String GDC_CHECKIN_REPOSITORY_BASE_PATH = "/content/gdc-check-in-store";

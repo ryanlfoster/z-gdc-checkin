@@ -24,17 +24,17 @@ import com.adobe.gdc.checkin.UserManagementService;
 import com.adobe.gdc.checkin.constants.QuartelyBDOConstants;
 import com.adobe.gdc.checkin.utils.QuarterlyBDOUtils;
 
-@Component(label = "GDC Check-in Quarterly BDO Form Save or Submit Servlet", description = "GDC Check-in Quarterly BDO Form Save or Submit Servlet")
+@Component(label = "GDC Check-in Quarterly BDO Form Save, Submit or Complete Servlet", description = "GDC Check-in Quarterly BDO Form Save,Submit or Complete Servlet")
 @Service(Servlet.class)
 @Properties({
 		@Property(name = "sling.servlet.resourceTypes", value = { "cq/Page" }),
 		@Property(name = "sling.servlet.methods", value = { "POST" }),
-		@Property(name = "sling.servlet.selectors", value = { "bdo", "save", "submit" }) })
-public class QuarterlyBDOSaveOrSubmitServlet extends SlingAllMethodsServlet {
+		@Property(name = "sling.servlet.selectors", value = { "bdo", "save", "submit", "complete" }) })
+public class QuarterlyBDOSaveSubmitOrCompleteServlet extends SlingAllMethodsServlet {
 
 	private static final long serialVersionUID = 1L;
 
-	private static final Logger log = LoggerFactory.getLogger(QuarterlyBDOSaveOrSubmitServlet.class);
+	private static final Logger log = LoggerFactory.getLogger(QuarterlyBDOSaveSubmitOrCompleteServlet.class);
 
 	@Reference
 	private QuarterlyBDORepositoryClient quarterlyBDORepositoryClient;
@@ -62,7 +62,7 @@ public class QuarterlyBDOSaveOrSubmitServlet extends SlingAllMethodsServlet {
 
 		log.info("Processing [QuarterlyBDOSaveOrSubmitServlet] for action - {} with request params {}",action, params);
 
-		if (StringUtils.isBlank(action) && !action.equals(QuartelyBDOConstants.SAVE) && !action.equals(QuartelyBDOConstants.SUBMIT)) {
+		if (StringUtils.isBlank(action) && !action.equals(QuartelyBDOConstants.SAVE) && !action.equals(QuartelyBDOConstants.SUBMIT) && !action.equals(QuartelyBDOConstants.COMPLETE))  {
 			log.error("Invalid action : {}", action);
 			result = false;
 		}

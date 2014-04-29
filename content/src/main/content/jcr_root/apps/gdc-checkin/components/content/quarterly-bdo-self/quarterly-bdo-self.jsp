@@ -73,7 +73,6 @@ String userID = userManagementService.getCurrentUser(session);
                 <div id="bdo_quarter${i}" class="tab-pane active">  
                     <c:set var="quarterNumber" value="${i}" scope="request"/>
                     <c:set var="editForm" value="true" scope="request"/>
-					<c:set var="displayGraph" value="true" scope="request"/>
                     <cq:include path="bdo-goals-achievement-form" resourceType= "gdc-checkin/components/content/bdo-goals-achievement-form" />
                 </div>
             </c:when>
@@ -82,7 +81,6 @@ String userID = userManagementService.getCurrentUser(session);
                 <div id="bdo_quarter${i}" class="tab-pane"> 
                     <c:set var="quarterNumber" value="${i}" scope="request"/>
                     <c:set var="editForm" value="false" scope="request"/>
-                    <c:set var="displayGraph" value="false" scope="request"/>
                     <cq:include path="bdo-goals-achievement-form" resourceType= "gdc-checkin/components/content/bdo-goals-achievement-form" />
         		</div>
             </c:otherwise>
