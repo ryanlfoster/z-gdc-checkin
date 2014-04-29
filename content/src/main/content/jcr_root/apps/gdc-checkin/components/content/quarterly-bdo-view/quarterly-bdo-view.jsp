@@ -39,12 +39,9 @@
 </c:choose>
 
 <c:choose>
-	<c:when test="<%=StringUtils.isNotBlank(request.getParameter("percentageAchieved"))%>">
-		<c:set var="percentageAchieved" value="<%=request.getParameter("percentageAchieved")%>" />
+	<c:when test="<%=StringUtils.isNotBlank(request.getParameter("bdoScore"))%>">
+		<c:set var="bdoScore" value="<%=request.getParameter("bdoScore")%>" />
 	</c:when>
-	<c:otherwise>
-		<c:set var="percentageAchieved" value="${percentageAchieved}" />
-	</c:otherwise>
 </c:choose>
 
 <c:choose>
@@ -74,7 +71,7 @@ ${designation}
 
 ${bdoObjectives}
 ${bdoAchievements}
-${percentageAchieved}
+${bdoScore}
 ${status}
 
 <c:if test="<%=StringUtils.isNotBlank(request.getParameter("editForm"))%>">
