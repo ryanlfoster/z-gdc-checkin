@@ -99,10 +99,7 @@ Map<String, String[]> quarterlyBDODataMap = quarterlyBDORepositoryClient.getQuar
                             <div class="col-md-2 col-xs-2">
                                 <label for="objective">
                                     Set BDO Objectives
-                                </label><br/>
-                                <span class="objective-desc">
-                                    Delight the Company<br/>Delight the Customer<br/>Delight the Employee
-                                </span>
+                                </label>
                             </div>
                             <div class="col-md-8 col-xs-8  bdo-objective-panel">
                                 <div class="row bdo-objective-active bdo-objective-panel-row">
@@ -113,9 +110,18 @@ Map<String, String[]> quarterlyBDODataMap = quarterlyBDORepositoryClient.getQuar
                                         <button class="btn btn-danger btn-remove" type="button" style="display:none">
                                             <span class="glyphicon glyphicon-remove"></span>
                                         </button>
-                                        <button class="btn btn-primary btn-add" type="button">
-                                            <span class="glyphicon glyphicon-plus"></span>
-                                        </button>
+                                        <c:choose>
+											<c:when test="<%=StringUtils.isNotBlank(request.getParameter("editBdoScore"))%>">
+												<button class="btn btn-success btn-add" type="button">
+                                            		<span class="glyphicon glyphicon-plus"></span>
+                                        		</button>
+                                        	</c:when>
+                                        	<c:otherwise>
+	                                        	<button class="btn btn-primary btn-add" type="button">
+	                                            <span class="glyphicon glyphicon-plus"></span>
+	                                        	</button>
+                                        	</c:otherwise>
+                                        </c:choose>
                                     </div>
                                 </div>
                             </div>
@@ -140,9 +146,18 @@ Map<String, String[]> quarterlyBDODataMap = quarterlyBDORepositoryClient.getQuar
                                         <button class="btn btn-danger btn-remove" type="button" style="display:none">
                                             <span class="glyphicon glyphicon-remove"></span>
                                         </button>
-                                        <button class="btn btn-primary btn-add" type="button">
-                                            <span class="glyphicon glyphicon-plus"></span>
-                                        </button>
+                                        <c:choose>
+											<c:when test="<%=StringUtils.isNotBlank(request.getParameter("editBdoScore"))%>">
+												<button class="btn btn-success btn-add" type="button">
+                                            		<span class="glyphicon glyphicon-plus"></span>
+                                        		</button>
+                                        	</c:when>
+                                        	<c:otherwise>
+	                                        	<button class="btn btn-primary btn-add" type="button">
+	                                            <span class="glyphicon glyphicon-plus"></span>
+	                                        	</button>
+                                        	</c:otherwise>
+                                        </c:choose>
                                     </div>
                                 </div>  
                             </div>
@@ -176,7 +191,7 @@ Map<String, String[]> quarterlyBDODataMap = quarterlyBDORepositoryClient.getQuar
 									<div class="col-md-4 col-xs-4"></div>
 									<div class="col-md-7 col-xs-7 align-right">
 										<div class="col-sm-10  col-xs-10 col-md-10">
-											<button type="button" class="btn btn-primary btn-complete">Complete</button>
+											<button type="button" class="btn btn-success btn-complete">Complete</button>
 											&nbsp;
 										</div>
 										<div class="col-sm-2  col-xs-2 col-md-2  align-left"></div>

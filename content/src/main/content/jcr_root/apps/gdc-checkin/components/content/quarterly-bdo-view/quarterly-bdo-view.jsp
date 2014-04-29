@@ -75,5 +75,5 @@ ${bdoScore}
 ${status}
 
 <c:if test="<%=StringUtils.isNotBlank(request.getParameter("editForm"))%>">
-	<a class="btn btn-primary btn-edit fancybox fancybox.iframe" href="/content/gdc-check-in/en/dynamic-pages/edit-quartery-bdo.html?quarterNumber=${quarterNumber}&annualYear=${annualYear}&userID=${userID}&editForm=true&editBdoScore=true">Edit</a>
+	<a class="btn btn-success btn-edit fancybox fancybox.iframe" href="/content/gdc-check-in/en/dynamic-pages/edit-quartery-bdo.html?quarterNumber=${quarterNumber}&annualYear=${annualYear}&userID=${userID}&editForm=true&editBdoScore=true">Edit</a>
 </c:if>
