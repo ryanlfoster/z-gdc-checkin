@@ -21,13 +21,13 @@ GDC.bdo.directReports.initTable = function(selector,quarterNumber,annualYear) {
 					  var html = "";
 
                       var fancyboxSrc="/content/gdc-check-in/en/dynamic-pages/view-quartery-bdo.html?"+
-                      					"bdoObjectives="+ encodeURIComponent(full.objectives) +
-                      					"&amp;bdoAchievements="+ encodeURIComponent(full.achievements) +
+                         			    "userID="+ full.userID +
+                      					 GDC.bdo.directReports.getParamArrayForQueryString('bdoObjectives',full.objectives) +
+                                         GDC.bdo.directReports.getParamArrayForQueryString('bdoAchievements',full.achievements)+
                       					"&amp;name="+ encodeURIComponent(full.name) +
                       					"&amp;designation="+ encodeURIComponent(full.designation) +
-                      					"&amp;userID="+ full.userID +
                       					"&amp;quarterNumber="+ quarterNumber +
-                      					"&amp;annualYear="+ annualYear +
+                      					"&amp;annualYear="+ annualYear + 
                       					"&amp;bdoScore="+ full.bdoScore +
                       					"&amp;status="+ encodeURIComponent(full.status) +
                       					"&amp;editForm=true";
@@ -38,6 +38,14 @@ GDC.bdo.directReports.initTable = function(selector,quarterNumber,annualYear) {
                       }}]
     	});
 
+}
+
+GDC.bdo.directReports.getParamArrayForQueryString = function(paramName, paramArrayValue) {
+	var paramString="";
+    for(var i=0;i<paramArrayValue.length; i++){
+        paramString=paramString+"&amp;"+paramName+"="+encodeURIComponent(paramArrayValue[i]);
+    }
+    return paramString;
 }
 
 GDC.bdo.directReports.stylePagination = function() {

@@ -93,13 +93,27 @@ public class QuarterlyBDOReportServlet extends SlingAllMethodsServlet{
 		
 		JSONObject employeeBDODataJson = new JSONObject();
 		employeeBDODataJson.put(QuartelyBDOConstants.INDEX, index);
-		employeeBDODataJson.put(QuartelyBDOConstants.NAME, employeeBDODataMap.get(QuartelyBDOConstants.NAME)[0]);
-		employeeBDODataJson.put(QuartelyBDOConstants.DESIGNATION, employeeBDODataMap.get(QuartelyBDOConstants.DESIGNATION)[0]);
-		employeeBDODataJson.put(QuartelyBDOConstants.EMPLOYEE_ID, employeeBDODataMap.get(QuartelyBDOConstants.EMPLOYEE_ID)[0]);
-		employeeBDODataJson.put(QuartelyBDOConstants.OBJECTIVES, new JSONArray(Arrays.asList(employeeBDODataMap.get(QuartelyBDOConstants.OBJECTIVES))));
-		employeeBDODataJson.put(QuartelyBDOConstants.ACHIEVEMENTS,new JSONArray(Arrays.asList(employeeBDODataMap.get(QuartelyBDOConstants.ACHIEVEMENTS))));
-		employeeBDODataJson.put(QuartelyBDOConstants.BDO_SCORE, employeeBDODataMap.get(QuartelyBDOConstants.BDO_SCORE) != null ? employeeBDODataMap.get(QuartelyBDOConstants.BDO_SCORE)[0] : ""); 
-		employeeBDODataJson.put(QuartelyBDOConstants.STATUS, employeeBDODataMap.get(QuartelyBDOConstants.STATUS)[0]);
+		employeeBDODataJson.put(QuartelyBDOConstants.NAME, employeeBDODataMap.get(QuartelyBDOConstants.NAME) != null 
+															? employeeBDODataMap.get(QuartelyBDOConstants.NAME)[0]
+														    : QuartelyBDOConstants.EMPTY_STRING);
+		employeeBDODataJson.put(QuartelyBDOConstants.DESIGNATION, employeeBDODataMap.get(QuartelyBDOConstants.DESIGNATION) != null
+																	? employeeBDODataMap.get(QuartelyBDOConstants.DESIGNATION)[0]
+																	: QuartelyBDOConstants.EMPTY_STRING);
+		employeeBDODataJson.put(QuartelyBDOConstants.EMPLOYEE_ID, employeeBDODataMap.get(QuartelyBDOConstants.EMPLOYEE_ID)!= null 
+																	? employeeBDODataMap.get(QuartelyBDOConstants.EMPLOYEE_ID)[0]
+																 	:  QuartelyBDOConstants.EMPTY_STRING);
+		employeeBDODataJson.put(QuartelyBDOConstants.OBJECTIVES, employeeBDODataMap.get(QuartelyBDOConstants.OBJECTIVES)!= null 
+																	? new JSONArray(Arrays.asList(employeeBDODataMap.get(QuartelyBDOConstants.OBJECTIVES)))
+																	: new JSONArray());
+		employeeBDODataJson.put(QuartelyBDOConstants.ACHIEVEMENTS, employeeBDODataMap.get(QuartelyBDOConstants.ACHIEVEMENTS) != null
+																	? new JSONArray(Arrays.asList(employeeBDODataMap.get(QuartelyBDOConstants.ACHIEVEMENTS)))
+																	: new JSONArray());
+		employeeBDODataJson.put(QuartelyBDOConstants.BDO_SCORE, employeeBDODataMap.get(QuartelyBDOConstants.BDO_SCORE) != null 
+																	? employeeBDODataMap.get(QuartelyBDOConstants.BDO_SCORE)[0]
+																	: QuartelyBDOConstants.EMPTY_STRING);
+		employeeBDODataJson.put(QuartelyBDOConstants.STATUS, employeeBDODataMap.get(QuartelyBDOConstants.STATUS) != null 
+																	? employeeBDODataMap.get(QuartelyBDOConstants.STATUS)[0]
+																	: QuartelyBDOConstants.EMPTY_STRING);
 		employeeBDODataJson.put(QuartelyBDOConstants.USER_ID, userID);
 
 		return employeeBDODataJson;
