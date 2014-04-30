@@ -23,7 +23,7 @@
 
 <c:choose>
 	<c:when test="<%=StringUtils.isNotBlank(request.getParameter("bdoObjectives"))%>">
-		<c:set var="bdoObjectives" value="<%=request.getParameter("bdoObjectives")%>" />
+		<c:set var="bdoObjectives" value="<%=request.getParameterValues("bdoObjectives")%>" />
 	</c:when>
 	<c:otherwise>
 		<c:set var="bdoObjectives" value="${bdoObjectives}" />
@@ -32,7 +32,7 @@
 
 <c:choose>
 	<c:when test="<%=StringUtils.isNotBlank(request.getParameter("bdoAchievements"))%>">
-		<c:set var="bdoAchievements" value="<%=request.getParameter("bdoAchievements")%>" />
+		<c:set var="bdoAchievements" value="<%=request.getParameterValues("bdoAchievements")%>" />
 	</c:when>
 	<c:otherwise>
 	</c:otherwise>
@@ -53,6 +53,17 @@
 	</c:otherwise>
 </c:choose>
 
+
+<c:choose>
+	<c:when test="<%=StringUtils.isNotBlank(request.getParameter("editForm"))%>">
+		<c:set var="numbering" value="numbering-green"/> 
+	</c:when>
+	<c:otherwise>
+		<c:set var="numbering" value="numbering-blue"/> 
+	</c:otherwise>
+</c:choose>
+
+
 <!-- Set the below variables to display edit form -->
 <c:if test="<%=StringUtils.isNotBlank(request.getParameter("quarterNumber"))%>">
 	<c:set var="quarterNumber" value="<%=request.getParameter("quarterNumber")%>" scope="request"/>
@@ -64,16 +75,118 @@
 	<c:set var="userID" value="<%=request.getParameter("userID")%>" scope="request"/>
 </c:if>
 
-<c:set var="editBdoScore" value="true" scope="request"/>
+<div class="row">
 
-${name}
-${designation}
+    <div class="col-md-9 col-xs-9">
 
-${bdoObjectives}
-${bdoAchievements}
-${bdoScore}
-${status}
+        <div class="row">
+            <div class="col-md-1 col-xs-1"></div>
+            <div class="col-md-10 col-xs-10">
+             ${name},<br/>
+             ${designation}<br/><br/>
+            </div>               
 
-<c:if test="<%=StringUtils.isNotBlank(request.getParameter("editForm"))%>">
-	<a class="btn btn-success btn-edit fancybox fancybox.iframe" href="/content/gdc-check-in/en/dynamic-pages/edit-quartery-bdo.html?quarterNumber=${quarterNumber}&annualYear=${annualYear}&userID=${userID}&editForm=true&editBdoScore=true">Edit</a>
-</c:if>
+            <div class="col-md-1 col-xs-1"></div>
+        </div>
+        <br/>
+
+        <div class="row">
+            <div class="col-md-1 col-xs-1"></div>
+            <div class="col-md-3 col-xs-3">
+                <label for="objective">
+                    BDO Objectives
+                </label>
+            </div>
+            <c:choose>
+                <c:when test="${not empty bdoObjectives}">
+                    <div class="col-md-8 col-xs-8">
+						<c:forEach items="${bdoObjectives}" varStatus="objectives">  
+                            <span class="${numbering}"> ${objectives.index +1}. </span> &nbsp; ${bdoObjectives[objectives.index]}<br/>  
+      					</c:forEach>  
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    <div class="col-md-8 col-xs-8">Unavailable</div>
+                </c:otherwise>
+            </c:choose>
+
+         </div>
+		 <br/>
+
+		 <div class="row">
+            <div class="col-md-1 col-xs-1"></div>
+            <div class="col-md-3 col-xs-3">
+                <label for="achievements">
+                   BDO Achievements
+                </label>
+            </div>
+             <c:choose>
+                <c:when test="${not empty bdoAchievements}">
+                    <div class="col-md-8 col-xs-8">
+                        <c:forEach items="${bdoAchievements}" varStatus="achievement">  
+                            <span class="${numbering}"> ${achievement.index +1}. </span> &nbsp; ${bdoAchievements[achievement.index]}<br/>  
+      					</c:forEach>  
+
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    <div class="col-md-8 col-xs-8">Unavailable</div>
+                </c:otherwise>
+            </c:choose>
+         </div>
+		 <br/>
+
+         <div class="row">
+            <div class="col-md-1 col-xs-1"></div>
+            <div class="col-md-3 col-xs-3">
+                <label for="bdoScore">
+                   BDO Score
+                </label>
+            </div>
+             <c:choose>
+                <c:when test="${not empty bdoScore}">
+                    <div class="col-md-8 col-xs-8">${bdoScore}</div>
+                </c:when>
+                <c:otherwise>
+                    <div class="col-md-8 col-xs-8">Unavailable</div>
+                </c:otherwise>
+            </c:choose>
+
+         </div>
+		 <br/>
+
+        <div class="row">
+            <div class="col-md-1 col-xs-1"></div>
+            <div class="col-md-3 col-xs-3">
+                <label for="status">
+                   Status
+                </label>
+            </div>
+            <c:choose>
+                <c:when test="${not empty status}">
+                    <div class="col-md-8 col-xs-8">${status}</div>
+                </c:when>
+                <c:otherwise>
+                    <div class="col-md-8 col-xs-8">Unavailable</div>
+                </c:otherwise>
+            </c:choose>
+
+         </div>
+		 <br/>
+
+        <c:if test="<%=StringUtils.isNotBlank(request.getParameter("editForm"))%>">
+            <div class="row">
+                <div class="col-md-4 col-xs-4"></div>
+                <div class="col-md-8 col-xs-8">
+        
+                    <a class="btn btn-success btn-edit fancybox fancybox.iframe" href="/content/gdc-check-in/en/dynamic-pages/edit-quartery-bdo.html?quarterNumber=${quarterNumber}&annualYear=${annualYear}&userID=${userID}&editForm=true&editBdoScore=true">Edit</a>
+                    &nbsp;
+        
+                </div>
+        
+            </div>
+        
+        </c:if>
+
+   </div>
+</div>

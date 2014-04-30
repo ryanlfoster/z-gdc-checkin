@@ -70,3 +70,13 @@
 	line-height: 24px;
 	text-align: left;
 }
+
+.numbering-blue {
+	font-weight: bold;
+	color: #002a80;
+}
+
+.numbering-green {
+	font-weight: bold;
+	color: #51a351;
+}
