@@ -3,6 +3,7 @@ package com.adobe.gdc.checkin.servlet;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -10,8 +11,13 @@ import javax.jcr.Session;
 import javax.servlet.ServletException;
 import org.apache.felix.scr.annotations.Reference;
 import org.apache.felix.scr.annotations.sling.SlingServlet;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.sling.api.SlingHttpServletRequest;
@@ -95,7 +101,7 @@ public class GenerateReportsServlet extends SlingSafeMethodsServlet {
 		
 		//Create a blank sheet
 		XSSFSheet sheet = workbook.createSheet("Employee BDO Report");
-		
+				
 		//Iterate over data and write to sheet
 		Set<String> keyset = resultData.keySet();
 		int rownum = 0;
@@ -111,17 +117,51 @@ public class GenerateReportsServlet extends SlingSafeMethodsServlet {
 		            cell.setCellValue((String)obj);
 		        else if(obj instanceof Integer)
 		            cell.setCellValue((Integer)obj);
+		       
 		    }
 		}
 	
+		styleExcelSheet(workbook, sheet);
+		
 		//Write the workbook in file system
 	    FileOutputStream out = new FileOutputStream(new File("bdo_report.xlsx"));
 	    workbook.write(out);
 	    out.flush();
 	    out.close();
-    	log.info("Successfully written generated BDO Report to file-> bdo_report.xlsx");    			  
+    	log.info("Successfully written generated BDO Report to file-> bdo_report.xlsx");    
+    	
+    	
     }
       
+    
+    
+    private void styleExcelSheet(XSSFWorkbook workbook, Sheet sheet) throws Exception{
+    	
+    	//Define style for the report header
+    	CellStyle  style = workbook.createCellStyle();
+      
+      	style.setFillForegroundColor(HSSFColor.GREEN.index);
+      	style.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+      	
+    	//every sheet has rows, iterate over them
+        Iterator<Row> rowIterator = sheet.iterator();
+        
+        //Style the first row
+        if (rowIterator.hasNext()) {
+        	//Get the row object
+            Row row = rowIterator.next();
+            //Every row has columns, get the column iterator and iterate over them
+            Iterator<Cell> cellIterator = row.cellIterator();        
+            while (cellIterator.hasNext()) 
+            {
+                //Get the Cell object
+                Cell cell = cellIterator.next();
+                cell.setCellStyle(style);
+            }         
+        }
+    }
+    
+    
     
 	private String[] getEmployeeBDOData( Map<String, String[]> employeeBDODataMap, String managerName) throws JSONException {			
 		
@@ -151,7 +191,7 @@ public class GenerateReportsServlet extends SlingSafeMethodsServlet {
 	private String formatArrayToString(String[] arrayValue) {
 		String stringValue = QuartelyBDOConstants.EMPTY_STRING;
 		for(int index=0; index<arrayValue.length; index++ ) {
-			stringValue = stringValue + (index+1) +". " + arrayValue[index] + "\n";
+			stringValue = stringValue + (index+1) +". " + arrayValue[index] + "\r\n";
 		}
 		return stringValue;
 	}
