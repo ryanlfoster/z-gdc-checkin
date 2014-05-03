@@ -65,6 +65,13 @@ public class QuartelyBDOConstants {
 	public static final String COMPLETED = "COMPLETED";
 	
 	//Repository root-path where BDO data is stored 
-	public static final String GDC_CHECKIN_REPOSITORY_BASE_PATH = "/content/gdc-check-in-store";
+	public static final String GDC_CHECKIN_REPOSITORY_BASE_PATH = "/content/gdc-bdo-store";
+	
+	//Excel file constants
+	public static final String EMPLOYEE_ID_TITLE = "Employee ID";
+	public static final String NAME_TITLE = "Name";
+	public static final String MANAGER_NAME_TITLE = "Manager Name";
+	public static final String BDO_SCORE_FOR_Q_TITLE = "BDO Score for Q";
+	public static final String NOTES_TITLE = "Notes";
 	
 }

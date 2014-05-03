@@ -55,9 +55,15 @@ public class GenerateReportsServlet extends SlingSafeMethodsServlet {
     			 
 		//Generate data to be written in the file
         Map<String, Object[]> resultData = new TreeMap<String, Object[]>();
-        resultData.put("1", new Object[] {"Employee ID", "Name", "Manager Name", "BDO Score for Q"+quarterNumber, "Notes" });
+        resultData.put("1", new Object[] {
+							        		QuartelyBDOConstants.EMPLOYEE_ID_TITLE,
+							        		QuartelyBDOConstants.NAME_TITLE,
+							        		QuartelyBDOConstants.MANAGER_NAME_TITLE,
+							        		QuartelyBDOConstants.BDO_SCORE_FOR_Q_TITLE,
+							        		QuartelyBDOConstants.NOTES_TITLE
+        								});
        				
-		try{
+		try {
 			//Get All Direct Reportees of the manager
 			String[] directReportees = userManagementService.getManagersDirectReportees(managersID,session);
 			
@@ -113,7 +119,7 @@ public class GenerateReportsServlet extends SlingSafeMethodsServlet {
 	    workbook.write(out);
 	    out.flush();
 	    out.close();
-    	log.info("Successfully written generated BDO Report to file->bdo_report.xlsx");    			  
+    	log.info("Successfully written generated BDO Report to file-> bdo_report.xlsx");    			  
     }
       
     
