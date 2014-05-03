@@ -141,12 +141,20 @@ public class GenerateReportsServlet extends SlingSafeMethodsServlet {
 										: QuartelyBDOConstants.EMPTY_STRING;
 			
 			employeeBDODataArray[4]	= employeeBDODataMap.get(QuartelyBDOConstants.ACHIEVEMENTS) != null
-										? employeeBDODataMap.get(QuartelyBDOConstants.ACHIEVEMENTS).toString()
+										? formatArrayToString(employeeBDODataMap.get(QuartelyBDOConstants.ACHIEVEMENTS))
 										: QuartelyBDOConstants.EMPTY_STRING;
 				
 			return employeeBDODataArray;
 		}
 	
+	
+	private String formatArrayToString(String[] arrayValue) {
+		String stringValue = QuartelyBDOConstants.EMPTY_STRING;
+		for(int index=0; index<arrayValue.length; index++ ) {
+			stringValue = stringValue + (index+1) +". " + arrayValue[index] + "\n";
+		}
+		return stringValue;
+	}
 	
     private Session getSession(SlingHttpServletRequest request) {
 		return request.getResourceResolver().adaptTo(Session.class);
