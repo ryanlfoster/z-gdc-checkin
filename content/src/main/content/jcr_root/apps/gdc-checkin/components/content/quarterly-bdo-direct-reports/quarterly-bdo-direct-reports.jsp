@@ -62,9 +62,7 @@
 
       //TO-DO
        $('.btn-download-report${quarterNumber}').click( function() { 
-			var sData = oTable.$('input').serialize();
-			console.log( "The following data would have been submitted to the server: \n\n"+sData );
-			return false;
+    	   $.get( "<%=currentPage.getPath()%>.managerreport.html", { managersID:managersID, quarterNumber:quarterNumber, annualYear:annualYear } );    	   
 		}); 
       
        $(".fancybox").fancybox({ 
