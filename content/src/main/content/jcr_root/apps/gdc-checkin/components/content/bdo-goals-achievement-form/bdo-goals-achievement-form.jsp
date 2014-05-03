@@ -60,17 +60,25 @@ Map<String, String[]> quarterlyBDODataMap = quarterlyBDORepositoryClient.getQuar
 <c:set var="name" value="<%=userManagementService.getEmployeeName(userID, session)%>" scope="request"/>
 <c:set var="designation" value="<%=quarterlyBDODataMap.get("designation")!= null ? quarterlyBDODataMap.get("designation")[0] : userManagementService.getEmployeeDesignation(userID, session)%>" scope="request"/>
 
-<div class="row">
+<div class="row no-margin">
 
-    <div class="col-md-9 col-xs-9">
+	<c:choose>
+		<c:when test="<%=StringUtils.isNotBlank(request.getParameter("editBdoScore"))%>">
+			<div class="col-md-12 col-xs-12 white-panel-large">
+		</c:when>
+		<c:otherwise>
+			<div class="col-md-9 col-xs-9 white-panel-small">
+		</c:otherwise>
+	</c:choose>
+    
         <div class="bdo-form">
-           
+
             <c:choose>
                 <c:when test = "${editForm eq 'true'}">
 
 					<div class="row">
                         <div class="col-md-1 col-xs-1"></div>
-                        <div class="col-md-10 col-xs-10">
+                        <div class="col-md-10 col-xs-10 margin">
                          ${name},<br/>
                          ${designation}<br/><br/>
                         </div>               

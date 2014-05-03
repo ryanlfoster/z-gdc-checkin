@@ -73,10 +73,65 @@
 
 .numbering-blue {
 	font-weight: bold;
-	color: #002a80;
+	color: #3276b1;
 }
 
 .numbering-green {
 	font-weight: bold;
 	color: #51a351;
 }
+
+.header-logo {
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	z-index: 2;
+}
+
+.bdo-self-content{
+	padding-left: 0px!important;
+}
+
+.no-margin{
+	margin-right: 0px;
+    margin-left: 0px;
+}
+
+.white-panel-small{
+	background: white;
+	padding-left: -1px;
+	border-radius: 8px;
+	-webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+	-moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+	-webkit-border-radius: 0px 0px 6px 6px;
+	-moz-border-radius: 0px 0px 6px 6px;
+	border-radius: 6px;
+	 min-height: 500px;
+     border: 1px solid #d4d4d4;
+}
+
+.border {
+	border: 1px solid #d4d4d4;
+ }
+
+.white-panel-large{
+	background: white;
+	padding-left: -1px;
+	border-radius: 8px;
+	-webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+	-moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+	-webkit-border-radius: 0px 0px 6px 6px;
+	-moz-border-radius: 0px 0px 6px 6px;
+	border-radius: 6px;
+	 min-height: 600px;
+}
+
+.margin{
+	margin-top: 5%
+ }
+ 
+ .btn-edit {
+ width: 70px;
+ }

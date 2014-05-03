@@ -68,11 +68,18 @@
 		}); 
       
        $(".fancybox").fancybox({ 
-           afterClose : function() {
-           oTable.fnReloadAjax();
 
+		   'width':'750',
+           'height':'600',
+           'autoDimensions':false,
+           'type':'iframe',
+           'autoSize':false,
+
+           afterClose : function() {
+              oTable.fnReloadAjax();
           }
 		});
+
 
 
 });

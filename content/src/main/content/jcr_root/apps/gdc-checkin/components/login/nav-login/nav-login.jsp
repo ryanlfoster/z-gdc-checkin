@@ -10,7 +10,7 @@
  			<h3><i class="fa fa-user fa-fw sign-in"></i>  John</h3>
 
     		<a href="#">profile</a> | <a href="#">settings</a>
- 			<a href="/content/gdc-check-in/en/check-in-home.html"><i class="icon-signout icon-large"></i> Logout</a>
+ 			<a href="/content/gdc-bdo/en/gdc-bdo-home.html"><i class="icon-signout icon-large"></i> Logout</a>
 		</div>
     </c:when>
     <c:otherwise>

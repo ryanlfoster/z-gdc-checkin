@@ -61,33 +61,39 @@
     </div>
 </div>
 
-
-<div class="tab-content bdo-direct-reports">
-    <c:forEach var="i" begin="1" end="4">
-
-       <% 
-        Calendar quarterStartCalendarDate = allQuartersDateRangeMap.get("startDateQuarter"+pageContext.getAttribute("i"));
-		Calendar quarterEndCalendarDate = allQuartersDateRangeMap.get("endDateQuarter"+pageContext.getAttribute("i"));
-		%>
-
-        <c:set var="quarterStatus" value="<%=quarterlyBDOService.getQuarterStatus(quarterStartCalendarDate, quarterEndCalendarDate)%>" />
-
-        <c:choose>
-			<c:when test="${quarterStatus eq current}"> 
-                <div id="bdo_reports_quarter${i}" class="tab-pane active">  
-                    <c:set var="quarterNumber" value="${i}" scope="request"/>
-					<c:set var="currentQuarter" value="true" scope="request"/>
-					<cq:include path="quarterly-bdo-direct-reports" resourceType= "gdc-checkin/components/content/quarterly-bdo-direct-reports" />
-                </div>
-            </c:when>
-
-            <c:otherwise>
-                <div id="bdo_reports_quarter${i}" class="tab-pane"> 
-                    <c:set var="quarterNumber" value="${i}" scope="request"/>
-                    <c:set var="currentQuarter" value="false" scope="request"/>
-					<cq:include path="quarterly-bdo-direct-reports" resourceType= "gdc-checkin/components/content/quarterly-bdo-direct-reports" />
-        		</div>
-            </c:otherwise>
-        </c:choose>
-    </c:forEach>
+<div class="row">
+	<div class="col-md-9 col-xs-9">
+		<div class="tab-content bdo-direct-reports">
+            <c:forEach var="i" begin="1" end="4">
+        
+               <% 
+                Calendar quarterStartCalendarDate = allQuartersDateRangeMap.get("startDateQuarter"+pageContext.getAttribute("i"));
+                Calendar quarterEndCalendarDate = allQuartersDateRangeMap.get("endDateQuarter"+pageContext.getAttribute("i"));
+                %>
+        
+                <c:set var="quarterStatus" value="<%=quarterlyBDOService.getQuarterStatus(quarterStartCalendarDate, quarterEndCalendarDate)%>" />
+        
+                <c:choose>
+                    <c:when test="${quarterStatus eq current}"> 
+                        <div id="bdo_reports_quarter${i}" class="tab-pane active">  
+                            <c:set var="quarterNumber" value="${i}" scope="request"/>
+                            <c:set var="currentQuarter" value="true" scope="request"/>
+                            <cq:include path="quarterly-bdo-direct-reports" resourceType= "gdc-checkin/components/content/quarterly-bdo-direct-reports" />
+                        </div>
+                    </c:when>
+        
+                    <c:otherwise>
+                        <div id="bdo_reports_quarter${i}" class="tab-pane"> 
+                            <c:set var="quarterNumber" value="${i}" scope="request"/>
+                            <c:set var="currentQuarter" value="false" scope="request"/>
+                            <cq:include path="quarterly-bdo-direct-reports" resourceType= "gdc-checkin/components/content/quarterly-bdo-direct-reports" />
+                        </div>
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach>
+        </div>
+	</div>
+	<div class="col-md-3 col-xs-3">
+        <!--  <cq:include path="bdo-achievement-tracker" resourceType= "gdc-checkin/components/content/bdo-achievement-tracker" /> -->
+    </div>
 </div>

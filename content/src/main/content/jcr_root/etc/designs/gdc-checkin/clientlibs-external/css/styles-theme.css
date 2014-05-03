@@ -1,10 +1,11 @@
 /**========= 
 BASE 
 ============ **/
-@font-face {font-family:'FontAwesome'; src:url('../fonts/fontAwesome/fontawesome-webfont.eot'); src:url('../fonts/fontAwesome/fontawesome-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/fontAwesome/fontawesome-webfont.woff') format('woff'), url('../fonts/fontAwesome/fontawesome-webfont.ttf') format('truetype'), url('../fonts/fontAwesome/fontawesome-webfont.svgz#FontAwesomeRegular') format('svg'), url('../fonts/fontAwesome/fontawesome-webfont.svg#FontAwesomeRegular') format('svg'); font-weight:normal; font-style:normal;}
+/* @font-face {font-family:'FontAwesome'; src:url('../fonts/fontAwesome/fontawesome-webfont.eot'); src:url('../fonts/fontAwesome/fontawesome-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/fontAwesome/fontawesome-webfont.woff') format('woff'), url('../fonts/fontAwesome/fontawesome-webfont.ttf') format('truetype'), url('../fonts/fontAwesome/fontawesome-webfont.svgz#FontAwesomeRegular') format('svg'), url('../fonts/fontAwesome/fontawesome-webfont.svg#FontAwesomeRegular') format('svg'); font-weight:normal; font-style:normal;}
 @font-face {font-family:'BebasNeueRegular'; src:url('../fonts/BebasNeue/BebasNeue-webfont.eot'); src:url('../fonts/BebasNeue/BebasNeue-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/BebasNeue/BebasNeue-webfont.woff') format('woff'), url('../fonts/BebasNeue/BebasNeue-webfont.ttf') format('truetype'), url('../fonts/BebasNeue/BebasNeue-webfont.svg#BebasNeueRegular') format('svg'); font-weight:normal; font-style:normal;}
 @font-face {font-family:'LeagueGothicRegular'; src:url('../fonts/LeagueGothic/League_Gothic-webfont.eot'); src:url('../fonts/LeagueGothic/League_Gothic-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/LeagueGothic/League_Gothic-webfont.woff') format('woff'), url('../fonts/LeagueGothic/League_Gothic-webfont.ttf') format('truetype'), url('../fonts/LeagueGothic/League_Gothic-webfont.svg#LeagueGothicRegular') format('svg'); font-weight:normal; font-style:normal;}
 @font-face {font-family:'IconicFill'; src:url('../fonts/iconicFill/iconic_fill.eot'); src:url('../fonts/iconicFill/iconic_fill.eot?#iefix') format('embedded-opentype'), url('../fonts/iconicFill/iconic_fill.ttf') format('truetype'), url('../fonts/iconicFill/iconic_fill.svg#iconic') format('svg');font-weight:normal; font-style:normal;}
+ */
 body {background:url(../images/line-pattern.png) #091e30;font-size:11px;color:#75787a;}
 p {line-height:1.6;}
 small {font-size:11px;}
@@ -14,7 +15,7 @@ small {font-size:11px;}
 MAIN LAYOUT
 ============ **/
 #page-wrap {max-width:100%;min-width:960px;margin:0 10px;position:relative;background:url(../images/line-pattern4.png) #ececec;}
-#header {max-width:100%;min-width:960px;margin:15px 10px 0 10px;}
+#header {max-width:100%;min-width:960px;margin:5px 10px 0 10px;}
 #main-content {margin:0 0 0 180px;padding:0;color:#454545;}
 #main-content #inner{min-height:600px;position:relative;}
 #main-sidebar{position:absolute;left:0;top:0;width:180px;bottom:0;padding:0;}
@@ -26,7 +27,7 @@ MAIN LAYOUT
 /**========= 
 TYPOGRAPHY
 ============ **/
-h1,h2,h3,h4,h5,h6,#main-sidebar .accordion-heading .btn,#main-content .accordion-toggle.btn, .brand, .main-tabs .nav-tabs > li > a, .info-widget span.text, .pricing-table ul li.heading, legend{font-family:'BebasNeueRegular',Arial,sans-serif;line-height:1;font-weight:normal;}
+h1,h2,h3,h4,h5,h6,#main-sidebar .accordion-heading .btn,#main-content .accordion-toggle.btn, .brand, .main-tabs .nav-tabs > li > a, .info-widget span.text, .pricing-table ul li.heading, legend{line-height:1;font-weight:normal;}
 h1,h2,h3,h4,h5,h6{margin:0;}
 a {text-shadow:none;}
 a:hover {text-shadow:none;text-decoration:none;}
@@ -1598,7 +1599,7 @@ ul.connections li .avatar{
 TABS
 ============ **/
 /** main tabs & news feed tabs */
-.main-tabs {margin:10px 10px 10px 0;position:relative;}
+.main-tabs {margin:10px 10px 0px 0;position:relative;}
 .main-tabs .nav.nav-tabs, .itemfeed .post .nav.nav-tabs {
   background-color:#fafafa;
   background-image:-moz-linear-gradient(top, #ffffff, #f2f2f2);
@@ -1642,7 +1643,7 @@ TABS
 .main-tabs .nav-tabs > .active.help > a, .main-tabs .nav-tabs > .active.help > a:hover {background-color:#fdfdfd;}
 .itemfeed .nav-tabs > .active > a, .itemfeed .nav-tabs > .active > a:hover {background-color:#fff;}
 
-.tabbable {margin-bottom:15px;}
+.tabbable {margin-bottom:0px;}
 /*default tabs */
 .tabbable.sub-tabs .nav.nav-tabs li a {font-size:18px;}
 .tabbable.sub-tabs .nav-tabs > li:first-child > a {border-left-color:#d4d4d4;}

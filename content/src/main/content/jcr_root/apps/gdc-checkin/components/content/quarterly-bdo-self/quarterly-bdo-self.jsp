@@ -59,7 +59,7 @@ String userID = userManagementService.getCurrentUser(session);
 </div>
 
 
-<div class="tab-content">
+<div class="tab-content bdo-self-content">
     <c:forEach var="i" begin="1" end="4">
        <% 
         Calendar quarterStartCalendarDate = allQuartersDateRangeMap.get("startDateQuarter"+pageContext.getAttribute("i"));

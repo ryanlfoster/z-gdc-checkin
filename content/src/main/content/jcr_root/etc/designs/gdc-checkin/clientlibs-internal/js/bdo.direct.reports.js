@@ -11,16 +11,16 @@ GDC.bdo.directReports.initTable = function(selector,quarterNumber,annualYear) {
    			 "sSearch": ""
 		},
         "sAjaxSource": bdoReportServiceSrcPath,
-        "aoColumns": [{"mData":"name","sTitle": "Name"},
-                      {"mData":"designation","sTitle": "Designation"},
-                      {"mData":"employeeID","sTitle": "Employee ID"},
-                      {"mData":"status","sTitle": "Status"},
-                      {"mData":"bdoScore","sTitle": "BDO Score(%)"},
-                      {"mData":"userID","sTitle": "", "mRender":function(data,type,full){
+        "aoColumns": [{"mData":"name","sTitle": "Name","sWidth":"25%"},
+                      {"mData":"designation","sTitle": "Designation","sWidth":"25%"},
+                      {"mData":"employeeID","sTitle": "Employee ID","sWidth":"15%","sClass":"center-aligned"},
+                      {"mData":"status","sTitle": "Status","sWidth":"10%","sClass":"center-aligned"},
+                      {"mData":"bdoScore","sTitle": "BDO Score(%)","sWidth":"16%","sClass":"center-aligned"},
+                      {"mData":"userID","sTitle": "", "sWidth":"10%", "mRender":function(data,type,full){
 
 					  var html = "";
 
-                      var fancyboxSrc="/content/gdc-check-in/en/dynamic-pages/view-quartery-bdo.html?"+
+                      var fancyboxSrc="/content/gdc-bdo/en/dynamic-pages/view-quartery-bdo.html?"+
                          			    "userID="+ full.userID +
                       					 GDC.bdo.directReports.getParamArrayForQueryString('bdoObjectives',full.objectives) +
                                          GDC.bdo.directReports.getParamArrayForQueryString('bdoAchievements',full.achievements)+

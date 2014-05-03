@@ -75,13 +75,23 @@
 	<c:set var="userID" value="<%=request.getParameter("userID")%>" scope="request"/>
 </c:if>
 
-<div class="row">
 
-    <div class="col-md-9 col-xs-9">
+<c:choose>
+	<c:when test="<%=StringUtils.isNotBlank(request.getParameter("editForm"))%>">
+		<div class="row no-margin ">
+            <div class="col-md-12 col-xs-12 white-panel-large">
+	</c:when>
+	<c:otherwise>
+		<div class="row">
+            <div class="col-md-12 col-xs-12 white-panel-small">
+	</c:otherwise>
+</c:choose>
+
+
 
         <div class="row">
             <div class="col-md-1 col-xs-1"></div>
-            <div class="col-md-10 col-xs-10">
+            <div class="col-md-10 col-xs-10 margin">
              ${name},<br/>
              ${designation}<br/><br/>
             </div>               
@@ -179,7 +189,7 @@
                 <div class="col-md-4 col-xs-4"></div>
                 <div class="col-md-8 col-xs-8">
         
-                    <a class="btn btn-success btn-edit fancybox fancybox.iframe" href="/content/gdc-check-in/en/dynamic-pages/edit-quartery-bdo.html?quarterNumber=${quarterNumber}&annualYear=${annualYear}&userID=${userID}&editForm=true&editBdoScore=true">Edit</a>
+                    <a class="btn btn-success btn-edit fancybox fancybox.iframe" href="/content/gdc-bdo/en/dynamic-pages/edit-quartery-bdo.html?quarterNumber=${quarterNumber}&annualYear=${annualYear}&userID=${userID}&editForm=true&editBdoScore=true">Edit</a>
                     &nbsp;
         
                 </div>

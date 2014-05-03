@@ -5,7 +5,7 @@
 <%@ page contentType="text/html; charset=utf-8" %>
 <%@include file="/libs/foundation/global.jsp" %>
 <%@page session="false" %>
-<br>
+
 <%@ page import="com.day.cq.commons.Doctype" %><%
     String xs = Doctype.isXHTML(request) ? "/" : "";
     String favIcon = currentDesign.getPath() + "/favicon.ico";
@@ -25,7 +25,7 @@
     <% } %>
 
 
-<title>GDC Check-in Tool</title>
+<title>GDC BDO Tool</title>
 
 
 </head>
