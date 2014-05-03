@@ -17,7 +17,6 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.sling.api.SlingHttpServletRequest;
@@ -75,7 +74,7 @@ public class GenerateReportsServlet extends SlingSafeMethodsServlet {
 			
 			String managerName = userManagementService.getEmployeeName(managersID, session);
 	    	
-			for(int i=0; i< directReportees.length; i++) {
+			for(int i=0; i<directReportees.length; i++) {
 				Map<String, String[]> employeeBDODataMap = quarterlyBDORepositoryClient.getQuarterlyBDOData(quarterNumber, annualYear, directReportees[i], session);
 				//If employee record exists in the repository, get the JSON data
 				if(employeeBDODataMap != null && employeeBDODataMap.size() > 0 ) { 
@@ -152,8 +151,7 @@ public class GenerateReportsServlet extends SlingSafeMethodsServlet {
             Row row = rowIterator.next();
             //Every row has columns, get the column iterator and iterate over them
             Iterator<Cell> cellIterator = row.cellIterator();        
-            while (cellIterator.hasNext()) 
-            {
+            while (cellIterator.hasNext()) {
                 //Get the Cell object
                 Cell cell = cellIterator.next();
                 cell.setCellStyle(style);
