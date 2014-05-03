@@ -25,7 +25,7 @@
     <% } %>
 
 
-<title>GDC BDO Tool</title>
+<title>GDC BDO</title>
 
 
 </head>
