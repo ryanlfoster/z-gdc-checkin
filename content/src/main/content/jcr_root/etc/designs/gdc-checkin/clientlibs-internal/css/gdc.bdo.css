@@ -22,6 +22,7 @@
 
 .bdo-form textarea {
 	height: 60px;
+	resize: none;
 }
 
 .bdo-form .objective-desc {
