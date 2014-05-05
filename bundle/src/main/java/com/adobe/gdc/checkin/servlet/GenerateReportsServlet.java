@@ -64,7 +64,7 @@ public class GenerateReportsServlet extends SlingSafeMethodsServlet {
 							        		QuartelyBDOConstants.EMPLOYEE_ID_TITLE,
 							        		QuartelyBDOConstants.NAME_TITLE,
 							        		QuartelyBDOConstants.MANAGER_NAME_TITLE,
-							        		QuartelyBDOConstants.BDO_SCORE_FOR_Q_TITLE,
+							        		QuartelyBDOConstants.BDO_SCORE_FOR_Q_TITLE + quarterNumber,
 							        		QuartelyBDOConstants.NOTES_TITLE
         								});
        				
@@ -133,19 +133,19 @@ public class GenerateReportsServlet extends SlingSafeMethodsServlet {
     }
       
     
-    
     private void styleExcelSheet(XSSFWorkbook workbook, Sheet sheet) throws Exception{
     	
     	//Define style for the report header
-    	CellStyle  style = workbook.createCellStyle();
+    	CellStyle  headerStyle = workbook.createCellStyle();
       
-      	style.setFillForegroundColor(HSSFColor.GREEN.index);
-      	style.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+    	headerStyle.setFillForegroundColor(HSSFColor.GREEN.index);
+    	headerStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+    	headerStyle.setWrapText(true);
       	
     	//every sheet has rows, iterate over them
         Iterator<Row> rowIterator = sheet.iterator();
         
-        //Style the first row
+        //Style only the Report Header
         if (rowIterator.hasNext()) {
         	//Get the row object
             Row row = rowIterator.next();
@@ -154,11 +154,32 @@ public class GenerateReportsServlet extends SlingSafeMethodsServlet {
             while (cellIterator.hasNext()) {
                 //Get the Cell object
                 Cell cell = cellIterator.next();
-                cell.setCellStyle(style);
+                cell.setCellStyle(headerStyle);
             }         
         }
+        
+       //Style for the Report cells
+    	CellStyle  cellStyle = workbook.createCellStyle();
+    	cellStyle.setWrapText(true);
+        
+        while (rowIterator.hasNext()) {
+        	//Get the row object
+            Row row = rowIterator.next();
+            //Every row has columns, get the column iterator and iterate over them
+            Iterator<Cell> cellIterator = row.cellIterator();        
+            while (cellIterator.hasNext()) {
+                //Get the Cell object
+                Cell cell = cellIterator.next();
+                cell.setCellStyle(cellStyle);
+            }         
+        }
+        
+        //Auto-size the columns
+        for (int i=0; i<5; i++) {
+        	sheet.autoSizeColumn(i);
+        }
+        
     }
-    
     
     
 	private String[] getEmployeeBDOData( Map<String, String[]> employeeBDODataMap, String managerName) throws JSONException {			
@@ -187,9 +208,10 @@ public class GenerateReportsServlet extends SlingSafeMethodsServlet {
 	
 	
 	private String formatArrayToString(String[] arrayValue) {
+		String crLf = Character.toString((char)13) + Character.toString((char)10);
 		String stringValue = QuartelyBDOConstants.EMPTY_STRING;
 		for(int index=0; index<arrayValue.length; index++ ) {
-			stringValue = stringValue + (index+1) +". " + arrayValue[index] + "\r\n";
+			stringValue = stringValue + (index+1) +". " + arrayValue[index] + crLf;
 		}
 		return stringValue;
 	}
