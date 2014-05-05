@@ -1,4 +1,4 @@
-/*
+/**
 * jQuery File Download Plugin v1.4.2 
 *
 * http://www.johnculviner.com
@@ -14,7 +14,7 @@
 * !!!!NOTE!!!!
 */
 
-(function($, window) {
+(function($, window){
 	// i'll just put them here to get evaluated on script load
 	var htmlSpecialCharsRegEx = /[<>&\r\n"']/gm;
 	var htmlSpecialCharsPlaceHolders = {

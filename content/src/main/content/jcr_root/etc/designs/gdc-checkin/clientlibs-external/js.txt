@@ -6,6 +6,6 @@ jquery.jqplot.min.js
 jqplot.donutRenderer.min.js
 jquery.dataTables.js
 dataTables.bootstrap.js
+jquery.fileDownload.js
 jquery.fancybox.js
 jquery.fancybox.pack.js
-jquery.fileDownload.js

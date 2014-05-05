@@ -60,18 +60,6 @@
 	       }
 	   });
 
-	   $(".fancybox").fancybox({ 
-	         'width':'750',
-	         'height':'600',
-	         'autoDimensions':false,
-	         'type':'iframe',
-	         'autoSize':false,
-
-	         afterClose : function() {
-	            oTable.fnReloadAjax();
-	        }
-	     });
-
 	   $('.btn-download-report${quarterNumber}').click( function() { 
 		      var url = "<%=currentPage.getPath()%>.managerreport.html?managersID="+managersID+"&quarterNumber="+quarterNumber+"&annualYear="+annualYear;
         $.fileDownload(url, {  
@@ -85,7 +73,20 @@
 		      }); 
 		   }); 
       
-    
+
+	   $(".fancybox").fancybox({ 
+
+		   'width':'750',
+           'height':'600',
+           'autoDimensions':false,
+           'type':'iframe',
+           'autoSize':false,
+
+           afterClose : function() {
+              oTable.fnReloadAjax();
+          }
+		});
+
 
 });
 
