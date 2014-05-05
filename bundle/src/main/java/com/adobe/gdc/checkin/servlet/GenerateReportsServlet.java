@@ -89,7 +89,7 @@ public class GenerateReportsServlet extends SlingSafeMethodsServlet {
 			}
 			response.setContentType("application/vnd.ms-excel");
 			response.setHeader("Expires:", "0"); // eliminates browser caching
-		    response.setHeader("Content-Disposition",  "attachment; filename=bdo_report.xls");
+		    response.setHeader("Content-Disposition",  "attachment; filename=bdo_report.xlsx");
 			
 		    XSSFWorkbook workbook = writeDataMapToFile(resultData);
 		    
