@@ -60,25 +60,32 @@
 	       }
 	   });
 
-      //TO-DO
-       $('.btn-download-report${quarterNumber}').click( function() { 
-    	   $.get( "<%=currentPage.getPath()%>.managerreport.html", { managersID:managersID, quarterNumber:quarterNumber, annualYear:annualYear } );    	   
-		}); 
+	   $(".fancybox").fancybox({ 
+	         'width':'750',
+	         'height':'600',
+	         'autoDimensions':false,
+	         'type':'iframe',
+	         'autoSize':false,
+
+	         afterClose : function() {
+	            oTable.fnReloadAjax();
+	        }
+	     });
+
+	   $('.btn-download-report${quarterNumber}').click( function() { 
+		      var url = "<%=currentPage.getPath()%>.managerreport.html?managersID="+managersID+"&quarterNumber="+quarterNumber+"&annualYear="+annualYear;
+        $.fileDownload(url, {  
+				         successCallback: function (url) {  
+				             alert('Report download successfully'); 
+				         },  
+             failCallback: function (html, url) {    
+                 alert('Your file download just failed for this URL:' + url + '\r\n' +     
+                       'Here was the resulting error HTML: \r\n' + html);    
+             }
+		      }); 
+		   }); 
       
-       $(".fancybox").fancybox({ 
-
-		   'width':'750',
-           'height':'600',
-           'autoDimensions':false,
-           'type':'iframe',
-           'autoSize':false,
-
-           afterClose : function() {
-              oTable.fnReloadAjax();
-          }
-		});
-
-
+    
 
 });
 

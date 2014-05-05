@@ -1,14 +1,18 @@
 package com.adobe.gdc.checkin.servlet;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import javax.jcr.Session;
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
+
 import org.apache.felix.scr.annotations.Reference;
 import org.apache.felix.scr.annotations.sling.SlingServlet;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -83,7 +87,20 @@ public class GenerateReportsServlet extends SlingSafeMethodsServlet {
 					resultData.put(index+"",employeeBDOData);
 				}
 			}
-			writeDataMapToFile(resultData);
+			response.setContentType("application/vnd.ms-excel");
+			response.setHeader("Expires:", "0"); // eliminates browser caching
+		    response.setHeader("Content-Disposition",  "attachment; filename=bdo_report.xls");
+			
+		    XSSFWorkbook workbook = writeDataMapToFile(resultData);
+		    
+		    ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
+		    workbook.write(outByteStream);
+		    byte [] outArray = outByteStream.toByteArray();
+		    response.setContentLength(outArray.length);
+		    OutputStream outStream = response.getOutputStream();
+		    outStream.write(outArray);
+		    outStream.flush();
+		    outStream.close();
 		}
 		catch(IOException e) {
 			log.error("[IOException]",e);
@@ -94,7 +111,7 @@ public class GenerateReportsServlet extends SlingSafeMethodsServlet {
     }
     
     
-    private void writeDataMapToFile( Map<String, Object[]> resultData) throws IOException, Exception{
+    private XSSFWorkbook writeDataMapToFile( Map<String, Object[]> resultData) throws IOException, Exception{
     	//Blank workbook
 		XSSFWorkbook workbook = new XSSFWorkbook(); 
 		
@@ -122,13 +139,7 @@ public class GenerateReportsServlet extends SlingSafeMethodsServlet {
 	
 		styleExcelSheet(workbook, sheet);
 		
-		//Write the workbook in file system
-	    FileOutputStream out = new FileOutputStream(new File("bdo_report.xlsx"));
-	    workbook.write(out);
-	    out.flush();
-	    out.close();
-    	log.info("Successfully written generated BDO Report to file-> bdo_report.xlsx");    
-    	
+		return workbook;
     	
     }
       
