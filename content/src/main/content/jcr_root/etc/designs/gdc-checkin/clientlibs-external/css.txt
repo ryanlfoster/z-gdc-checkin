@@ -1,10 +1,10 @@
 #base=css
 
 bootstrap.css
-font-awesome.css
 prettify.css
 styles-theme.css
 form-wizard.css
 styles.css
 dataTables.bootstrap.css
 jquery.fancybox.css
+font-awesome.css
