@@ -100,7 +100,13 @@ public class QuarterlyBDOUtils {
 	 */
 	public static String getQuarterlyBDORepositoryPath(int year, int quarterNumber, String user) {
 		
-		String repositoryBasePath = QuartelyBDOConstants.GDC_CHECKIN_REPOSITORY_BASE_PATH +"/"+year+"/"+user+"/"+"Q"+quarterNumber;
+		String repositoryBasePath = QuartelyBDOConstants.GDC_CHECKIN_REPOSITORY_BASE_PATH +"/"+user+"/"+year+"/"+"Q"+quarterNumber;
+		return repositoryBasePath;
+	}
+	
+	public static String getEmployeeProfileBasePath(String user) {
+		
+		String repositoryBasePath = QuartelyBDOConstants.GDC_CHECKIN_REPOSITORY_BASE_PATH +"/"+user;
 		return repositoryBasePath;
 	}
 

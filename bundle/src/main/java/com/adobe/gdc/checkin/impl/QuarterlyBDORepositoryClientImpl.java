@@ -53,6 +53,28 @@ public class QuarterlyBDORepositoryClientImpl  implements QuarterlyBDORepository
 		return false;
 	}
 
+	
+	public boolean createOrUpdateEmployeeProfileData(Map<String, String[]> params,  Session session)  throws Exception {
+		
+		String userID = params.get(QuartelyBDOConstants.USER_ID)[0];
+		
+		String repositoryPath = QuarterlyBDOUtils.getEmployeeProfileBasePath(userID); 
+		
+		//Get or create the employee Profile node to store/update Employee profile data
+		Node employeeProfileNode = JcrUtils.getOrCreateByPath(repositoryPath, JcrConstants.NT_UNSTRUCTURED, session);
+		
+		//Now save the employee profile data as the node properties
+		QuarterlyBDOUtils.setNodeProperties(employeeProfileNode, getEmployeeProfileProperties(params, session));
+				
+		if(session.hasPendingChanges()) {
+			session.save();
+			return true;
+		}
+		return false;
+
+	}
+	
+	
 	@Override
 	public Map<String, String[]> getQuarterlyBDOData(int quarterNumber, int annualYear, String userID, Session session) throws Exception {
 
@@ -68,6 +90,21 @@ public class QuarterlyBDORepositoryClientImpl  implements QuarterlyBDORepository
 		return bdoDataMap;
 	}
 	
+	@Override
+	public Map<String, String[]> getEmployeeProfileData(String userID, Session session) throws Exception {
+
+		Map<String, String[]> employeeDataMap = new HashMap<String, String[]>();
+		String repositoryPath = QuarterlyBDOUtils.getEmployeeProfileBasePath(userID);
+		
+		//Get the Employee Profile node from the repository
+		Node employeeProfileNode = JcrUtils.getNodeIfExists(repositoryPath, session);
+		
+		//If node exists, read the node properties 
+		if(employeeProfileNode != null) {
+			employeeDataMap = QuarterlyBDOUtils.readNodeproperties(employeeProfileNode);
+		} 
+		return employeeDataMap;
+	}
 	
 	private Map<String, String[]> getQuarterlyBDOProperties(String action, Map<String, String[]> params, Session session) throws Exception
 	{
@@ -77,8 +114,7 @@ public class QuarterlyBDORepositoryClientImpl  implements QuarterlyBDORepository
 		properties.put(QuartelyBDOConstants.ACHIEVEMENTS, params.get(QuartelyBDOConstants.ACHIEVEMENTS_ARRAY));
 		properties.put(QuartelyBDOConstants.DESIGNATION, params.get(QuartelyBDOConstants.DESIGNATION));
 		properties.put(QuartelyBDOConstants.BDO_SCORE, params.get(QuartelyBDOConstants.BDO_SCORE));
-		properties.put(QuartelyBDOConstants.NAME, params.get(QuartelyBDOConstants.NAME));
-		properties.put(QuartelyBDOConstants.EMPLOYEE_ID, new String[] {userManagementService.getEmployeeID(params.get(QuartelyBDOConstants.USER_ID)[0],session)});
+		
 		String [] status = {};
 		if(action.equals(QuartelyBDOConstants.SUBMIT)) {
 			status = new String[] {QuartelyBDOConstants.SUBMITTED};
@@ -95,6 +131,17 @@ public class QuarterlyBDORepositoryClientImpl  implements QuarterlyBDORepository
 		return properties; 
 	}
 
+	
+	private Map<String, String[]> getEmployeeProfileProperties(Map<String, String[]> params, Session session) throws Exception
+	{
+		Map<String,String[]> properties = new HashMap<String,String[]>();
+	
+		properties.put(QuartelyBDOConstants.DESIGNATION, params.get(QuartelyBDOConstants.DESIGNATION));
+		properties.put(QuartelyBDOConstants.EMPLOYEE_ID, params.get(QuartelyBDOConstants.EMPLOYEE_ID));
+		properties.put(QuartelyBDOConstants.NAME, params.get(QuartelyBDOConstants.NAME));
+		
+		return properties; 
+	}
 }
 
 

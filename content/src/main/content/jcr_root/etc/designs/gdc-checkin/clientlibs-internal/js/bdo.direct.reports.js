@@ -12,10 +12,10 @@ GDC.bdo.directReports.initTable = function(selector,quarterNumber,annualYear) {
 		},
         "sAjaxSource": bdoReportServiceSrcPath,
         "aoColumns": [{"mData":"name","sTitle": "Name","sWidth":"25%"},
-                      {"mData":"designation","sTitle": "Designation","sWidth":"25%"},
+                      {"mData":"designation","sTitle": "Designation","sWidth":"23%"},
                       {"mData":"employeeID","sTitle": "Employee ID","sWidth":"15%","sClass":"center-aligned"},
-                      {"mData":"status","sTitle": "Status","sWidth":"16%","sClass":"center-aligned"},
-                      {"mData":"bdoScore","sTitle": "BDO Score(%)","sWidth":"10%","sClass":"center-aligned"},
+                      {"mData":"status","sTitle": "Status","sWidth":"16%"},
+                      {"mData":"bdoScore","sTitle": "BDO Score(%)","sWidth":"15%","sClass":"center-aligned"},
                       {"mData":"userID","sTitle": "", "sWidth":"10%", "mRender":function(data,type,full){
 
 					  var html = "";

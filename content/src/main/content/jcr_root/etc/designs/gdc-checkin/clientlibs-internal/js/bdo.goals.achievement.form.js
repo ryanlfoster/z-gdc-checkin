@@ -22,10 +22,11 @@ GDC.bdo.form = function(bdoObjectives,bdoAchievements) {
 
 }
 
-GDC.bdo.form.detectAnyFormChange = function(bdoObjectives,bdoAchievements,bdoScore) {
+GDC.bdo.form.detectAnyFormChange = function(bdoObjectives,bdoAchievements,employeeID) {
 
 	if((GDC.bdo.form.unescapeHtml(bdoObjectives.toString()) === GDC.bdo.form.getObjectives().toString()) 
-        && (GDC.bdo.form.unescapeHtml(bdoAchievements.toString()) === GDC.bdo.form.getAchievements().toString())) {
+        && (GDC.bdo.form.unescapeHtml(bdoAchievements.toString()) === GDC.bdo.form.getAchievements().toString())
+        && (employeeID == GDC.bdo.form.getRequestParams().employeeID)) {
             return false;
         }
     else {
@@ -104,6 +105,7 @@ GDC.bdo.form.updateFormFieldValues = function(updatedFormValues, newStatus) {
 	bdoObjectivesArray = updatedFormValues.objectives;
     bdoAchievementsArray = updatedFormValues.achievements;
     bdoScore = updatedFormValues.bdoScore;
+    employeeID = updatedFormValues.employeeID;
 
     if(newStatus == "save") {
         status = 'NOT SUBMITTED';
@@ -130,6 +132,7 @@ GDC.bdo.form.getRequestParams = function() {
 	var userID = $('.quarterly-bdo-form #userID').val();
 	var annualYear = $('.quarterly-bdo-form #annualYear').val();
 	var name = $('.quarterly-bdo-form #name').val();
+	var employeeID = $('.quarterly-bdo-form #employeeID').val();
 
     var json = {"objectives" : objectives,
                 "achievements" : achievements,
@@ -138,7 +141,8 @@ GDC.bdo.form.getRequestParams = function() {
                 "quarterNumber" : quarterNumber,
                 "userID" : userID,
                 "annualYear" : annualYear,
-                "name": name
+                "name": name,
+                "employeeID": employeeID
     			};
 
     return json;
@@ -191,6 +195,10 @@ GDC.bdo.form.validateOnSave = function() {
     	errorMsg += 'Please set BDO Objective !<br>';
     }
 
+    if(GDC.bdo.isEmpty($('.quarterly-bdo-form #employeeID').val()) ) {
+    	errorMsg += 'Please enter your employeeID !<br>';
+    }
+
     if(errorMsg != "") {
 		GDC.bdo.form.notifyError(errorMsg);
         return false;
@@ -212,6 +220,9 @@ GDC.bdo.form.validateOnSubmit = function() {
     	errorMsg += 'Please set BDO Achievement self-inputs !<br>';
     }
 
+	if(GDC.bdo.isEmpty($('.quarterly-bdo-form #employeeID').val()) ) {
+    	errorMsg += 'Please enter your employeeID !<br>';
+    }
     if(errorMsg != "") {
 		GDC.bdo.form.notifyError(errorMsg);            
         return false;

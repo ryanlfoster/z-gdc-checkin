@@ -76,7 +76,7 @@
 
 	   $(".fancybox").fancybox({ 
 
-		   'width':'750',
+		         'width':'750',
            'height':'600',
            'autoDimensions':false,
            'type':'iframe',

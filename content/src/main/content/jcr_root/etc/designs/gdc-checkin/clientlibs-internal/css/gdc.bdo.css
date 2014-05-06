@@ -45,6 +45,15 @@
 	color: #D00000;
 }
 
+#errmsg {
+ color: red;
+}
+
+#employeeID {
+	line-height: 18px;
+ border-radius: 4px;
+}
+
 .bdo-form .success-msg {
 	font-size: medium;
 	font-style: italic;

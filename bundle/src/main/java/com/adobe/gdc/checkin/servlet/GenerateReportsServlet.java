@@ -79,11 +79,13 @@ public class GenerateReportsServlet extends SlingSafeMethodsServlet {
 			String managerName = userManagementService.getEmployeeName(managersID, session);
 	    	
 			for(int i=0; i<directReportees.length; i++) {
-				Map<String, String[]> employeeBDODataMap = quarterlyBDORepositoryClient.getQuarterlyBDOData(quarterNumber, annualYear, directReportees[i], session);
-				//If employee record exists in the repository, get the JSON data
-				if(employeeBDODataMap != null && employeeBDODataMap.size() > 0 ) { 
+				Map<String, String[]> employeeProfileDataMap = quarterlyBDORepositoryClient.getEmployeeProfileData(directReportees[i], session);
+				
+				//If employee exists in the repository
+				if(employeeProfileDataMap != null && employeeProfileDataMap.size() > 0 ) {
+					Map<String, String[]> employeeBDODataMap = quarterlyBDORepositoryClient.getQuarterlyBDOData(quarterNumber, annualYear, directReportees[i], session);					
 					int index = resultData.size() + 1;
-					String[] employeeBDOData = getEmployeeBDOData(employeeBDODataMap, managerName);
+					String[] employeeBDOData = getEmployeeBDOData(employeeProfileDataMap, employeeBDODataMap, managerName);
 					resultData.put(index+"",employeeBDOData);
 				}
 			}
@@ -193,15 +195,15 @@ public class GenerateReportsServlet extends SlingSafeMethodsServlet {
     }
     
     
-	private String[] getEmployeeBDOData( Map<String, String[]> employeeBDODataMap, String managerName) throws JSONException {			
+	private String[] getEmployeeBDOData( Map<String, String[]> employeeProfileDataMap, Map<String, String[]> employeeBDODataMap, String managerName) throws JSONException {			
 		
 			String[] employeeBDODataArray = new String[5];
-			employeeBDODataArray[0] = employeeBDODataMap.get(QuartelyBDOConstants.EMPLOYEE_ID)!= null 
-										? employeeBDODataMap.get(QuartelyBDOConstants.EMPLOYEE_ID)[0]
+			employeeBDODataArray[0] = employeeProfileDataMap.get(QuartelyBDOConstants.EMPLOYEE_ID)!= null 
+										? employeeProfileDataMap.get(QuartelyBDOConstants.EMPLOYEE_ID)[0]
 										:  QuartelyBDOConstants.EMPTY_STRING;
 										
-			employeeBDODataArray[1] = employeeBDODataMap.get(QuartelyBDOConstants.NAME) != null 
-										? employeeBDODataMap.get(QuartelyBDOConstants.NAME)[0]
+			employeeBDODataArray[1] = employeeProfileDataMap.get(QuartelyBDOConstants.NAME) != null 
+										? employeeProfileDataMap.get(QuartelyBDOConstants.NAME)[0]
 										: QuartelyBDOConstants.EMPTY_STRING;
 										
 			employeeBDODataArray[2]	= managerName;

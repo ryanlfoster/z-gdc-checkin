@@ -75,6 +75,12 @@ public class QuarterlyBDOSaveSubmitOrCompleteServlet extends SlingAllMethodsServ
 			Session session = getSession(request);
 			if (result) {
 				result = quarterlyBDORepositoryClient.createOrUpdateQuarterlyBDOData(action, params, session);
+				
+				if(action.equals(QuartelyBDOConstants.SAVE) || action.equals(QuartelyBDOConstants.SUBMIT)) {
+					//save or update the Employee Profile Data
+					result = quarterlyBDORepositoryClient.createOrUpdateEmployeeProfileData(params, session);
+				}
+								
 			}
 
 			if (result && action.equals(QuartelyBDOConstants.SUBMIT)) {

@@ -61,13 +61,19 @@ public class QuarterlyBDOReportServlet extends SlingAllMethodsServlet{
 			String[] directReportees = userManagementService.getManagersDirectReportees(managersID,session);
 			JSONArray directReportResultArray = new JSONArray();
 			for(int i=0; i< directReportees.length; i++) {
-				Map<String, String[]> employeeBDODataMap = quarterlyBDORepositoryClient.getQuarterlyBDOData(quarterNumber, annualYear, directReportees[i], session);
-				//If employee record exists in the repository, get the JSON data
-				if(employeeBDODataMap != null && employeeBDODataMap.size() > 0 ) { 
+				
+				Map<String, String[]> employeeProfileDataMap = quarterlyBDORepositoryClient.getEmployeeProfileData(directReportees[i], session);
+				
+				//If employee exists in the repository
+				if(employeeProfileDataMap != null && employeeProfileDataMap.size() > 0 ) {
+					
+					Map<String, String[]> employeeBDODataMap = quarterlyBDORepositoryClient.getQuarterlyBDOData(quarterNumber, annualYear, directReportees[i], session);					
 					int index = directReportResultArray.length() + 1;
-					JSONObject employeeBDODataJson = getEmployeeBDOJSON(index,employeeBDODataMap,directReportees[i]);
+					JSONObject employeeBDODataJson = getEmployeeBDOJSON(index,employeeProfileDataMap,employeeBDODataMap,directReportees[i],session);
 					directReportResultArray.put(employeeBDODataJson);
+					
 				}
+				
 			}
 			
 			responseObject.put(QuartelyBDOConstants.TOTAL_RECORDS, directReportResultArray.length());
@@ -89,19 +95,21 @@ public class QuarterlyBDOReportServlet extends SlingAllMethodsServlet{
 	}
 	
 	
-	private JSONObject getEmployeeBDOJSON(int index, Map<String, String[]> employeeBDODataMap, String userID) throws JSONException {
+	private JSONObject getEmployeeBDOJSON(int index, Map<String, String[]> employeeProfileDataMap, Map<String, String[]> employeeBDODataMap, String userID, Session session) throws Exception {
 		
 		JSONObject employeeBDODataJson = new JSONObject();
 		employeeBDODataJson.put(QuartelyBDOConstants.INDEX, index);
-		employeeBDODataJson.put(QuartelyBDOConstants.NAME, employeeBDODataMap.get(QuartelyBDOConstants.NAME) != null 
-															? employeeBDODataMap.get(QuartelyBDOConstants.NAME)[0]
-														    : QuartelyBDOConstants.EMPTY_STRING);
+		employeeBDODataJson.put(QuartelyBDOConstants.NAME, employeeProfileDataMap.get(QuartelyBDOConstants.NAME) != null 
+															? employeeProfileDataMap.get(QuartelyBDOConstants.NAME)[0]
+															: QuartelyBDOConstants.EMPTY_STRING);
+		employeeBDODataJson.put(QuartelyBDOConstants.EMPLOYEE_ID, employeeProfileDataMap.get(QuartelyBDOConstants.EMPLOYEE_ID) != null
+																	? employeeProfileDataMap.get(QuartelyBDOConstants.EMPLOYEE_ID)[0]
+																    : QuartelyBDOConstants.EMPTY_STRING);
 		employeeBDODataJson.put(QuartelyBDOConstants.DESIGNATION, employeeBDODataMap.get(QuartelyBDOConstants.DESIGNATION) != null
 																	? employeeBDODataMap.get(QuartelyBDOConstants.DESIGNATION)[0]
+																	: employeeProfileDataMap.get(QuartelyBDOConstants.DESIGNATION) != null
+																	? employeeProfileDataMap.get(QuartelyBDOConstants.DESIGNATION)[0]
 																	: QuartelyBDOConstants.EMPTY_STRING);
-		employeeBDODataJson.put(QuartelyBDOConstants.EMPLOYEE_ID, employeeBDODataMap.get(QuartelyBDOConstants.EMPLOYEE_ID)!= null 
-																	? employeeBDODataMap.get(QuartelyBDOConstants.EMPLOYEE_ID)[0]
-																 	:  QuartelyBDOConstants.EMPTY_STRING);
 		employeeBDODataJson.put(QuartelyBDOConstants.OBJECTIVES, employeeBDODataMap.get(QuartelyBDOConstants.OBJECTIVES)!= null 
 																	? new JSONArray(Arrays.asList(employeeBDODataMap.get(QuartelyBDOConstants.OBJECTIVES)))
 																	: new JSONArray());
@@ -113,7 +121,7 @@ public class QuarterlyBDOReportServlet extends SlingAllMethodsServlet{
 																	: QuartelyBDOConstants.EMPTY_STRING);
 		employeeBDODataJson.put(QuartelyBDOConstants.STATUS, employeeBDODataMap.get(QuartelyBDOConstants.STATUS) != null 
 																	? employeeBDODataMap.get(QuartelyBDOConstants.STATUS)[0]
-																	: QuartelyBDOConstants.EMPTY_STRING);
+																	: QuartelyBDOConstants.NOT_SUBMITTED);
 		employeeBDODataJson.put(QuartelyBDOConstants.USER_ID, userID);
 
 		return employeeBDODataJson;
