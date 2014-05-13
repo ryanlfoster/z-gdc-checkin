@@ -6,39 +6,39 @@
 <c:set var="percentageList" value="${fn:split('10,20,30,40,50,60,70,80,90,100', ',')}" scope="application" />
 
 <c:choose>
- <c:when test="<%=StringUtils.isNotBlank(request.getParameter("quarterNumber"))%>">
-  <c:set var="quarterNumber" value="<%=Integer.parseInt(request.getParameter("quarterNumber"))%>" />
- </c:when>
- <c:otherwise>
-  <c:set var="quarterNumber" value="${quarterNumber}" />
- </c:otherwise>
+    <c:when test="<%=StringUtils.isNotBlank(request.getParameter("quarterNumber"))%>">
+        <c:set var="quarterNumber" value="<%=Integer.parseInt(request.getParameter("quarterNumber"))%>" />
+    </c:when>
+    <c:otherwise>
+        <c:set var="quarterNumber" value="${quarterNumber}" />
+    </c:otherwise>
 </c:choose>
 
 <c:choose>
- <c:when test="<%=StringUtils.isNotBlank(request.getParameter("annualYear"))%>">
-  <c:set var="annualYear" value="<%=Integer.parseInt(request.getParameter("annualYear"))%>" />
- </c:when>
- <c:otherwise>
-  <c:set var="annualYear" value="${annualYear}" />
- </c:otherwise>
+    <c:when test="<%=StringUtils.isNotBlank(request.getParameter("annualYear"))%>">
+        <c:set var="annualYear" value="<%=Integer.parseInt(request.getParameter("annualYear"))%>" />
+    </c:when>
+    <c:otherwise>
+        <c:set var="annualYear" value="${annualYear}" />
+    </c:otherwise>
 </c:choose>
 
 <c:choose>
- <c:when test="<%=StringUtils.isNotBlank(request.getParameter("userID"))%>">
-  <c:set var="userID" value="<%=request.getParameter("userID")%>" />
- </c:when>
- <c:otherwise>
-  <c:set var="userID" value="${userID}" />
- </c:otherwise>
+			 <c:when test="<%=StringUtils.isNotBlank(request.getParameter("userID"))%>">
+			     <c:set var="userID" value="<%=request.getParameter("userID")%>" />
+			 </c:when>
+			 <c:otherwise>
+			     <c:set var="userID" value="${userID}" />
+			 </c:otherwise>
 </c:choose>
 
 <c:choose>
- <c:when test="<%=StringUtils.isNotBlank(request.getParameter("editForm"))%>">
-  <c:set var="editForm" value="<%=request.getParameter("editForm")%>" />
- </c:when>
- <c:otherwise>
-  <c:set var="editForm" value="${editForm}" />
- </c:otherwise>
+    <c:when test="<%=StringUtils.isNotBlank(request.getParameter("editForm"))%>">
+        <c:set var="editForm" value="<%=request.getParameter("editForm")%>" />
+    </c:when>
+    <c:otherwise>
+        <c:set var="editForm" value="${editForm}" />
+    </c:otherwise>
 </c:choose>
 
 <%
@@ -70,203 +70,159 @@ if(StringUtils.isNotBlank(request.getParameter("editBdoScore"))|| StringUtils.is
 <c:set var="name" value="<%=userManagementService.getEmployeeName(userID, session)%>" scope="request"/>
 <c:set var="designation" value="<%=quarterlyBDODataMap.get("designation")!= null ? quarterlyBDODataMap.get("designation")[0] : userManagementService.getEmployeeDesignation(userID, session)%>" scope="request"/>
 <c:set var="employeeID" value="<%=employeeID %>" scope="request"/>
+
 <div class="row no-margin">
 
- <c:choose>
-  <c:when test="<%=StringUtils.isNotBlank(request.getParameter("editBdoScore"))%>">
-   <div class="col-md-12 col-xs-12 white-panel-large">
-  </c:when>
-  <c:otherwise>
-   <div class="col-md-9 col-xs-9 white-panel-small">
-  </c:otherwise>
- </c:choose>
-    
-        <div class="bdo-form">
+<c:choose>
+    <c:when test="<%=StringUtils.isNotBlank(request.getParameter("editBdoScore"))%>">
+        <div class="col-md-12 col-xs-12 white-panel-large">
+    </c:when>
+    <c:otherwise>
+        <div class="col-md-9 col-xs-9 white-panel-small">
+    </c:otherwise>
+</c:choose>
 
-            <c:choose>
-                <c:when test = "${editForm eq 'true'}">
+<div class="bdo-form">
+    <c:choose>
+        <c:when test = "${editForm eq 'true'}">
+				        <div class="row">
+				            <div class="col-md-1 col-xs-1"></div>
+				            <div class="col-md-10 col-xs-10 margin">
+							             ${name},<br/>
+							             ${designation}<br/><br/>
+				            </div>               
+				            <div class="col-md-1 col-xs-1"></div>
+				        </div>
 
-                    <div class="row">
-                        <div class="col-md-1 col-xs-1"></div>
-                        <div class="col-md-10 col-xs-10 margin">
-                         ${name},<br/>
-                         ${designation}<br/><br/>
-                        </div>               
+            <div class="row">
+				            <div class="col-md-1 col-xs-1"></div>
+				            <div class="col-md-8 col-xs-8" id="form-message"></div>
+            </div>
             
-                        <div class="col-md-1 col-xs-1"></div>
-                    </div>
+            <br/>
 
-                    <div class="row">
-                        <div class="col-md-1 col-xs-1"></div>
-                        <div class="col-md-8 col-xs-8" id="form-message"></div>
-                    </div>
-                    <br/>
+            <form id="quarterly-bdo-form" class="quarterly-bdo-form" method="POST" action="<%=currentPage.getPath()%>.bdo">
 
-                    
-                            
-                    <form id="quarterly-bdo-form" class="quarterly-bdo-form" method="POST" action="<%=currentPage.getPath()%>.bdo">
-
-                        <input type="hidden" name="designation" id="designation" value="${designation}" />
-                        <input type="hidden" name="quarterNumber" id="quarterNumber" value="${quarterNumber}" />
-                        <input type="hidden" name="userID" id="userID" value="${userID}" />
-                        <input type="hidden" name="annualYear" id="annualYear" value="${annualYear}" />
-                        <input type="hidden" name="name" id="name" value="${name}" />
-                        
-                        
-                        
-                        <div class="row">
-                            <div class="col-md-1 col-xs-1"></div>
-                            <div class="col-md-2 col-xs-2">
-                                <label for="employeeID">
-                                    Employee ID
-                                </label>
-                            </div>
-                            <div class="col-md-8 col-xs-8" >
-                                 <c:choose>
-                                     <c:when test="<%=disableEmployeeID%>">
-                                         <input type="text" name="employeeID" id="employeeID" value="${employeeID}" disabled="disabled" />
-                                     </c:when>
-                                     <c:otherwise>
-                                         <input type="text" name="employeeID" id="employeeID" value="${employeeID}" />&nbsp;<span id="errmsg"></span>
-                                     </c:otherwise>
-                                 </c:choose>
-                            </div>
-                            <div class="col-md-1 col-xs-1"></div>
-                        </div>
+				            <input type="hidden" name="designation" id="designation" value="${designation}" />
+				            <input type="hidden" name="quarterNumber" id="quarterNumber" value="${quarterNumber}" />
+				            <input type="hidden" name="userID" id="userID" value="${userID}" />
+				            <input type="hidden" name="annualYear" id="annualYear" value="${annualYear}" />
+				            <input type="hidden" name="name" id="name" value="${name}" />
+				            
+                <div class="row">
+				                <div class="col-md-1 col-xs-1"></div>
+				                <div class="col-md-2 col-xs-2">
+				                    <label for="employeeID">
+				                        Employee ID
+				                    </label>
+				                </div>
+				                <div class="col-md-8 col-xs-8" >
+				                     <c:choose>
+				                         <c:when test="<%=disableEmployeeID%>">
+				                             <input type="text" name="employeeID" id="employeeID" value="${employeeID}" disabled="disabled" />
+				                         </c:when>
+				                         <c:otherwise>
+				                             <input type="text" name="employeeID" id="employeeID" value="${employeeID}" />&nbsp;<span id="errmsg"></span>
+				                         </c:otherwise>
+				                     </c:choose>
+				                </div>
+				                <div class="col-md-1 col-xs-1"></div>
+                </div>
         
-                     <br/>
+                <br/><br/>
 
-                        <div class="row">
-                            <div class="col-md-1 col-xs-1"></div>
-                            <div class="col-md-2 col-xs-2">
-                                <label for="objective">
-                                    Set BDO Objectives
-                                </label>
+                <div class="row">
+                    <div class="col-md-1 col-xs-1"></div>
+
+                    <div class="col-md-10 col-xs-10  bdo-panel">
+                        <div class="row bdo-active bdo-panel-row">
+                            <div class="col-sm-10  col-xs-10 col-md-10">
+                                <textarea id="objective_1" name="objective" placeholder="Objective" class="form-control objective" rows="1" cols="20"></textarea>
+                                <textarea id="achievement_1" name="achievement" placeholder="Achievement" class="form-control achievement" rows="1" cols="20"></textarea>
                             </div>
-                            <div class="col-md-8 col-xs-8  bdo-objective-panel">
-                                <div class="row bdo-objective-active bdo-objective-panel-row">
-                                    <div class="col-sm-10  col-xs-10 col-md-10">
-                                        <textarea id="objective_1" name="objective" placeholder="Objective" class="form-control objective" rows="1" cols="50"></textarea>
-                                    </div>
-                                    <div class="col-sm-2  col-xs-2 col-md-2 align-left button-wrapper">
-                                        <button class="btn btn-danger btn-remove" type="button" style="display:none">
-                                            <span class="glyphicon glyphicon-remove"></span>
+                            <div class="col-sm-2  col-xs-2 col-md-2 align-left button-wrapper">
+                                <button class="btn btn-danger btn-remove" type="button" style="display:none">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </button>
+                                <c:choose>
+                                    <c:when test="<%=StringUtils.isNotBlank(request.getParameter("editBdoScore"))%>">
+                                        <button class="btn btn-success btn-add" type="button">
+                                            <span class="glyphicon glyphicon-plus"></span>
                                         </button>
-                                        <c:choose>
-            <c:when test="<%=StringUtils.isNotBlank(request.getParameter("editBdoScore"))%>">
-             <button class="btn btn-success btn-add" type="button">
-                                                  <span class="glyphicon glyphicon-plus"></span>
-                                              </button>
-                                         </c:when>
-                                         <c:otherwise>
-                                              <button class="btn btn-primary btn-add" type="button">
-                                                  <span class="glyphicon glyphicon-plus"></span>
-                                              </button>
-                                         </c:otherwise>
-                                        </c:choose>
-                                    </div>
-                                </div>
+                                    </c:when>
+                                    <c:otherwise>
+		                                      <button class="btn btn-primary btn-add" type="button">
+		                                          <span class="glyphicon glyphicon-plus"></span>
+		                                      </button>
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
-                            <div class="col-md-1 col-xs-1"></div>
                         </div>
+                    </div>
+                    <div class="col-md-1 col-xs-1"></div>
+                </div>
+                
+                <br/>
         
-                        <br/>
-        
-                        <div class="row">
-                            <div class="col-md-1 col-xs-1"></div>
-                            <div class="col-md-2 col-xs-2">
-                                <label for="achievement">
-                                    BDO Achievements inputs
-                                </label>
-                            </div>
-                            <div class="col-md-8 col-xs-8 bdo-achievement-panel">
-                                <div class="row bdo-achievement-active bdo-achievement-panel-row">
-                                    <div class="col-sm-10  col-xs-10 col-md-10">
-                                        <textarea id="achievement_1" name="achievement" placeholder="Achievement" class="form-control achievement" rows="1" cols="50"></textarea>
-                                    </div>
-                                    <div class="col-sm-2  col-xs-2 col-md-2  align-left button-wrapper">
-                                        <button class="btn btn-danger btn-remove" type="button" style="display:none">
-                                            <span class="glyphicon glyphicon-remove"></span>
-                                        </button>
-                                        <c:choose>
-                                              <c:when test="<%=StringUtils.isNotBlank(request.getParameter("editBdoScore"))%>">
-                                                  <button class="btn btn-success btn-add" type="button">
-                                                      <span class="glyphicon glyphicon-plus"></span>
-                                                  </button>
-                                              </c:when>
-                                              <c:otherwise>
-                                                  <button class="btn btn-primary btn-add" type="button">
-                                                     <span class="glyphicon glyphicon-plus"></span>
-                                                  </button>
-                                              </c:otherwise>
-                                        </c:choose>
-                                    </div>
-                                </div>  
-                            </div>
-                            <div class="col-md-1 col-xs-1"></div>
-                        </div>
-    
-                        <br/>
+										      <c:choose>
+										          <c:when test="<%=StringUtils.isNotBlank(request.getParameter("editBdoScore"))%>">
+										
+																        <div class="row">
+																			         <div class="col-md-1 col-xs-1"></div>
+																			         <div class="col-md-2 col-xs-2">
+																			          <label for="percentageAchieved"> BDO Score </label>
+																            </div>
+																			         <div class="col-md-8 col-xs-8">
+																						          <select name="bdoScore" id="bdoScore">
+																						           <option value=""selected}>Please select</option>
+																						           <c:forEach items="${percentageList}" var="percent">
+																						            <option value="${percent}" ${percent eq bdoScore ? 'selected' : ''}>${percent}</option>
+																						           </c:forEach>
+																						          </select> %
+																			         </div>
+																            <div class="col-md-1 col-xs-1"></div>
+																        </div>
+										
+										              <br/>
 
-      <c:choose>
-       <c:when test="<%=StringUtils.isNotBlank(request.getParameter("editBdoScore"))%>">
+															        <div class="row">
+																		         <div class="col-md-4 col-xs-4"></div>
+																		         <div class="col-md-7 col-xs-7 align-right">
+																					          <div class="col-sm-10  col-xs-10 col-md-10">
+																					           <button type="button" class="btn btn-success btn-complete">Complete</button>
+																					           &nbsp;
+																					          </div>
+																		             <div class="col-sm-2  col-xs-2 col-md-2  align-left"></div>
+																		         </div>
+																		         <div class="col-md-1 col-xs-1"></div>
+															        </div>
 
-        <div class="row">
-         <div class="col-md-1 col-xs-1"></div>
-         <div class="col-md-2 col-xs-2">
-          <label for="percentageAchieved"> BDO Score </label>
-         </div>
-         <div class="col-md-8 col-xs-8">
-          <select name="bdoScore" id="bdoScore">
-           <option value=""selected}>Please select</option>
-           <c:forEach items="${percentageList}" var="percent">
-            <option value="${percent}" ${percent eq bdoScore ? 'selected' : ''}>${percent}</option>
-           </c:forEach>
-          </select> %
-         </div>
-         <div class="col-md-1 col-xs-1"></div>
-        </div>
-
-        <br/>
-
-        <div class="row">
-         <div class="col-md-4 col-xs-4"></div>
-         <div class="col-md-7 col-xs-7 align-right">
-          <div class="col-sm-10  col-xs-10 col-md-10">
-           <button type="button" class="btn btn-success btn-complete">Complete</button>
-           &nbsp;
-          </div>
-          <div class="col-sm-2  col-xs-2 col-md-2  align-left"></div>
-         </div>
-         <div class="col-md-1 col-xs-1"></div>
-        </div>
-
-        <br/>
-       </c:when>
-       <c:otherwise>
-        <div class="row">
-         <div class="col-md-4 col-xs-4"></div>
-         <div class="col-md-7 col-xs-7 align-right">
-          <div class="col-sm-10  col-xs-10 col-md-10">
-           <button type="button" class="btn btn-primary btn-save">Save</button>
-           &nbsp;
-           <button type="button" class="btn btn-primary btn-submit">Submit</button>
-          </div>
-          <div class="col-sm-2  col-xs-2 col-md-2  align-left"></div>
-         </div>
-         <div class="col-md-1 col-xs-1"></div>
-        </div>
-
-        <br />
-       </c:otherwise>
-      </c:choose>
+                       <br/>
+                  </c:when>
+                  <c:otherwise>
+															        <div class="row">
+															         <div class="col-md-4 col-xs-4"></div>
+															         <div class="col-md-7 col-xs-7 align-right">
+															          <div class="col-sm-10  col-xs-10 col-md-10">
+															           <button type="button" class="btn btn-primary btn-save">Save</button>
+															           &nbsp;
+															           <button type="button" class="btn btn-primary btn-submit">Submit</button>
+															          </div>
+															          <div class="col-sm-2  col-xs-2 col-md-2  align-left"></div>
+															         </div>
+															         <div class="col-md-1 col-xs-1"></div>
+															        </div>
+															
+															        <br />
+                 </c:otherwise>
+          </c:choose>
       
-      <div class="row">
-           <div class="col-md-1 col-xs-1"></div>
-           <div class="col-md-6 col-xs-6">
-               <div class="status-msg">status : <span class="status">${status}</span></div>
-           </div>
-      </div>
+				      <div class="row">
+				           <div class="col-md-1 col-xs-1"></div>
+				           <div class="col-md-6 col-xs-6">
+				               <div class="status-msg">status : <span class="status">${status}</span></div>
+				           </div>
+				      </div>
 
      </form>
 
@@ -276,11 +232,9 @@ if(StringUtils.isNotBlank(request.getParameter("editBdoScore"))|| StringUtils.is
      <cq:include path="quarterly-bdo-view" resourceType= "gdc-checkin/components/content/quarterly-bdo-view" />
  </c:otherwise>
 
-            </c:choose>
+    </c:choose>
         </div>
-
     </div>
-    
 </div>
 
 
@@ -300,7 +254,7 @@ if(StringUtils.isNotBlank(request.getParameter("editBdoScore"))|| StringUtils.is
       bdoAchievementsArray = [];
       bdoScore = '${bdoScore}';
       status = '${status}';
-            employeeID = '${employeeID}';
+      employeeID = '${employeeID}';
 
    <c:forEach items="${bdoObjectives}" var="objective">
         bdoObjectivesArray.push('${fn:escapeXml(objective)}'); 
@@ -327,9 +281,9 @@ if(StringUtils.isNotBlank(request.getParameter("editBdoScore"))|| StringUtils.is
 
                 }
                 GDC.bdo.form.enableForm(this, buttonLabel);
-                   if(!GDC.bdo.isEmpty($("#employeeID").val())) {
+                    if(!GDC.bdo.isEmpty($("#employeeID").val())) {
                         $("#employeeID").prop('disabled', true);
-                    }
+                     }
             } 
             else {
                 GDC.bdo.form.notifyError("Nothing to save");

@@ -21,8 +21,10 @@
 }
 
 .bdo-form textarea {
-	height: 60px;
-	resize: none;
+	height: 85px;
+ resize: none;
+ width:  48%;
+ display: inline;
 }
 
 .bdo-form .objective-desc {

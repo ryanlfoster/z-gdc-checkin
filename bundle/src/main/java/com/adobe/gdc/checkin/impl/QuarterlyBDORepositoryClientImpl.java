@@ -1,9 +1,15 @@
 package com.adobe.gdc.checkin.impl;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import javax.jcr.Node;
 import javax.jcr.Session;
+
+import org.apache.commons.lang.StringUtils;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Reference;
 import org.apache.felix.scr.annotations.Service;
@@ -110,8 +116,32 @@ public class QuarterlyBDORepositoryClientImpl  implements QuarterlyBDORepository
 	{
 		Map<String,String[]> properties = new HashMap<String,String[]>();
 		
-		properties.put(QuartelyBDOConstants.OBJECTIVES, params.get(QuartelyBDOConstants.OBJECTIVES_ARRAY));
-		properties.put(QuartelyBDOConstants.ACHIEVEMENTS, params.get(QuartelyBDOConstants.ACHIEVEMENTS_ARRAY));
+		String [] objectives = params.get(QuartelyBDOConstants.OBJECTIVES_ARRAY);
+		String [] achievements = params.get(QuartelyBDOConstants.ACHIEVEMENTS_ARRAY);
+				
+		List<String> objectiveList =  new ArrayList<String>(Arrays.asList(objectives));
+		List<String> achievementList =  new ArrayList<String>(Arrays.asList(achievements));
+		
+		Iterator<String> objectiveListIterator = objectiveList.iterator();
+		Iterator<String> achievementListIterator = achievementList.iterator();
+		
+		//This is to trim out empty values from the Array
+		while(objectiveListIterator.hasNext() && achievementListIterator.hasNext()) {
+			
+			String objective = objectiveListIterator.next();
+			String achievement = achievementListIterator.next();
+			
+			if(StringUtils.isBlank(objective) && StringUtils.isBlank(achievement)) {
+				objectiveListIterator.remove();
+				achievementListIterator.remove();
+			}
+		}
+		
+		objectives = objectiveList.toArray(new String[0]);
+		achievements = achievementList.toArray(new String[0]);
+		
+		properties.put(QuartelyBDOConstants.OBJECTIVES, objectives);
+		properties.put(QuartelyBDOConstants.ACHIEVEMENTS, achievements);
 		properties.put(QuartelyBDOConstants.DESIGNATION, params.get(QuartelyBDOConstants.DESIGNATION));
 		properties.put(QuartelyBDOConstants.BDO_SCORE, params.get(QuartelyBDOConstants.BDO_SCORE));
 		
