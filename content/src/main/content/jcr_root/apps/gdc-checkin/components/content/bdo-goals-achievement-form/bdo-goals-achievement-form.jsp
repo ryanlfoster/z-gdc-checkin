@@ -3,8 +3,6 @@
 <%@page session="false" %>
 <%@page import="org.apache.commons.lang.StringUtils,com.adobe.gdc.checkin.QuarterlyBDORepositoryClient,com.adobe.gdc.checkin.UserManagementService,java.util.Map,javax.jcr.Session" %>
 
-<c:set var="percentageList" value="${fn:split('10,20,30,40,50,60,70,80,90,100', ',')}" scope="application" />
-
 <c:choose>
     <c:when test="<%=StringUtils.isNotBlank(request.getParameter("quarterNumber"))%>">
         <c:set var="quarterNumber" value="<%=Integer.parseInt(request.getParameter("quarterNumber"))%>" />
@@ -122,25 +120,28 @@ if(StringUtils.isNotBlank(request.getParameter("editBdoScore"))|| StringUtils.is
 				                             <input type="text" name="employeeID" id="employeeID" value="${employeeID}" disabled="disabled" />
 				                         </c:when>
 				                         <c:otherwise>
-				                             <input type="text" name="employeeID" id="employeeID" value="${employeeID}" />&nbsp;<span id="errmsg"></span>
+				                             <input type="text" name="employeeID" id="employeeID" value="${employeeID}" />&nbsp;<span id="errmsg-employeeID"></span>
 				                         </c:otherwise>
 				                     </c:choose>
 				                </div>
 				                <div class="col-md-1 col-xs-1"></div>
                 </div>
         
-                <br/><br/>
+                <br/>
 
                 <div class="row">
                     <div class="col-md-1 col-xs-1"></div>
 
                     <div class="col-md-10 col-xs-10  bdo-panel">
+				                    <label for="bdo-panel">
+				                        Set BDO Objectives and provide self-inputs
+				                    </label>
                         <div class="row bdo-active bdo-panel-row">
-                            <div class="col-sm-10  col-xs-10 col-md-10">
-                                <textarea id="objective_1" name="objective" placeholder="Objective" class="form-control objective" rows="1" cols="20"></textarea>
-                                <textarea id="achievement_1" name="achievement" placeholder="Achievement" class="form-control achievement" rows="1" cols="20"></textarea>
+                            <div class="col-sm-11  col-xs-11 col-md-11">
+                                <textarea id="objective_1" name="objective" placeholder="Objective" class="form-control objective" rows="1" cols="20"></textarea>&nbsp;
+                                <textarea id="achievement_1" name="achievement" placeholder="Achievement self-input" class="form-control achievement" rows="1" cols="20"></textarea>
                             </div>
-                            <div class="col-sm-2  col-xs-2 col-md-2 align-left button-wrapper">
+                            <div class="col-sm-1  col-xs-1 col-md-1 align-left button-wrapper">
                                 <button class="btn btn-danger btn-remove" type="button" style="display:none">
                                     <span class="glyphicon glyphicon-remove"></span>
                                 </button>
@@ -173,12 +174,7 @@ if(StringUtils.isNotBlank(request.getParameter("editBdoScore"))|| StringUtils.is
 																			          <label for="percentageAchieved"> BDO Score </label>
 																            </div>
 																			         <div class="col-md-8 col-xs-8">
-																						          <select name="bdoScore" id="bdoScore">
-																						           <option value=""selected}>Please select</option>
-																						           <c:forEach items="${percentageList}" var="percent">
-																						            <option value="${percent}" ${percent eq bdoScore ? 'selected' : ''}>${percent}</option>
-																						           </c:forEach>
-																						          </select> %
+																						          <input type="number" min="1" max="100" name="bdoScore" id="bdoScore" value="${bdoScore}" /> % &nbsp;<span id="errmsg-bdoscore"></span>
 																			         </div>
 																            <div class="col-md-1 col-xs-1"></div>
 																        </div>
@@ -336,13 +332,22 @@ if(StringUtils.isNotBlank(request.getParameter("editBdoScore"))|| StringUtils.is
              }
          });  
 
-              $("#employeeID").keypress(function (e) {
-        //if the letter is not digit then display error and don't type anything
-        if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
-           //display error message
-           $("#errmsg").html("Digits Only!").show().fadeOut("slow");
-                 return false;
-       }
+        $("#employeeID").keypress(function (e) {
+				        //if the letter is not digit then display error and don't type anything
+				        if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+				           //display error message
+				           $("#errmsg-employeeID").html("Digits Only!").show().fadeOut("slow");
+				                 return false;
+				       }
+      });
+        
+      $("#bdoScore").keypress(function (e) {
+            //if not a valid number between 1 to 100, then display error and don't type anything
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+               //display error message
+               $("#errmsg-bdoscore").html("Only digits between 1 to 99!").show().fadeOut("slow");
+                     return false;
+           }
       });
  
   }

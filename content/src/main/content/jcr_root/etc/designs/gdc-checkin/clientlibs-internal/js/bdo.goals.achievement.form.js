@@ -305,7 +305,11 @@ GDC.bdo.form.validateOnComplete = function() {
     if(GDC.bdo.isEmpty($('.quarterly-bdo-form #bdoScore').val()) ) {
     	errorMsg += 'Please provide your score !<br>';
     }
-
+    
+    if(($('.quarterly-bdo-form #bdoScore').val() < 1 ) ||  ($('.quarterly-bdo-form #bdoScore').val() >100)) {
+    	errorMsg += 'Please enter a valid BDO Score (Between 1 to 99)<br>';
+    }
+    
     if(errorMsg != "") {
 		GDC.bdo.form.notifyError(errorMsg);            
         return false;

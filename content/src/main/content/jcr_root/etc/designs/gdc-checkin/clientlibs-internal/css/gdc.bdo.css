@@ -21,10 +21,11 @@
 }
 
 .bdo-form textarea {
-	height: 85px;
+	height: 75px;
  resize: none;
- width:  48%;
+ width: 49%;
  display: inline;
+ margin-bottom: 5px;
 }
 
 .bdo-form .objective-desc {
@@ -47,13 +48,26 @@
 	color: #D00000;
 }
 
-#errmsg {
+#errmsg-employeeID {
  color: red;
+}
+
+#errmsg-bdoscore {
+	color: red;
 }
 
 #employeeID {
 	line-height: 18px;
  border-radius: 4px;
+ font-family: cursive;
+}
+
+#bdoScore {
+	width: 60px;
+	height: 25px;
+	border-radius: 4px;
+	text-align: center;
+	font-family: cursive;
 }
 
 .bdo-form .success-msg {
