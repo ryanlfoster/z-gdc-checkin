@@ -306,8 +306,8 @@ GDC.bdo.form.validateOnComplete = function() {
     	errorMsg += 'Please provide your score !<br>';
     }
     
-    if(($('.quarterly-bdo-form #bdoScore').val() < 1 ) ||  ($('.quarterly-bdo-form #bdoScore').val() >100)) {
-    	errorMsg += 'Please enter a valid BDO Score (Between 1 to 99)<br>';
+    if(($('.quarterly-bdo-form #bdoScore').val() < 0 ) ||  ($('.quarterly-bdo-form #bdoScore').val() >100)) {
+    	errorMsg += 'Please enter a valid BDO Score (Between 0 to 100)<br>';
     }
     
     if(errorMsg != "") {

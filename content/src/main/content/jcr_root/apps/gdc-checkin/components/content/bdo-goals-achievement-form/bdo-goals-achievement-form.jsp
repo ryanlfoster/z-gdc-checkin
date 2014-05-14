@@ -174,7 +174,7 @@ if(StringUtils.isNotBlank(request.getParameter("editBdoScore"))|| StringUtils.is
 																			          <label for="percentageAchieved"> BDO Score </label>
 																            </div>
 																			         <div class="col-md-8 col-xs-8">
-																						          <input type="number" min="1" max="100" name="bdoScore" id="bdoScore" value="${bdoScore}" /> % &nbsp;<span id="errmsg-bdoscore"></span>
+																						          <input type="number" min="0" max="100" name="bdoScore" id="bdoScore" value="${bdoScore}" /> % &nbsp;<span id="errmsg-bdoscore"></span>
 																			         </div>
 																            <div class="col-md-1 col-xs-1"></div>
 																        </div>
@@ -345,7 +345,7 @@ if(StringUtils.isNotBlank(request.getParameter("editBdoScore"))|| StringUtils.is
             //if not a valid number between 1 to 100, then display error and don't type anything
             if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
                //display error message
-               $("#errmsg-bdoscore").html("Only digits between 1 to 99!").show().fadeOut("slow");
+               $("#errmsg-bdoscore").html("Only digits between 0 to 100!").show().fadeOut("slow");
                      return false;
            }
       });
