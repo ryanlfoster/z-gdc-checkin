@@ -1,12 +1,16 @@
 
+.profile-logout {
+	   padding-left: 45%;
+}
+
 .nav_login_container {
     color: #FFFFFF;
     float: left;
     font-size: 13px;
     margin-top: 5%; 
     width: 100%;
-	border-radius: 8px;
-	box-shadow: 0 0.3em 1em #999999;
+	   border-radius: 8px;
+	   box-shadow: 0 0.3em 1em #999999;
     padding: 15px 5px 0 5px;
     background: url("../images/white_login.jpg") repeat scroll center bottom rgba(0, 0, 0, 0);
 }
