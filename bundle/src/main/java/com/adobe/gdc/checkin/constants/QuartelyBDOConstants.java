@@ -51,9 +51,11 @@ public class QuartelyBDOConstants {
 	
 	//User profile properties
 	public static final String PROFILE_EMPLOYEE_ID = "profile/employeeID";
-	public static final String PROFILE_MANAGER_ID = "profile/managersID";
+	public static final String PROFILE_MANAGER = "profile/manager";
 	public static final String PROFILE_DESIGNATION =  "profile/designation";
 	public static final String PROFILE_FULL_NAME = "profile/fullName";
+	public static final String PROFILE_GIVENNAME = "profile/givenName";
+	public static final String PROFILE_FAMILYNAME = "profile/familyName";
 	public static final String PROFILE_DIRECT_REPORTS = "profile/directReports";
 	
 	//ADOBE_EMAIL_MAIL

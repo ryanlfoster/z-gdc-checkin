@@ -21,7 +21,7 @@ I18n i18n = new I18n(slingRequest);
 final String contextPath = slingRequest.getContextPath();
 String action = contextPath + resource.getPath() + ".html/j_security_check";
 
-String redirectTo ="/content/gdc-bdo/en/gdc-bdo-home.html";
+String redirectTo ="/gdc-bdo-home.html";
 redirectTo = slingRequest.getResourceResolver().map(request, redirectTo);
 
 final boolean isAnonymous = UserPropertiesUtil.isAnonymous(slingRequest);

@@ -34,7 +34,7 @@
 <%
 HierarchyNodeInheritanceValueMap hnivm = new HierarchyNodeInheritanceValueMap(resource);    
 if(isAnonymous){
-    String loginPage = hnivm.getInherited("cq:loginPage","/content/gdc-bdo/en/login-page")+".html";
+    String loginPage = hnivm.getInherited("cq:loginPage","/login-page")+".html";
  response.sendRedirect(loginPage);
 }
 %>

@@ -28,25 +28,15 @@ public class UserManagementServiceImpl implements UserManagementService{
 	}
 
 	@Override
-	public String getEmployeeID(String userID, Session session) throws Exception {
-		UserManager userManager = getUserManager(session);
-		String employeeID = QuartelyBDOConstants.EMPTY_STRING;
-		final Authorizable authorizable = userManager.getAuthorizable(userID);
-		
-		if(authorizable.hasProperty(QuartelyBDOConstants.PROFILE_EMPLOYEE_ID))
-			employeeID =  authorizable.getProperty(QuartelyBDOConstants.PROFILE_EMPLOYEE_ID)[0].getString();
-		
-		return employeeID;
-	}
-
-	@Override
 	public String getManagersEmailId(Session session) throws Exception {
 		UserManager userManager = getUserManager(session);
 		String managersEmailId = QuartelyBDOConstants.EMPTY_STRING;
 		final Authorizable authorizable = userManager.getAuthorizable(session.getUserID());
-		if(authorizable.hasProperty(QuartelyBDOConstants.PROFILE_MANAGER_ID))
-			managersEmailId =  authorizable.getProperty(QuartelyBDOConstants.PROFILE_MANAGER_ID)[0].getString() 
-														+ QuartelyBDOConstants.ADOBE_EMAIL_EXTENTION;
+		if(authorizable.hasProperty(QuartelyBDOConstants.PROFILE_MANAGER))
+			managersEmailId =  authorizable.getProperty(QuartelyBDOConstants.PROFILE_MANAGER)[0].getString();
+            //	+ QuartelyBDOConstants.ADOBE_EMAIL_EXTENTION;
+		
+		
 		
 		return managersEmailId;
 	}
@@ -86,17 +76,26 @@ public class UserManagementServiceImpl implements UserManagementService{
 		UserManager userManager = getUserManager(session);
 		String name = QuartelyBDOConstants.EMPTY_STRING;
 		final Authorizable authorizable = userManager.getAuthorizable(userID);
-		if(authorizable.hasProperty(QuartelyBDOConstants.PROFILE_FULL_NAME))
-			name =  authorizable.getProperty(QuartelyBDOConstants.PROFILE_FULL_NAME)[0].getString();
+		if(authorizable.hasProperty(QuartelyBDOConstants.PROFILE_GIVENNAME))
+			name =  authorizable.getProperty(QuartelyBDOConstants.PROFILE_GIVENNAME)[0].getString();
+		if(authorizable.hasProperty(QuartelyBDOConstants.PROFILE_FAMILYNAME))
+			name = name + " " + authorizable.getProperty(QuartelyBDOConstants.PROFILE_FAMILYNAME)[0].getString();
 		
 		return name;
 	}
 
+	@Override
+	public boolean isManager(Session session) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 	private UserManager getUserManager(Session session) throws UnsupportedRepositoryOperationException, RepositoryException {
 		 UserManager userManager = ((JackrabbitSession) session).getUserManager();	
 		 return userManager;
 	}
+
+	
 
 	
 }
