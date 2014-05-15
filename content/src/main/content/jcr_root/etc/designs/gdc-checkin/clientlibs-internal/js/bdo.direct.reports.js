@@ -7,16 +7,16 @@ GDC.bdo.directReports.initTable = function(selector,quarterNumber,annualYear) {
 
 		"bSort": false,
 		"iDisplayLength": 10,
-      	"oLanguage": {
+      	"oLanguage": { 
    			 "sSearch": ""
 		},
         "sAjaxSource": bdoReportServiceSrcPath,
-        "aoColumns": [{"mData":"name","sTitle": "Name","sWidth":"25%"},
-                      {"mData":"designation","sTitle": "Designation","sWidth":"23%"},
-                      {"mData":"employeeID","sTitle": "Employee ID","sWidth":"15%","sClass":"center-aligned"},
-                      {"mData":"status","sTitle": "Status","sWidth":"16%"},
-                      {"mData":"bdoScore","sTitle": "BDO Score(%)","sWidth":"15%","sClass":"center-aligned"},
-                      {"mData":"userID","sTitle": "", "sWidth":"10%", "mRender":function(data,type,full){
+        "aoColumns": [{"mData":"name","sTitle": "Name","sWidth":"198px"},
+                      {"mData":"designation","sTitle": "Designation","sWidth":"178px"},
+                      {"mData":"employeeID","sTitle": "Employee ID","sWidth":"103px","sClass":"center-aligned"},
+                      {"mData":"status","sTitle": "Status","sWidth":"111px"},
+                      {"mData":"bdoScore","sTitle": "BDO Score(%)","sWidth":"102px","sClass":"center-aligned"},
+                      {"mData":"userID","sTitle": "", "sWidth":"18px", "mRender":function(data,type,full){
 
 					  var html = "";
 
