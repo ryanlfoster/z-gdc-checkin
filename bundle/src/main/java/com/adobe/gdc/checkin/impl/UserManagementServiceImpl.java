@@ -78,7 +78,7 @@ public class UserManagementServiceImpl implements UserManagementService{
 			memberOfValues = authorizable.getProperty(QuartelyBDOConstants.PROFILE_MEMBER_OF);
 			for(int i=0; i<memberOfValues.length; i++) {
 				String mailingGroup = QuarterlyBDOUtils.extractValueFromRawString(memberOfValues[i].getString());
-				if(mailingGroup.equalsIgnoreCase("ORG"+currentLdapID+"ALL")) {
+				if(mailingGroup.equalsIgnoreCase("ORG-"+currentLdapID+"-ALL")) {
 					return true;
 				}
 				
