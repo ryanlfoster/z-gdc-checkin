@@ -76,4 +76,7 @@ public class QuartelyBDOConstants {
 	public static final String BDO_SCORE_FOR_Q_TITLE = "BDO Score for Q";
 	public static final String NOTES_TITLE = "Notes";
 	
+	//Cookie constants
+	public static final String GDC_USER_COOKIE = "gdc-user";
+	
 }

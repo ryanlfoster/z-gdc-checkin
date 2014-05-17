@@ -1,10 +1,14 @@
 <%@ page contentType="text/html; charset=utf-8" %>
-<%@ page import="com.day.cq.personalization.UserPropertiesUtil" %>
+<%@ page import="com.adobe.gdc.checkin.UserManagementService" %>
 
 <%@include file="/libs/foundation/global.jsp" %>
 <%@page session="false" %>
 
-<c:set var="isLoggedIn" value="<%=!(UserPropertiesUtil.isAnonymous(slingRequest))%>" />
+<%
+ UserManagementService userManagementService = sling.getService(UserManagementService.class);
+%>
+
+<c:set var="isLoggedIn" value="<%=!(userManagementService.isAnonymous(request))%>" />
 <c:set var="isManager" value="true" />
 
 <div id="page-wrap">

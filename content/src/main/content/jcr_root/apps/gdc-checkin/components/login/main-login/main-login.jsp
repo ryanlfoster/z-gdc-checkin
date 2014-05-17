@@ -1,12 +1,10 @@
 <%@ page contentType="text/html; charset=utf-8" %>
 
 <%@ page import="com.day.cq.i18n.I18n,
-            org.apache.sling.api.resource.Resource,
-                   com.day.cq.personalization.UserPropertiesUtil,
-                   com.day.cq.wcm.api.WCMMode,
-       org.apache.commons.lang.StringUtils,
-                   com.day.cq.wcm.foundation.forms.FormsHelper,
-                   com.day.text.Text" %>
+                 org.apache.sling.api.resource.Resource,
+                 com.adobe.gdc.checkin.UserManagementService,
+                 org.apache.commons.lang.StringUtils,
+                 com.day.text.Text" %>
 
 <%@include file="/libs/foundation/global.jsp" %>
 <%@page session="false" %>
@@ -14,8 +12,6 @@
 
 <%
 String id = Text.getName(resource.getPath());
-response.setContentType("text/html");
-response.setCharacterEncoding("UTF-8");
 
 I18n i18n = new I18n(slingRequest);
 final String contextPath = slingRequest.getContextPath();
@@ -24,7 +20,8 @@ String action = contextPath + resource.getPath() + ".html/j_security_check";
 String redirectTo ="/gdc-bdo-home.html";
 redirectTo = slingRequest.getResourceResolver().map(request, redirectTo);
 
-final boolean isAnonymous = UserPropertiesUtil.isAnonymous(slingRequest);
+UserManagementService userManagementService = sling.getService(UserManagementService.class);
+final boolean isAnonymous = userManagementService.isAnonymous(request);
 
 if (isAnonymous) {
     String jReason = request.getParameter("j_reason");
@@ -70,113 +67,97 @@ if (isAnonymous) {
  var xmlhttp = null;
 
  function getXmlHttp() {
-  if (xmlhttp) {
-   return xmlhttp;
-  }
-
-  if (window.XMLHttpRequest) {
-   xmlhttp = new XMLHttpRequest();
-  } else {
-   if (window.ActiveXObject) {
-    try {
-     xmlhttp = new ActiveXObject('Msxml2.XMLHTTP');
-    } catch (ex) {
-     try {
-      xmlhttp = new ActiveXObject('Microsoft.XMLHTTP');
-     } catch (ex) {
-     }
-    }
-   }
-  }
-  return xmlhttp;
+				if (xmlhttp) {
+				    return xmlhttp;
+				}
+				
+				if (window.XMLHttpRequest) {
+				    xmlhttp = new XMLHttpRequest();
+				} 
+				else {
+					   if (window.ActiveXObject) {
+								    try {
+								        xmlhttp = new ActiveXObject('Msxml2.XMLHTTP');
+								    } catch (ex) {
+											     try {
+											         xmlhttp = new ActiveXObject('Microsoft.XMLHTTP');
+											     } catch (ex) {
+											     }
+					       }
+					   }
+				}
+				return xmlhttp;
  }
 
  function sendRequest(/* String */path, /* String */user, /* String */ pass) {
-  var xmlhttp = getXmlHttp();
-  if (!xmlhttp) {
-   return false;
-  }
-
-  if (xmlhttp.readyState < 4) {
-   xmlhttp.abort();
-  }
-
-  // send the authentication request
-  var params = "j_validate=true";
-  params += "&j_username=" + encodeURIComponent(user);
-  params += "&j_password=" + encodeURIComponent(pass);
-  params += "&_charset_=utf8";
-  xmlhttp.open('POST', path, false);
-  xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  xmlhttp.setRequestHeader("Content-length", params.length);
-  xmlhttp.setRequestHeader("Connection", "close");
-  xmlhttp.send(params);
-  return xmlhttp.status != 403;
+				var xmlhttp = getXmlHttp();
+				if (!xmlhttp) {
+				    return false;
+				}
+				
+				if (xmlhttp.readyState < 4) {
+				    xmlhttp.abort();
+				}
+				
+				// send the authentication request
+				var params = "j_validate=true";
+				params += "&j_username=" + encodeURIComponent(user);
+				params += "&j_password=" + encodeURIComponent(pass);
+				params += "&_charset_=utf8";
+				xmlhttp.open('POST', path, false);
+				xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+				xmlhttp.setRequestHeader("Content-length", params.length);
+				xmlhttp.setRequestHeader("Connection", "close");
+				xmlhttp.send(params);
+				return xmlhttp.status != 403;
  }
-
-
-
- function createCookie(name, value, days, path) {
-  if (days) {
-   var date = new Date();
-   date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-   var expires = "; expires="+date.toGMTString();
-  } else {
-   var expires = "";
-  }
-  path = path || "/";
-  document.cookie = name + "=" + value + expires + "; path=" + path;
- }
-
- function eraseCookie(name, path) {
-  createCookie(name, "", -1, path);
- }
-
 
  function showError() {
-  var msg="User name and password do not match";
-  try {
-
-   var loginError = document.getElementById("login-error");
-   loginError.innerHTML = msg;
-   loginError.className = "err-visible";
-  } catch (e) {
-   alert(msg+"::"+e.message);
-  }
+				var msg="User name and password do not match";
+				try {
+					   var loginError = document.getElementById("login-error");
+					   loginError.innerHTML = msg;
+					   loginError.className = "err-visible";
+				} catch (e) {
+				    alert(msg+"::"+e.message);
+				}
  }
 
+ function createCookie(name, value, days, path) {
+				if (days) {
+					   var date = new Date();
+					   date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+					   var expires = "; expires="+date.toGMTString();
+				} else {
+				    var expires = "";
+				}
+				path = path || "/";
+				document.cookie = name + "=" + value + expires + "; path=" + path;
+ }
 
  function validateLogin() {
-   var user = document.forms['<%=id%>']['j_username'].value;
-   var pass = document.forms['<%=id%>']['j_password'].value;
-   var path = document.forms['<%=id%>'].action;
-   var resource = document.forms['<%=id%>'].resource.value;
-
-
- if (!user) {
-  return false;
- }
-
-
- // send user/id password to check and persist
-  if (sendRequest(path, user, pass)) {
-   // erase legacy login #37548
-   eraseCookie("login-token", "/crx");
-  var u = resource;
-   if (window.location.hash && u.indexOf('#') < 0) {
-    u = u + window.location.hash;
-   }
-
-   document.location = u;
-   CQ_Analytics.ProfileDataMgr.loadProfile(user);
-
-  } else {
-
-   showError();
-  }
-
- return false;
-
+				var user = document.forms['<%=id%>']['j_username'].value;
+				var pass = document.forms['<%=id%>']['j_password'].value;
+				var path = document.forms['<%=id%>'].action;
+				var resource = document.forms['<%=id%>'].resource.value;
+				
+				if (!user) {
+				   return false;
+				}
+				// send user/id password to check and persist
+				if (sendRequest(path, user, pass)) {
+				    createCookie("gdc-user", user, 7, '/')
+						  var u = resource;
+						  if (window.location.hash && u.indexOf('#') < 0) {
+						       u = u + window.location.hash;
+						   }
+						   document.location = u;
+					} 
+				 else {
+						   showError();
+					}
+				
+				 return false;
  }
 
 </script>
@@ -186,10 +167,10 @@ if (isAnonymous) {
 %>
 
 <script>
-	$(document).ready(function() {
-	
-	    if(!<%=isAnonymous%>) {
-	        window.location.assign("<%=redirectTo%>")
-	    }
-	 });
+ $(document).ready(function() {
+ 
+     if(!<%=isAnonymous%>) {
+         window.location.assign("<%=redirectTo%>")
+     }
+  });
 </script>

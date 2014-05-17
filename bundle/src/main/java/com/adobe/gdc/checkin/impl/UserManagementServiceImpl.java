@@ -4,6 +4,8 @@ import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.jcr.UnsupportedRepositoryOperationException;
 import javax.jcr.Value;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Service;
@@ -27,6 +29,13 @@ public class UserManagementServiceImpl implements UserManagementService{
 		return session.getUserID();
 	}
 
+	@Override
+	public String getCurrentUserName(Session session) throws Exception {
+		String userID = getCurrentUser(session);
+		return getEmployeeName(userID, session) ;
+	}
+	
+	
 	@Override
 	public String getManagersEmailId(Session session) throws Exception {
 		UserManager userManager = getUserManager(session);
@@ -90,12 +99,25 @@ public class UserManagementServiceImpl implements UserManagementService{
 		return false;
 	}
 	
+	@Override
+	public  boolean isAnonymous( HttpServletRequest request) {
+		String cookieName = QuartelyBDOConstants.GDC_USER_COOKIE;
+        Cookie[] cookies = request.getCookies();
+        for (Cookie cookie : cookies) {
+            String name = cookie.getName();
+            if (cookieName.equals(name)) {
+                return false;
+            }
+        }
+        return true;
+    }
+	
 	private UserManager getUserManager(Session session) throws UnsupportedRepositoryOperationException, RepositoryException {
 		 UserManager userManager = ((JackrabbitSession) session).getUserManager();	
 		 return userManager;
 	}
 
 	
-
+	
 	
 }
