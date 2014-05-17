@@ -57,6 +57,7 @@ public class QuartelyBDOConstants {
 	public static final String PROFILE_GIVENNAME = "profile/givenName";
 	public static final String PROFILE_FAMILYNAME = "profile/familyName";
 	public static final String PROFILE_DIRECT_REPORTS = "profile/directReports";
+	public static final String PROFILE_MEMBER_OF = "profile/memberOf";
 	
 	//ADOBE_EMAIL_MAIL
 	public static final String ADOBE_EMAIL_EXTENTION = "@adobe.com";

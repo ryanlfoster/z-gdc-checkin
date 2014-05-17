@@ -3,6 +3,7 @@ package com.adobe.gdc.checkin.utils;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 import javax.jcr.Node;
 import javax.jcr.Property;
@@ -110,4 +111,20 @@ public class QuarterlyBDOUtils {
 		return repositoryBasePath;
 	}
 
+	
+	
+	public static String extractValueFromRawString(String rawString) {
+		
+		StringTokenizer tokens = new StringTokenizer(rawString, ",");
+		while (tokens.hasMoreElements()) {
+			String token = (String) tokens.nextElement();
+			if(token.contains("CN") && !token.contains("USERS")) {
+				return token.replace("CN=", QuartelyBDOConstants.EMPTY_STRING);
+			}
+		}
+		return QuartelyBDOConstants.EMPTY_STRING;
+	}
+	
+	
+	
 }

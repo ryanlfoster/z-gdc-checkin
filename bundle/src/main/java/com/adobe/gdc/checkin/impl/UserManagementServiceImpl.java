@@ -1,5 +1,7 @@
 package com.adobe.gdc.checkin.impl;
 
+import java.util.StringTokenizer;
+
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.jcr.UnsupportedRepositoryOperationException;
@@ -17,6 +19,7 @@ import org.slf4j.LoggerFactory;
 
 import com.adobe.gdc.checkin.UserManagementService;
 import com.adobe.gdc.checkin.constants.QuartelyBDOConstants;
+import com.adobe.gdc.checkin.utils.QuarterlyBDOUtils;
 
 @Component(metatype = true)
 @Service(UserManagementService.class)
@@ -35,22 +38,20 @@ public class UserManagementServiceImpl implements UserManagementService{
 		return getEmployeeName(userID, session) ;
 	}
 	
-	
 	@Override
 	public String getManagersEmailId(Session session) throws Exception {
 		UserManager userManager = getUserManager(session);
-		String managersEmailId = QuartelyBDOConstants.EMPTY_STRING;
+		String managersEmailId, manager;
+		managersEmailId =  manager= QuartelyBDOConstants.EMPTY_STRING;
 		final Authorizable authorizable = userManager.getAuthorizable(session.getUserID());
-		if(authorizable.hasProperty(QuartelyBDOConstants.PROFILE_MANAGER))
-			managersEmailId =  authorizable.getProperty(QuartelyBDOConstants.PROFILE_MANAGER)[0].getString();
-            //	+ QuartelyBDOConstants.ADOBE_EMAIL_EXTENTION;
+		if(authorizable.hasProperty(QuartelyBDOConstants.PROFILE_MANAGER)) {
+			manager =  authorizable.getProperty(QuartelyBDOConstants.PROFILE_MANAGER)[0].getString();
+			return QuarterlyBDOUtils.extractValueFromRawString(manager) + QuartelyBDOConstants.ADOBE_EMAIL_EXTENTION;
+		}
 		
-		
-		
-		return managersEmailId;
+		return QuartelyBDOConstants.EMPTY_STRING;
 	}
 
-	
 	@Override
 	public String[] getManagersDirectReportees(String managersID, Session session) throws Exception {
 		UserManager userManager = getUserManager(session);
@@ -61,13 +62,31 @@ public class UserManagementServiceImpl implements UserManagementService{
 			directReportsValue =  authorizable.getProperty(QuartelyBDOConstants.PROFILE_DIRECT_REPORTS);
 			directReports=new String[directReportsValue.length];
 			for(int i=0; i<directReportsValue.length; i++) {
-				directReports[i] = directReportsValue[i].getString();
+				directReports[i] =  QuarterlyBDOUtils.extractValueFromRawString(directReportsValue[i].getString());
 			}
 		}
 		return directReports;
 	}
 
-	
+	@Override
+	public boolean isManager(Session session) throws Exception {
+		String currentLdapID = getCurrentUser(session);
+		UserManager userManager = getUserManager(session);
+		Value[] memberOfValues = {};
+		final Authorizable authorizable = userManager.getAuthorizable(currentLdapID);
+		if(authorizable.hasProperty(QuartelyBDOConstants.PROFILE_MEMBER_OF)) {
+			memberOfValues = authorizable.getProperty(QuartelyBDOConstants.PROFILE_MEMBER_OF);
+			for(int i=0; i<memberOfValues.length; i++) {
+				String mailingGroup = QuarterlyBDOUtils.extractValueFromRawString(memberOfValues[i].getString());
+				if(mailingGroup.equalsIgnoreCase("ORG"+currentLdapID+"ALL")) {
+					return true;
+				}
+				
+			}
+		}
+		
+		return false;
+	}
 
 	@Override
 	public String getEmployeeDesignation(String userID,Session session) throws Exception {
@@ -92,12 +111,6 @@ public class UserManagementServiceImpl implements UserManagementService{
 		
 		return name;
 	}
-
-	@Override
-	public boolean isManager(Session session) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 	
 	@Override
 	public  boolean isAnonymous( HttpServletRequest request) {
@@ -117,7 +130,4 @@ public class UserManagementServiceImpl implements UserManagementService{
 		 return userManager;
 	}
 
-	
-	
-	
 }

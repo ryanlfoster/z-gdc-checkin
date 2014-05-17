@@ -17,6 +17,19 @@ GDC.bdo.isEmptyArray = function(array) {
     return true;
 }
 
+
+GDC.bdo.isLoggedIn = function()
+{
+    var name = "gdc-user" + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) 
+      {
+      var c = ca[i].trim();
+      if (c.indexOf(name)==0) return true;
+      }
+    return false;
+    }
+
 GDC.bdo.form = function(bdoObjectives,bdoAchievements) {
 
 	GDC.bdo.form.multifield('.bdo-panel','.bdo-active'); 

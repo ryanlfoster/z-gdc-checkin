@@ -1,15 +1,16 @@
 <%@ page contentType="text/html; charset=utf-8" %>
-<%@ page import="com.adobe.gdc.checkin.UserManagementService" %>
+<%@ page import="com.adobe.gdc.checkin.UserManagementService,javax.jcr.Session" %>
 
 <%@include file="/libs/foundation/global.jsp" %>
 <%@page session="false" %>
 
 <%
  UserManagementService userManagementService = sling.getService(UserManagementService.class);
+ Session session = resourceResolver.adaptTo(Session.class);
 %>
 
 <c:set var="isLoggedIn" value="<%=!(userManagementService.isAnonymous(request))%>" />
-<c:set var="isManager" value="true" />
+<c:set var="isManager" value="<%= userManagementService.isManager(session)%>" />
 
 <div id="page-wrap">
 

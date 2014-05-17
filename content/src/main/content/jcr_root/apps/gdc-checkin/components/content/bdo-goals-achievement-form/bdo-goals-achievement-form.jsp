@@ -22,12 +22,12 @@
 </c:choose>
 
 <c:choose>
-			 <c:when test="<%=StringUtils.isNotBlank(request.getParameter("userID"))%>">
-			     <c:set var="userID" value="<%=request.getParameter("userID")%>" />
-			 </c:when>
-			 <c:otherwise>
-			     <c:set var="userID" value="${userID}" />
-			 </c:otherwise>
+    <c:when test="<%=StringUtils.isNotBlank(request.getParameter("userID"))%>">
+        <c:set var="userID" value="<%=request.getParameter("userID")%>" />
+    </c:when>
+    <c:otherwise>
+        <c:set var="userID" value="${userID}" />
+    </c:otherwise>
 </c:choose>
 
 <c:choose>
@@ -60,7 +60,6 @@ if(StringUtils.isNotBlank(request.getParameter("editBdoScore"))|| StringUtils.is
 }
 
 %>
-
 <c:set var="bdoObjectives" value="<%=quarterlyBDODataMap.get("objectives")%>" scope="request"/>
 <c:set var="bdoAchievements" value="<%=quarterlyBDODataMap.get("achievements")%>" scope="request"/>
 <c:set var="bdoScore" value="<%=quarterlyBDODataMap.get("bdoScore") != null ? quarterlyBDODataMap.get("bdoScore")[0] : ""%>" scope="request"/>
@@ -83,48 +82,48 @@ if(StringUtils.isNotBlank(request.getParameter("editBdoScore"))|| StringUtils.is
 <div class="bdo-form">
     <c:choose>
         <c:when test = "${editForm eq 'true'}">
-				        <div class="row">
-				            <div class="col-md-1 col-xs-1"></div>
-				            <div class="col-md-10 col-xs-10 margin">
-							             ${name},<br/>
-							             ${designation}<br/><br/>
-				            </div>               
-				            <div class="col-md-1 col-xs-1"></div>
-				        </div>
+            <div class="row">
+                <div class="col-md-1 col-xs-1"></div>
+                <div class="col-md-10 col-xs-10 margin">
+                    ${name},<br/>
+                    ${designation}<br/><br/>
+                </div>               
+                <div class="col-md-1 col-xs-1"></div>
+            </div>
 
             <div class="row">
-				            <div class="col-md-1 col-xs-1"></div>
-				            <div class="col-md-8 col-xs-8" id="form-message"></div>
+                <div class="col-md-1 col-xs-1"></div>
+                <div class="col-md-8 col-xs-8" id="form-message"></div>
             </div>
             
             <br/>
 
             <form id="quarterly-bdo-form" class="quarterly-bdo-form" method="POST" action="<%=currentPage.getPath()%>.bdo">
 
-				            <input type="hidden" name="designation" id="designation" value="${designation}" />
-				            <input type="hidden" name="quarterNumber" id="quarterNumber" value="${quarterNumber}" />
-				            <input type="hidden" name="userID" id="userID" value="${userID}" />
-				            <input type="hidden" name="annualYear" id="annualYear" value="${annualYear}" />
-				            <input type="hidden" name="name" id="name" value="${name}" />
-				            
+                <input type="hidden" name="designation" id="designation" value="${designation}" />
+                <input type="hidden" name="quarterNumber" id="quarterNumber" value="${quarterNumber}" />
+                <input type="hidden" name="userID" id="userID" value="${userID}" />
+                <input type="hidden" name="annualYear" id="annualYear" value="${annualYear}" />
+                <input type="hidden" name="name" id="name" value="${name}" />
+                
                 <div class="row">
-				                <div class="col-md-1 col-xs-1"></div>
-				                <div class="col-md-2 col-xs-2">
-				                    <label for="employeeID">
-				                        Employee ID
-				                    </label>
-				                </div>
-				                <div class="col-md-8 col-xs-8" >
-				                     <c:choose>
-				                         <c:when test="<%=disableEmployeeID%>">
-				                             <input type="text" name="employeeID" id="employeeID" value="${employeeID}" disabled="disabled" />
-				                         </c:when>
-				                         <c:otherwise>
-				                             <input type="text" name="employeeID" id="employeeID" value="${employeeID}" />&nbsp;<span id="errmsg-employeeID"></span>
-				                         </c:otherwise>
-				                     </c:choose>
-				                </div>
-				                <div class="col-md-1 col-xs-1"></div>
+                    <div class="col-md-1 col-xs-1"></div>
+                    <div class="col-md-2 col-xs-2">
+                        <label for="employeeID">
+                            Employee ID
+                        </label>
+                    </div>
+                    <div class="col-md-8 col-xs-8" >
+                         <c:choose>
+                             <c:when test="<%=disableEmployeeID%>">
+                                 <input type="text" name="employeeID" id="employeeID" value="${employeeID}" disabled="disabled" />
+                             </c:when>
+                             <c:otherwise>
+                                 <input type="text" name="employeeID" id="employeeID" value="${employeeID}" />&nbsp;<span id="errmsg-employeeID"></span>
+                             </c:otherwise>
+                         </c:choose>
+                    </div>
+                    <div class="col-md-1 col-xs-1"></div>
                 </div>
         
                 <br/>
@@ -133,9 +132,9 @@ if(StringUtils.isNotBlank(request.getParameter("editBdoScore"))|| StringUtils.is
                     <div class="col-md-1 col-xs-1"></div>
 
                     <div class="col-md-10 col-xs-10  bdo-panel">
-				                    <label for="bdo-panel">
-				                        Set BDO Objectives and provide self-inputs
-				                    </label>
+                        <label for="bdo-panel">
+                            Set BDO Objectives and provide self-inputs
+                        </label>
                         <div class="row bdo-active bdo-panel-row">
                             <div class="col-sm-11  col-xs-11 col-md-11">
                                 <textarea id="objective_1" name="objective" placeholder="Objective" class="form-control objective" rows="1" cols="20"></textarea>&nbsp;
@@ -152,9 +151,9 @@ if(StringUtils.isNotBlank(request.getParameter("editBdoScore"))|| StringUtils.is
                                         </button>
                                     </c:when>
                                     <c:otherwise>
-		                                      <button class="btn btn-primary btn-add" type="button">
-		                                          <span class="glyphicon glyphicon-plus"></span>
-		                                      </button>
+                                        <button class="btn btn-primary btn-add" type="button">
+                                            <span class="glyphicon glyphicon-plus"></span>
+                                        </button>
                                     </c:otherwise>
                                 </c:choose>
                             </div>
@@ -165,60 +164,60 @@ if(StringUtils.isNotBlank(request.getParameter("editBdoScore"))|| StringUtils.is
                 
                 <br/>
         
-										      <c:choose>
-										          <c:when test="<%=StringUtils.isNotBlank(request.getParameter("editBdoScore"))%>">
-										
-																        <div class="row">
-																			         <div class="col-md-1 col-xs-1"></div>
-																			         <div class="col-md-2 col-xs-2">
-																			          <label for="percentageAchieved"> BDO Score </label>
-																            </div>
-																			         <div class="col-md-8 col-xs-8">
-																						          <input type="number" min="0" max="100" name="bdoScore" id="bdoScore" value="${bdoScore}" /> % &nbsp;<span id="errmsg-bdoscore"></span>
-																			         </div>
-																            <div class="col-md-1 col-xs-1"></div>
-																        </div>
-										
-										              <br/>
+                <c:choose>
+                    <c:when test="<%=StringUtils.isNotBlank(request.getParameter("editBdoScore"))%>">
+          
+                        <div class="row">
+                            <div class="col-md-1 col-xs-1"></div>
+                            <div class="col-md-2 col-xs-2">
+                             <label for="percentageAchieved"> BDO Score </label>
+                            </div>
+                            <div class="col-md-8 col-xs-8">
+                                <input type="number" min="0" max="100" name="bdoScore" id="bdoScore" value="${bdoScore}" /> % &nbsp;<span id="errmsg-bdoscore"></span>
+                            </div>
+                            <div class="col-md-1 col-xs-1"></div>
+                        </div>
+          
+                        <br/>
 
-															        <div class="row">
-																		         <div class="col-md-4 col-xs-4"></div>
-																		         <div class="col-md-7 col-xs-7 align-right">
-																					          <div class="col-sm-10  col-xs-10 col-md-10">
-																					           <button type="button" class="btn btn-success btn-complete">Complete</button>
-																					           &nbsp;
-																					          </div>
-																		             <div class="col-sm-2  col-xs-2 col-md-2  align-left"></div>
-																		         </div>
-																		         <div class="col-md-1 col-xs-1"></div>
-															        </div>
+                       <div class="row">
+                           <div class="col-md-4 col-xs-4"></div>
+                           <div class="col-md-7 col-xs-7 align-right">
+                               <div class="col-sm-10  col-xs-10 col-md-10">
+                                <button type="button" class="btn btn-success btn-complete">Complete</button>
+                                &nbsp;
+                               </div>
+                               <div class="col-sm-2  col-xs-2 col-md-2  align-left"></div>
+                           </div>
+                           <div class="col-md-1 col-xs-1"></div>
+                       </div>
 
                        <br/>
                   </c:when>
                   <c:otherwise>
-															        <div class="row">
-															         <div class="col-md-4 col-xs-4"></div>
-															         <div class="col-md-7 col-xs-7 align-right">
-															          <div class="col-sm-10  col-xs-10 col-md-10">
-															           <button type="button" class="btn btn-primary btn-save">Save</button>
-															           &nbsp;
-															           <button type="button" class="btn btn-primary btn-submit">Submit</button>
-															          </div>
-															          <div class="col-sm-2  col-xs-2 col-md-2  align-left"></div>
-															         </div>
-															         <div class="col-md-1 col-xs-1"></div>
-															        </div>
-															
-															        <br />
+                       <div class="row">
+                        <div class="col-md-4 col-xs-4"></div>
+                        <div class="col-md-7 col-xs-7 align-right">
+                         <div class="col-sm-10  col-xs-10 col-md-10">
+                          <button type="button" class="btn btn-primary btn-save">Save</button>
+                          &nbsp;
+                          <button type="button" class="btn btn-primary btn-submit">Submit</button>
+                         </div>
+                         <div class="col-sm-2  col-xs-2 col-md-2  align-left"></div>
+                        </div>
+                        <div class="col-md-1 col-xs-1"></div>
+                       </div>
+               
+                       <br />
                  </c:otherwise>
           </c:choose>
       
-				      <div class="row">
-				           <div class="col-md-1 col-xs-1"></div>
-				           <div class="col-md-6 col-xs-6">
-				               <div class="status-msg">status : <span class="status">${status}</span></div>
-				           </div>
-				      </div>
+          <div class="row">
+               <div class="col-md-1 col-xs-1"></div>
+               <div class="col-md-6 col-xs-6">
+                   <div class="status-msg">status : <span class="status">${status}</span></div>
+               </div>
+          </div>
 
      </form>
 
@@ -240,10 +239,10 @@ if(StringUtils.isNotBlank(request.getParameter("editBdoScore"))|| StringUtils.is
  var bdoAchievementsArray = [];
  var bdoScore = '';
  var status = '';
-    var employeeID = '';
+ var employeeID = '';
 
  $(document).ready(function() {
- 
+
   if(${editForm} == true) {
    
       bdoObjectivesArray = [];
@@ -259,88 +258,99 @@ if(StringUtils.isNotBlank(request.getParameter("editBdoScore"))|| StringUtils.is
    <c:forEach items="${bdoAchievements}" var="achievement">
         bdoAchievementsArray.push('${fn:escapeXml(achievement)}'); 
    </c:forEach>
- 
+
    GDC.bdo.form(bdoObjectivesArray,bdoAchievementsArray);
- 
- 
+
+
    $(".bdo-form").on("click", ".btn-save",function() {
 
-            var changeInFormValues = GDC.bdo.form.detectAnyFormChange(bdoObjectivesArray,bdoAchievementsArray,employeeID);
- 
-            if(changeInFormValues) {
-                var validateForm = GDC.bdo.form.validateOnSave();
-                var buttonLabel = $(this).html();
- 
-                if(validateForm == true) {
-                    GDC.bdo.form.disableForm(this);
-                    GDC.bdo.form.saveSubmitOrCompleteBDO("save");
+       if(!GDC.bdo.isLoggedIn()) {
+           location.reload();
+       }
 
-                }
-                GDC.bdo.form.enableForm(this, buttonLabel);
-                    if(!GDC.bdo.isEmpty($("#employeeID").val())) {
-                        $("#employeeID").prop('disabled', true);
-                     }
-            } 
-            else {
-                GDC.bdo.form.notifyError("Nothing to save");
-            }
- 
+       var changeInFormValues = GDC.bdo.form.detectAnyFormChange(bdoObjectivesArray,bdoAchievementsArray,employeeID);
+       
+       if(changeInFormValues) {
+           var validateForm = GDC.bdo.form.validateOnSave();
+           var buttonLabel = $(this).html();
+           
+           if(validateForm == true) {
+               GDC.bdo.form.disableForm(this);
+               GDC.bdo.form.saveSubmitOrCompleteBDO("save");
+               
+           }
+           GDC.bdo.form.enableForm(this, buttonLabel);
+           if(!GDC.bdo.isEmpty($("#employeeID").val())) {
+               $("#employeeID").prop('disabled', true);
+           }
+       } 
+       else {
+           GDC.bdo.form.notifyError("Nothing to save");
+       }
+       
       });  
- 
-         $(".bdo-form").on("click", ".btn-submit",function() {
- 
-             var changeInFormValues = GDC.bdo.form.detectAnyFormChange(bdoObjectivesArray,bdoAchievementsArray,employeeID);
- 
-             if(changeInFormValues || (!changeInFormValues && status == 'NOT SUBMITTED')) {
-                 var validateForm = GDC.bdo.form.validateOnSubmit();
-                 var buttonLabel = $(this).html();
-                 
-                 if(validateForm == true) {
-                     GDC.bdo.form.disableForm(this);
-                     GDC.bdo.form.saveSubmitOrCompleteBDO("submit");
 
-                 }
-                 GDC.bdo.form.enableForm(this, buttonLabel);
+    $(".bdo-form").on("click", ".btn-submit",function() {
 
-                    if(!GDC.bdo.isEmpty($("#employeeID").val())) {
-                        $("#employeeID").prop('disabled', true);
-                    }
+       if(!GDC.bdo.isLoggedIn()) {
+           location.reload();
+       }
 
-             }  
-             else {
-                     GDC.bdo.form.notifyError("Already Submitted!");
-             }
-         });  
-         
-         $(".bdo-form").on("click", ".btn-complete",function() {
-          
-             var changeInFormValues = GDC.bdo.form.detectAnyFormChangeOnComplete(bdoObjectivesArray,bdoAchievementsArray,bdoScore);
- 
-             if(changeInFormValues) {
-                 var validateForm = GDC.bdo.form.validateOnComplete();
-                 var buttonLabel = $(this).html();
-                 
-                 if(validateForm == true) {
-                     GDC.bdo.form.disableForm(this);
-                     GDC.bdo.form.saveSubmitOrCompleteBDO("complete");
-                 }
-                 GDC.bdo.form.enableForm(this, buttonLabel);
-
-             }  
-             else {
-                     GDC.bdo.form.notifyError("Please update the form before COMPLETING your action !");
-             }
-         });  
-
-        $("#employeeID").keypress(function (e) {
-				        //if the letter is not digit then display error and don't type anything
-				        if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
-				           //display error message
-				           $("#errmsg-employeeID").html("Digits Only!").show().fadeOut("slow");
-				                 return false;
-				       }
-      });
+        var changeInFormValues = GDC.bdo.form.detectAnyFormChange(bdoObjectivesArray,bdoAchievementsArray,employeeID);
         
+        if(changeInFormValues || (!changeInFormValues && status == 'NOT SUBMITTED')) {
+            var validateForm = GDC.bdo.form.validateOnSubmit();
+            var buttonLabel = $(this).html();
+            
+            if(validateForm == true) {
+                GDC.bdo.form.disableForm(this);
+                GDC.bdo.form.saveSubmitOrCompleteBDO("submit");
+                
+            }
+            GDC.bdo.form.enableForm(this, buttonLabel);
+            
+            if(!GDC.bdo.isEmpty($("#employeeID").val())) {
+                $("#employeeID").prop('disabled', true);
+            }
+            
+        }  
+        else {
+            GDC.bdo.form.notifyError("Already Submitted!");
+        }
+     });  
+         
+      $(".bdo-form").on("click", ".btn-complete",function() {
+
+        if(!GDC.bdo.isLoggedIn()) {
+           location.reload();
+        }
+          var changeInFormValues = GDC.bdo.form.detectAnyFormChangeOnComplete(bdoObjectivesArray,bdoAchievementsArray,bdoScore);
+          
+          if(changeInFormValues) {
+              var validateForm = GDC.bdo.form.validateOnComplete();
+              var buttonLabel = $(this).html();
+              
+              if(validateForm == true) {
+                  GDC.bdo.form.disableForm(this);
+                  GDC.bdo.form.saveSubmitOrCompleteBDO("complete");
+              }
+              GDC.bdo.form.enableForm(this, buttonLabel);
+              
+          }  
+          else {
+              GDC.bdo.form.notifyError("Please update the form before COMPLETING your action !");
+          }
+      });  
+
+      $("#employeeID").keypress(function (e) {
+          //if the letter is not digit then display error and don't type anything
+          if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+              //display error message
+              $("#errmsg-employeeID").html("Digits Only!").show().fadeOut("slow");
+              return false;
+          }
+      });
+      
       $("#bdoScore").keypress(function (e) {
             //if not a valid number between 1 to 100, then display error and don't type anything
             if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {

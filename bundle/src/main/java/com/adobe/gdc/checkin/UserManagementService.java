@@ -17,7 +17,7 @@ public interface UserManagementService {
 	
 	String[] getManagersDirectReportees(String managersID, Session session) throws Exception;
 	
-	boolean isManager(Session session);
+	boolean isManager(Session session) throws Exception;
 	
 	boolean isAnonymous(HttpServletRequest request);
 }
