@@ -76,14 +76,14 @@ public class QuarterlyBDOUtils {
 		 	String[] propertyValue = {};
 			if(!property.isMultiple())
 			{
-				propertyValue =  new String[] {property.getValue().getString()};
+				propertyValue =  new String[] {property.getValue().getString().replace("\n","<br/>\\")};
 			}
 			else
 			{
 				Value[] values = property.getValues();
 				propertyValue = new String[values.length];
 				for(int i=0; i<values.length;i++) 
-					propertyValue[i] = values[i].getString();
+					propertyValue[i] = values[i].getString().replace("\n","<br>\\");
 			}
 			
 			nodePropertyMap.put(propertyName, propertyValue);

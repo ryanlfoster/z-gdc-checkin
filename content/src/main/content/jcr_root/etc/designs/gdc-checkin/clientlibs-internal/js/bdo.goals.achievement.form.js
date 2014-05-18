@@ -409,5 +409,6 @@ GDC.bdo.form.unescapeHtml = function(safe) {
         		   .replace(/&lt;/g, '<')
         		   .replace(/&gt;/g, '>')
         		   .replace(/&#034;/g, '"')
-                   .replace(/&#039;/g, "'");
+                   .replace(/&#039;/g, "'")
+                   .replace(/<br>/g,"\n");
  }
