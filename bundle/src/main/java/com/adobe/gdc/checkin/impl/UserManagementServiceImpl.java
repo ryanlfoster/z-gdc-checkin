@@ -1,14 +1,11 @@
 package com.adobe.gdc.checkin.impl;
 
-import java.util.StringTokenizer;
-
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.jcr.UnsupportedRepositoryOperationException;
 import javax.jcr.Value;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Service;
 import org.apache.jackrabbit.api.JackrabbitSession;
@@ -16,7 +13,6 @@ import org.apache.jackrabbit.api.security.user.Authorizable;
 import org.apache.jackrabbit.api.security.user.UserManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import com.adobe.gdc.checkin.UserManagementService;
 import com.adobe.gdc.checkin.constants.QuartelyBDOConstants;
 import com.adobe.gdc.checkin.utils.QuarterlyBDOUtils;
@@ -41,8 +37,7 @@ public class UserManagementServiceImpl implements UserManagementService{
 	@Override
 	public String getManagersEmailId(Session session) throws Exception {
 		UserManager userManager = getUserManager(session);
-		String managersEmailId, manager;
-		managersEmailId =  manager= QuartelyBDOConstants.EMPTY_STRING;
+		String manager;
 		final Authorizable authorizable = userManager.getAuthorizable(session.getUserID());
 		if(authorizable.hasProperty(QuartelyBDOConstants.PROFILE_MANAGER)) {
 			manager =  authorizable.getProperty(QuartelyBDOConstants.PROFILE_MANAGER)[0].getString();
