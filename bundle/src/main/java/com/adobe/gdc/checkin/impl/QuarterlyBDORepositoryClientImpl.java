@@ -82,7 +82,7 @@ public class QuarterlyBDORepositoryClientImpl  implements QuarterlyBDORepository
 	
 	
 	@Override
-	public Map<String, String[]> getQuarterlyBDOData(int quarterNumber, int annualYear, String userID, Session session) throws Exception {
+	public Map<String, String[]> getQuarterlyBDOData(int quarterNumber, int annualYear, String userID, Session session, boolean escapeNewline) throws Exception {
 
 		Map<String, String[]> bdoDataMap = new HashMap<String, String[]>();
 		String repositoryPath = QuarterlyBDOUtils.getQuarterlyBDORepositoryPath(annualYear, quarterNumber, userID);
@@ -91,7 +91,7 @@ public class QuarterlyBDORepositoryClientImpl  implements QuarterlyBDORepository
 		
 		//If node exists, read the node properties 
 		if(quarterlyBDONode != null) {
-			bdoDataMap = QuarterlyBDOUtils.readNodeproperties(quarterlyBDONode);
+			bdoDataMap = QuarterlyBDOUtils.readNodeproperties(quarterlyBDONode,escapeNewline);
 		} 
 		return bdoDataMap;
 	}
@@ -107,8 +107,8 @@ public class QuarterlyBDORepositoryClientImpl  implements QuarterlyBDORepository
 		
 		//If node exists, read the node properties 
 		if(employeeProfileNode != null) {
-			employeeDataMap = QuarterlyBDOUtils.readNodeproperties(employeeProfileNode);
-		} 
+			employeeDataMap = QuarterlyBDOUtils.readNodeproperties(employeeProfileNode, false);
+		}
 		return employeeDataMap;
 	}
 	

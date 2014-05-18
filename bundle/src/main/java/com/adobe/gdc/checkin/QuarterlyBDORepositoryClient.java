@@ -9,7 +9,7 @@ public interface QuarterlyBDORepositoryClient {
 	
 	boolean createOrUpdateEmployeeProfileData(Map<String, String[]> params,  Session session)  throws Exception;
 	
-	Map<String, String[]> getQuarterlyBDOData(int quarterNumber, int annualYear, String userID, Session session) throws Exception;
+	Map<String, String[]> getQuarterlyBDOData(int quarterNumber, int annualYear, String userID, Session session, boolean escapeNewline) throws Exception;
 	
 	public Map<String, String[]> getEmployeeProfileData(String userID, Session session) throws Exception;
 }

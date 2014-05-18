@@ -83,7 +83,7 @@ public class GenerateReportsServlet extends SlingSafeMethodsServlet {
 				
 				//If employee exists in the repository
 				if(employeeProfileDataMap != null && employeeProfileDataMap.size() > 0 ) {
-					Map<String, String[]> employeeBDODataMap = quarterlyBDORepositoryClient.getQuarterlyBDOData(quarterNumber, annualYear, directReportees[i], session);					
+					Map<String, String[]> employeeBDODataMap = quarterlyBDORepositoryClient.getQuarterlyBDOData(quarterNumber, annualYear, directReportees[i], session, false);					
 					int index = resultData.size() + 1;
 					String[] employeeBDOData = getEmployeeBDOData(employeeProfileDataMap, employeeBDODataMap, managerName);
 					resultData.put(index+"",employeeBDOData);

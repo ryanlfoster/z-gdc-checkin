@@ -64,7 +64,7 @@ public class QuarterlyBDOUtils {
 		}	
 	}
 	
-	public static Map<String, String[]> readNodeproperties(Node quarterlyBDONode) throws RepositoryException {
+	public static Map<String, String[]> readNodeproperties(Node quarterlyBDONode, boolean escapeNewline) throws RepositoryException {
 		
 		Map<String, String[]> nodePropertyMap = new HashMap<String, String[]>();
 		PropertyIterator propertyIterator = quarterlyBDONode.getProperties();
@@ -76,14 +76,25 @@ public class QuarterlyBDOUtils {
 		 	String[] propertyValue = {};
 			if(!property.isMultiple())
 			{
-				propertyValue =  new String[] {property.getValue().getString().replace("\n","<br>\\")};
+				if(escapeNewline) {
+					propertyValue =  new String[] {property.getValue().getString().replace("\n","<br>\\")};
+				}
+				else {
+					propertyValue =  new String[] {property.getValue().getString()};
+				}
 			}
 			else
 			{
 				Value[] values = property.getValues();
 				propertyValue = new String[values.length];
-				for(int i=0; i<values.length;i++) 
-					propertyValue[i] = values[i].getString().replace("\n","<br>\\");
+				for(int i=0; i<values.length;i++) {
+					if(escapeNewline) {
+						propertyValue[i] = values[i].getString().replace("\n","<br>\\");
+					}
+					else {
+						propertyValue[i] = values[i].getString();
+					}
+				}
 			}
 			
 			nodePropertyMap.put(propertyName, propertyValue);

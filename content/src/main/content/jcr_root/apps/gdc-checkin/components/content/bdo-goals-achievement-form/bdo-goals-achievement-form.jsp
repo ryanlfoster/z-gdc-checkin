@@ -48,7 +48,7 @@ int annualYear = (Integer)pageContext.getAttribute("annualYear");
 
 String userID = (String)pageContext.getAttribute("userID");
 Session session = resourceResolver.adaptTo(Session.class);
-Map<String, String[]> quarterlyBDODataMap = quarterlyBDORepositoryClient.getQuarterlyBDOData(quarterNumber,annualYear,userID,session);
+Map<String, String[]> quarterlyBDODataMap = quarterlyBDORepositoryClient.getQuarterlyBDOData(quarterNumber,annualYear,userID,session,true);
 
 Map<String, String[]> employeeProfileDataMap = quarterlyBDORepositoryClient.getEmployeeProfileData(userID,session);
 

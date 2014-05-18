@@ -67,7 +67,7 @@ public class QuarterlyBDOReportServlet extends SlingAllMethodsServlet{
 				//If employee exists in the repository
 				if(employeeProfileDataMap != null && employeeProfileDataMap.size() > 0 ) {
 					
-					Map<String, String[]> employeeBDODataMap = quarterlyBDORepositoryClient.getQuarterlyBDOData(quarterNumber, annualYear, directReportees[i], session);					
+					Map<String, String[]> employeeBDODataMap = quarterlyBDORepositoryClient.getQuarterlyBDOData(quarterNumber, annualYear, directReportees[i], session, false);					
 					int index = directReportResultArray.length() + 1;
 					JSONObject employeeBDODataJson = getEmployeeBDOJSON(index,employeeProfileDataMap,employeeBDODataMap,directReportees[i],session);
 					directReportResultArray.put(employeeBDODataJson);
