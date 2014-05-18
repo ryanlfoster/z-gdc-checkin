@@ -91,7 +91,7 @@ public class QuarterlyBDOUtils {
 
 		return nodePropertyMap;
 	}
-	
+	 
 	/**
 	 * 
 	 * @param year
