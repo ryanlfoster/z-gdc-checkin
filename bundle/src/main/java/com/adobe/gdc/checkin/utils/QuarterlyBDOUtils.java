@@ -76,7 +76,7 @@ public class QuarterlyBDOUtils {
 		 	String[] propertyValue = {};
 			if(!property.isMultiple())
 			{
-				propertyValue =  new String[] {property.getValue().getString().replace("\n","<br/>\\")};
+				propertyValue =  new String[] {property.getValue().getString().replace("\n","<br>\\")};
 			}
 			else
 			{
