@@ -5,7 +5,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -13,6 +15,7 @@ import javax.jcr.Session;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.felix.scr.annotations.Reference;
 import org.apache.felix.scr.annotations.sling.SlingServlet;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -223,8 +226,19 @@ public class GenerateReportsServlet extends SlingSafeMethodsServlet {
 	private String formatArrayToString(String[] arrayValue) {
 		String crLf = Character.toString((char)13) + Character.toString((char)10);
 		String stringValue = QuartelyBDOConstants.EMPTY_STRING;
-		for(int index=0; index<arrayValue.length; index++ ) {
-			stringValue = stringValue + (index+1) +". " + arrayValue[index] + crLf;
+		int numbering = 1;
+		
+		List<String> achievementList = new ArrayList<String>();
+		
+		for(int index=0; index<arrayValue.length; index++) {
+			if(StringUtils.isNotBlank(arrayValue[index])) {
+				achievementList.add(arrayValue[index]);
+			}
+		}
+		
+		for(String achievement :  achievementList) {
+				stringValue = stringValue + (numbering) +". " + achievement + crLf;
+				numbering++;
 		}
 		return stringValue;
 	}
