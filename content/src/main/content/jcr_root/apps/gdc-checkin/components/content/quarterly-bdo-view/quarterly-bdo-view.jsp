@@ -155,7 +155,7 @@
             </div>
              <c:choose>
                 <c:when test="${not empty bdoScore}">
-                    <div class="col-md-8 col-xs-8">${bdoScore}</div>
+                    <div class="col-md-8 col-xs-8">${bdoScore} %</div>
                 </c:when>
                 <c:otherwise>
                     <div class="col-md-8 col-xs-8">Unavailable</div>
