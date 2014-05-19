@@ -245,6 +245,12 @@ GDC.bdo.form.notifySuccess = function(successMsg) {
 
 }
 
+
+GDC.bdo.form.clearMessages = function() {
+	$("#form-message").hide();
+}
+
+
 GDC.bdo.form.validateOnSave = function() {
 	var errorMsg="";
 
@@ -335,6 +341,7 @@ GDC.bdo.form.multifield = function(panelSelector, activeSelector) {
 
     $(panelSelector).on("click", ".btn-add",function(){
 
+    	 GDC.bdo.form.clearMessages();
          var clonedRow = $(activeSelector).clone();
 
          $(activeSelector).find(".btn-remove").show();
@@ -350,6 +357,8 @@ GDC.bdo.form.multifield = function(panelSelector, activeSelector) {
      });
 
     $(panelSelector).on("click", ".btn-remove",function() {
+    	
+    	GDC.bdo.form.clearMessages();
         var panelRow = panelSelector+ "-row";
         $(this).parents(panelRow).remove();
 
