@@ -2,6 +2,7 @@ package com.adobe.gdc.checkin.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.Map;
 import javax.jcr.Session;
 import javax.servlet.Servlet;
@@ -19,6 +20,8 @@ import org.apache.sling.commons.json.JSONException;
 import org.apache.sling.commons.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.adobe.gdc.checkin.EmailService;
 import com.adobe.gdc.checkin.QuarterlyBDORepositoryClient;
 import com.adobe.gdc.checkin.UserManagementService;
 import com.adobe.gdc.checkin.constants.QuartelyBDOConstants;
@@ -42,6 +45,9 @@ public class QuarterlyBDOSaveSubmitOrCompleteServlet extends SlingAllMethodsServ
 	@Reference
 	UserManagementService userManagementService;
 
+	@Reference
+	EmailService emailService;
+	
 	@Override
 	protected void doPost(SlingHttpServletRequest request,
 			SlingHttpServletResponse response) throws ServletException,
@@ -86,7 +92,7 @@ public class QuarterlyBDOSaveSubmitOrCompleteServlet extends SlingAllMethodsServ
 			if (result && action.equals(QuartelyBDOConstants.SUBMIT)) {
 				//If the BDO form is self submitted- send notification to the manager
 				if( (userManagementService.getCurrentUser(session)).equals(params.get(QuartelyBDOConstants.USER_ID)[0])) {
-					// TO_DO send email to manager
+					sendEmailNotification(session);
 				}
 			}
 			
@@ -113,6 +119,23 @@ public class QuarterlyBDOSaveSubmitOrCompleteServlet extends SlingAllMethodsServ
 
 	}
 
+	
+	private void sendEmailNotification(Session session) throws Exception {
+		
+		//first construct emailParams
+		String employeeName = userManagementService.getCurrentUserName(session);
+		Map<String, String> emailParams = new HashMap<String, String>();
+		emailParams.put("employeeName", employeeName);
+		
+		String [] recipients = new String[2];
+		recipients[0] = userManagementService.getCurrentUser(session) + QuartelyBDOConstants.ADOBE_EMAIL_EXTENTION;
+		recipients[1] = userManagementService.getManagersEmailId(session);
+		
+		emailService.sendEmail(QuartelyBDOConstants.EMAIL_TEMPLATE_PATH, emailParams, recipients);
+		
+	}
+	
+	
 	private Session getSession(SlingHttpServletRequest request) {
 		return request.getResourceResolver().adaptTo(Session.class);
 	}

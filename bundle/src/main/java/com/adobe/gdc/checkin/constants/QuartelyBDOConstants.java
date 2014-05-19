@@ -80,4 +80,20 @@ public class QuartelyBDOConstants {
 	//Cookie constants
 	public static final String GDC_USER_COOKIE = "gdc-user";
 	
+	
+	//Email notification constants
+	 /**
+     * Sender Email Address variable passed in the input parameter
+     * map to the sendEmail() function.
+     */
+    public static final String SENDER_EMAIL_ADDRESS = "senderEmailAddress";
+
+    /**
+     * Sender Name variable passed in the input parameter
+     * map to the sendEmail() function.
+     */
+    public static final String SENDER_NAME = "senderName";
+    
+    public static final String EMAIL_TEMPLATE_PATH  = "/etc/notification/email/checkinEmailTemplate/emailtemplate.txt";
+	
 }

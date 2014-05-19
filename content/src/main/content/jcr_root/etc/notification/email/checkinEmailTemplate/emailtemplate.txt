@@ -1,12 +1,13 @@
-Subject: Email Notification
+Subject: GDC BDO Submission notification
 
 
 <div style="font-size: 12px; font-weight: normal; color: #000000; font-family:Arial,Helvetica,Verdana,sans-serif;">
 
-${body}
+This is a notification that ${employeeName} has submitted the BDO for this quarter.
 
 Thanks,
-Adobe Team
+Adobe GDC
+
 -------------------------------------------------------
 This confirmation notice has been sent by electronic mail.  Please do not reply to this email.  
 
