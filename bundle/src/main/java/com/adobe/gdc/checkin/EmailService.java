@@ -37,9 +37,9 @@ public interface EmailService {
      * @param emailParams Replacement variable map to be injected in the template
      * @param recipients recipient email addresses
      * 
-     * @return failureList containing list recipient's InternetAddresses for which email sent failed
+     * @return boolean - true if email sent, false otherwise
      */
-    List<InternetAddress> sendEmail(String templatePath, Map<String, String> emailParams,
+    boolean sendEmail(String templatePath, Map<String, String> emailParams,
         InternetAddress... recipients);
 
     /**
@@ -50,7 +50,7 @@ public interface EmailService {
      * @param emailParams Replacement variable map to be injected in the template
      * @param recipients recipient email addresses. Invalid email addresses are skipped.
      * 
-     * @return failureList containing list recipient's String addresses for which email sent failed
+     * @return boolean - true if email sent, false otherwise
      */
-    List<String> sendEmail(String templatePath, Map<String, String> emailParams, String... recipients);
+    boolean sendEmail(String templatePath, Map<String, String> emailParams, String... recipients);
 }

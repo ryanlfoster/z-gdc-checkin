@@ -20,7 +20,7 @@
 package com.adobe.gdc.checkin.impl;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import javax.jcr.Session;
@@ -56,9 +56,9 @@ public final class EmailServiceImpl implements EmailService {
     private ResourceResolverFactory resourceResolverFactory;
 
     @Override
-    public List<String> sendEmail(final String templatePath, final Map<String, String> emailParams,
+    public boolean sendEmail(final String templatePath, final Map<String, String> emailParams,
         final String... recipients) {
-        List<String> failureList = new ArrayList<String>();
+    	
         if (recipients == null || recipients.length <= 0) {
             throw new IllegalArgumentException("Invalid Recipients");
         }
@@ -72,21 +72,15 @@ public final class EmailServiceImpl implements EmailService {
             }
         }
         InternetAddress[] iAddressRecipients = addresses.toArray(new InternetAddress[addresses.size()]);
-        List<InternetAddress> failureInternetAddresses =  sendEmail(templatePath, emailParams, iAddressRecipients);
+        
+        return  sendEmail(templatePath, emailParams, iAddressRecipients);
 
-        for (InternetAddress address : failureInternetAddresses) {
-            failureList.add(address.toString());
-        }
-
-        return failureList;
     }
 
 
     @Override
-    public List<InternetAddress> sendEmail(final String templatePath, final Map<String, String> emailParams,
+    public boolean sendEmail(final String templatePath, final Map<String, String> emailParams,
             final InternetAddress... recipients) {
-
-        List<InternetAddress> failureList = new ArrayList<InternetAddress>();
 
         if (recipients == null || recipients.length <= 0) {
             throw new IllegalArgumentException("Invalid Recipients");
@@ -102,18 +96,16 @@ public final class EmailServiceImpl implements EmailService {
         }
 
         MessageGateway<HtmlEmail> messageGateway = messageGatewayService.getGateway(HtmlEmail.class);
+        
+        try {
+			email.setTo(Arrays.asList(recipients));
+			messageGateway.send(email);
+		} catch (Exception e) {
+			log.error("[Exception] Email sent failed", e);
+			 return false;
+		}
 
-        for (InternetAddress address : recipients) {
-            try {
-                email.setTo(Collections.singleton(address));
-                messageGateway.send(email);
-            } catch (Exception e) {
-                failureList.add(address);
-                log.error("Exception sending email to " + address, e);
-            }
-         }
-
-        return failureList;
+        return true;
     }
 
 
