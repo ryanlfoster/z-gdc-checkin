@@ -264,10 +264,6 @@ if(StringUtils.isNotBlank(request.getParameter("editBdoScore"))|| StringUtils.is
 
    $(".bdo-form").on("click", ".btn-save",function() {
 
-       if(!GDC.bdo.isLoggedIn()) {
-           location.reload();
-       }
-
        var changeInFormValues = GDC.bdo.form.detectAnyFormChange(bdoObjectivesArray,bdoAchievementsArray,employeeID);
        
        if(changeInFormValues) {
@@ -290,11 +286,7 @@ if(StringUtils.isNotBlank(request.getParameter("editBdoScore"))|| StringUtils.is
        
       });  
 
-    $(".bdo-form").on("click", ".btn-submit",function() {
-
-       if(!GDC.bdo.isLoggedIn()) {
-           location.reload();
-       }
+    $(".bdo-form").on("click", ".btn-submit",function() {  	    
 
         var changeInFormValues = GDC.bdo.form.detectAnyFormChange(bdoObjectivesArray,bdoAchievementsArray,employeeID);
         
@@ -321,9 +313,6 @@ if(StringUtils.isNotBlank(request.getParameter("editBdoScore"))|| StringUtils.is
          
       $(".bdo-form").on("click", ".btn-complete",function() {
 
-        if(!GDC.bdo.isLoggedIn()) {
-           location.reload();
-        }
           var changeInFormValues = GDC.bdo.form.detectAnyFormChangeOnComplete(bdoObjectivesArray,bdoAchievementsArray,bdoScore);
           
           if(changeInFormValues) {
