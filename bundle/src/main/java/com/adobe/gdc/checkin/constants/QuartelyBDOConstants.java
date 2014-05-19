@@ -93,7 +93,7 @@ public class QuartelyBDOConstants {
      * map to the sendEmail() function.
      */
     public static final String SENDER_NAME = "senderName";
-    
+    public static final String EMPLOYEE_NAME = "employeeName";
     public static final String EMAIL_TEMPLATE_PATH  = "/etc/notification/email/checkinEmailTemplate/emailtemplate.txt";
 	
 }

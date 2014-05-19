@@ -125,7 +125,7 @@ public class QuarterlyBDOSaveSubmitOrCompleteServlet extends SlingAllMethodsServ
 		//first construct emailParams
 		String employeeName = userManagementService.getCurrentUserName(session);
 		Map<String, String> emailParams = new HashMap<String, String>();
-		emailParams.put("employeeName", employeeName);
+		emailParams.put(QuartelyBDOConstants.EMPLOYEE_NAME, employeeName);
 		
 		String [] recipients = new String[2];
 		recipients[0] = userManagementService.getCurrentUser(session) + QuartelyBDOConstants.ADOBE_EMAIL_EXTENTION;
