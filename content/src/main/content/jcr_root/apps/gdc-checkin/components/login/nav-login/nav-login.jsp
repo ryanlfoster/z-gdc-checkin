@@ -1,25 +1,30 @@
 <%@ page import="com.adobe.gdc.checkin.UserManagementService,
-    javax.jcr.Session,
-    com.day.cq.commons.inherit.HierarchyNodeInheritanceValueMap" %>
+													    javax.jcr.Session,
+													    com.day.cq.commons.inherit.HierarchyNodeInheritanceValueMap" %>
 <%@include file="/libs/foundation/global.jsp" %>
+
+<%
+    final String logoutPath = request.getContextPath() + "/system/sling/logout.html";
+%>
 
 <script type="text/javascript">
     function logout() {
-        document.cookie = "gdc-user=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
-        location.reload();
+    	 CQ.shared.Util.load("<%= logoutPath %>");
     }  
 </script>
 
 <%
   UserManagementService userManagementService = sling.getService(UserManagementService.class);
-  final boolean isAnonymous = userManagementService.isAnonymous(request);
-
   Session session = resourceResolver.adaptTo(Session.class);
-  HierarchyNodeInheritanceValueMap hnivm = new HierarchyNodeInheritanceValueMap(resource);    
+  final boolean isAnonymous = userManagementService.isAnonymous(session);
+  
   if(isAnonymous){
+	    HierarchyNodeInheritanceValueMap hnivm = new HierarchyNodeInheritanceValueMap(resource);   
      String loginPage = hnivm.getInherited("cq:loginPage","/login-page")+".html";
      response.sendRedirect(loginPage);
   }
+  
+
 %>
 
 <c:set var="isLoggedIn" value="<%=!isAnonymous%>" />

@@ -6,6 +6,8 @@ import javax.jcr.UnsupportedRepositoryOperationException;
 import javax.jcr.Value;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Service;
 import org.apache.jackrabbit.api.JackrabbitSession;
@@ -108,16 +110,13 @@ public class UserManagementServiceImpl implements UserManagementService{
 	}
 	
 	@Override
-	public  boolean isAnonymous( HttpServletRequest request) {
-		String cookieName = QuartelyBDOConstants.GDC_USER_COOKIE;
-        Cookie[] cookies = request.getCookies();
-        for (Cookie cookie : cookies) {
-            String name = cookie.getName();
-            if (cookieName.equals(name)) {
-                return false;
-            }
-        }
-        return true;
+	public  boolean isAnonymous(Session session) {
+	
+		if(session == null || session.getUserID().equalsIgnoreCase("anonymous")) {
+			return true;
+		}
+		
+		return false;
     }
 	
 	private UserManager getUserManager(Session session) throws UnsupportedRepositoryOperationException, RepositoryException {

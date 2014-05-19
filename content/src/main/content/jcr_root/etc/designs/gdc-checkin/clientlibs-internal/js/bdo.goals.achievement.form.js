@@ -28,7 +28,7 @@ GDC.bdo.isLoggedIn = function()
       if (c.indexOf(name)==0) return true;
       }
     return false;
-    }
+}
 
 GDC.bdo.form = function(bdoObjectives,bdoAchievements) {
 

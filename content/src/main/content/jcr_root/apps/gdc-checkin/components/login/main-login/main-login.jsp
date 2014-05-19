@@ -21,7 +21,8 @@ String redirectTo ="/gdc-bdo-home.html";
 redirectTo = slingRequest.getResourceResolver().map(request, redirectTo);
 
 UserManagementService userManagementService = sling.getService(UserManagementService.class);
-final boolean isAnonymous = userManagementService.isAnonymous(request);
+Session session = resourceResolver.adaptTo(Session.class);
+final boolean isAnonymous = userManagementService.isAnonymous(session);
 
 if (isAnonymous) {
     String jReason = request.getParameter("j_reason");
@@ -112,6 +113,10 @@ if (isAnonymous) {
 				return xmlhttp.status != 403;
  }
 
+ function eraseCookie(name, path) {
+	    createCookie(name, "", -1, path);
+	}
+ 
  function showError() {
 				var msg="User name and password do not match";
 				try {
@@ -146,7 +151,8 @@ if (isAnonymous) {
 				}
 				// send user/id password to check and persist
 				if (sendRequest(path, user, pass)) {
-				    createCookie("gdc-user", user, 7, '/')
+					   // erase legacy login #37548
+			     eraseCookie("login-token", "/crx");
 						  var u = resource;
 						  if (window.location.hash && u.indexOf('#') < 0) {
 						       u = u + window.location.hash;

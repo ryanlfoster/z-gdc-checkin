@@ -9,7 +9,7 @@
  Session session = resourceResolver.adaptTo(Session.class);
 %>
 
-<c:set var="isLoggedIn" value="<%=!(userManagementService.isAnonymous(request))%>" />
+<c:set var="isLoggedIn" value="<%=!(userManagementService.isAnonymous(session))%>" />
 <c:set var="isManager" value="<%= userManagementService.isManager(session)%>" />
 
 <div id="page-wrap">

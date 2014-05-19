@@ -19,5 +19,5 @@ public interface UserManagementService {
 	
 	boolean isManager(Session session) throws Exception;
 	
-	boolean isAnonymous(HttpServletRequest request);
+	boolean isAnonymous(Session session);
 }
