@@ -143,7 +143,11 @@ public class QuarterlyBDORepositoryClientImpl  implements QuarterlyBDORepository
 		properties.put(QuartelyBDOConstants.OBJECTIVES, objectives);
 		properties.put(QuartelyBDOConstants.ACHIEVEMENTS, achievements);
 		properties.put(QuartelyBDOConstants.DESIGNATION, params.get(QuartelyBDOConstants.DESIGNATION));
-		properties.put(QuartelyBDOConstants.BDO_SCORE, params.get(QuartelyBDOConstants.BDO_SCORE));
+		
+		//Update the BDO SCORE -for manager only
+		if(action.equals(QuartelyBDOConstants.COMPLETE)) {
+			properties.put(QuartelyBDOConstants.BDO_SCORE, params.get(QuartelyBDOConstants.BDO_SCORE));
+		}
 		
 		String [] status = {};
 		if(action.equals(QuartelyBDOConstants.SUBMIT)) {
