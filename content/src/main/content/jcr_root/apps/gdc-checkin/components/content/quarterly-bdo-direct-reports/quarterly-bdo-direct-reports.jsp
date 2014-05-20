@@ -83,7 +83,9 @@
            'autoSize':false,
 
            afterClose : function() {
-              oTable.fnReloadAjax();
+			        	   if(quarterNumber == 4) {
+			        		    location.reload();
+			            }
           }
 		});
 
