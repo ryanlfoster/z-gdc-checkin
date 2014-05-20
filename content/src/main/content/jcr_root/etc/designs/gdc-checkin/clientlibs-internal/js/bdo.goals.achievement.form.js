@@ -300,14 +300,6 @@ GDC.bdo.form.validateOnSubmit = function() {
 GDC.bdo.form.validateOnComplete = function() {
 	var errorMsg="";
 
-    if(GDC.bdo.isEmptyArray(GDC.bdo.form.getObjectives()) ) {
-    	errorMsg += 'Please set BDO Objective !<br>';
-    }
-
-    if(GDC.bdo.isEmptyArray(GDC.bdo.form.getAchievements()) ) {
-    	errorMsg += 'Please set BDO Achievement self-inputs !<br>';
-    }
-
     if(GDC.bdo.isEmpty($('.quarterly-bdo-form #bdoScore').val()) ) {
     	errorMsg += 'Please provide your score !<br>';
     }
