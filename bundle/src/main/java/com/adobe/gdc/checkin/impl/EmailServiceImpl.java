@@ -42,7 +42,7 @@ import com.day.cq.commons.mail.MailTemplate;
 import com.day.cq.mailer.MessageGateway;
 import com.day.cq.mailer.MessageGatewayService;
 
-@Component(label = "ACS AEM Commons - E-mail Service",
+@Component(label = "E-mail Service",
     description = "A Generic Email service that sends an email to a given list of recipients.")
 @Service(EmailService.class)
 public final class EmailServiceImpl implements EmailService {

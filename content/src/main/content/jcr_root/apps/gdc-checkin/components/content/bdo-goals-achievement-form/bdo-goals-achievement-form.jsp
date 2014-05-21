@@ -344,14 +344,14 @@ if(StringUtils.isNotBlank(request.getParameter("editBdoScore"))|| StringUtils.is
             //if not a valid number between 1 to 100, then display error and don't type anything
             if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
                //display error message
-               $("#errmsg-bdoscore").html("Only digits between 0 to 100!").show().fadeOut("slow");
+               $("#errmsg-bdoscore").html("Only digits between 0 to 100!").show().fadeOut(2000);
                      return false;
            }
       });
       
       $('#bdoScore').bind('copy paste cut',function(e) { 
           e.preventDefault(); //disable cut,copy,paste
-									 $("#errmsg-bdoscore").html("cut, copy & paste options are disabled !!").show().fadeOut(2000);
+									 $("#errmsg-bdoscore").html("Not allowed!").show().fadeOut(2000);
 						});
 
   }
