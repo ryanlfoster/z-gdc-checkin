@@ -75,13 +75,18 @@
       
 
 	   $(".fancybox").fancybox({ 
-
-		         'width':'750',
-           'height':'600',
            'autoDimensions':false,
            'type':'iframe',
            'autoSize':false,
 
+           helpers   : { 
+               overlay : {closeClick: false} // prevents closing when clicking OUTSIDE fancybox 
+           },
+
+           beforeLoad : function() {                    
+               this.width = $(window).width()*0.40;  
+               this.height = $(window).height()*0.60; 
+           },
            afterClose : function() {
 			        	   if(quarterNumber == 4) {
 			        		    location.reload();

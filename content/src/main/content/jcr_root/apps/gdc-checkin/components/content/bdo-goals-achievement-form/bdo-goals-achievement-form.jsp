@@ -242,7 +242,7 @@ if(StringUtils.isNotBlank(request.getParameter("editBdoScore"))|| StringUtils.is
  var employeeID = '';
 
  $(document).ready(function() {
-
+	 
   if(${editForm} == true) {
    
       bdoObjectivesArray = [];
@@ -348,7 +348,12 @@ if(StringUtils.isNotBlank(request.getParameter("editBdoScore"))|| StringUtils.is
                      return false;
            }
       });
- 
+      
+      $('#bdoScore').bind('copy paste cut',function(e) { 
+          e.preventDefault(); //disable cut,copy,paste
+									 $("#errmsg-bdoscore").html("cut, copy & paste options are disabled !!").show().fadeOut(2000);
+						});
+
   }
  
  });
