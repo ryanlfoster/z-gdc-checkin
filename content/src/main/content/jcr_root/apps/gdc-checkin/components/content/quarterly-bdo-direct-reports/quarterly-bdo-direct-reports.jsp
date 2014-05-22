@@ -85,7 +85,7 @@
 
            beforeLoad : function() {                    
                this.width = $(window).width()*0.40;  
-               this.height = $(window).height()*0.60; 
+               this.height = $(window).height()*0.64; 
            },
            afterClose : function() {
 			        	   if(quarterNumber == 4) {
