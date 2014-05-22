@@ -133,7 +133,14 @@ if(StringUtils.isNotBlank(request.getParameter("editBdoScore"))|| StringUtils.is
 
                     <div class="col-md-10 col-xs-10  bdo-panel">
                         <label for="bdo-panel">
-                            Set BDO Objectives and provide self-inputs
+                             <c:choose>
+                                 <c:when test="<%=StringUtils.isNotBlank(request.getParameter("editBdoScore"))%>">
+                                     BDO Objectives and self-inputs
+                                 </c:when>
+                                 <c:otherwise>
+                                     Set BDO Objectives and provide self-inputs
+                                 </c:otherwise>
+                              </c:choose>
                         </label>
                         <div class="row bdo-active bdo-panel-row">
                             <div class="col-sm-11  col-xs-11 col-md-11">
