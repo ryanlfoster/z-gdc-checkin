@@ -2,11 +2,13 @@ package com.adobe.gdc.checkin.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import javax.jcr.Node;
+import javax.jcr.NodeIterator;
 import javax.jcr.Session;
 
 import org.apache.commons.lang.StringUtils;
@@ -59,7 +61,7 @@ public class QuarterlyBDORepositoryClientImpl  implements QuarterlyBDORepository
 		return false;
 	}
 
-	
+	@Override
 	public boolean createOrUpdateEmployeeProfileData(Map<String, String[]> params,  Session session)  throws Exception {
 		
 		String userID = params.get(QuartelyBDOConstants.USER_ID)[0];
@@ -111,6 +113,32 @@ public class QuarterlyBDORepositoryClientImpl  implements QuarterlyBDORepository
 		}
 		return employeeDataMap;
 	}
+	
+	
+	@Override
+	public int getEmployeeProfileBeginYear(String userID, Session session) throws Exception {
+		
+		String repositoryPath = QuarterlyBDOUtils.getEmployeeProfileBasePath(userID); 
+		
+		//Get Employee Node
+		Node employeeNode = JcrUtils.getNodeIfExists(repositoryPath, session);
+		
+		NodeIterator years = employeeNode.getNodes();
+		
+		int minYear = Calendar.getInstance().get(Calendar.YEAR);
+		
+		while(years.hasNext()) {
+			
+			Node yearNode = (Node) years.next();
+			
+			int year = Integer.parseInt(yearNode.getName());
+			
+			minYear = Math.min(minYear,year);
+		}
+		
+		return minYear;
+	}
+	
 	
 	private Map<String, String[]> getQuarterlyBDOProperties(String action, Map<String, String[]> params, Session session) throws Exception
 	{
