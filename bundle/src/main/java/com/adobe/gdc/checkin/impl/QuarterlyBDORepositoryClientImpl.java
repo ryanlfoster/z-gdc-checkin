@@ -66,6 +66,10 @@ public class QuarterlyBDORepositoryClientImpl  implements QuarterlyBDORepository
 			return true;
 		}
 		
+		if(adminSession != null && adminSession.isLive()) {
+			adminSession.logout();
+		}
+		
 		return false;
 	}
 
@@ -88,7 +92,11 @@ public class QuarterlyBDORepositoryClientImpl  implements QuarterlyBDORepository
 			adminSession.save();
 			return true;
 		}
-		
+	    
+		if(adminSession != null && adminSession.isLive()) {
+			adminSession.logout();
+		}
+	
 		return false;
 
 	}
@@ -111,6 +119,10 @@ public class QuarterlyBDORepositoryClientImpl  implements QuarterlyBDORepository
 			bdoDataMap = QuarterlyBDOUtils.readNodeproperties(quarterlyBDONode,escapeNewline);
 		} 
 		
+		if(adminSession != null && adminSession.isLive()) {
+			adminSession.logout();
+		}
+		
 		return bdoDataMap;
 	}
 	
@@ -128,6 +140,10 @@ public class QuarterlyBDORepositoryClientImpl  implements QuarterlyBDORepository
 		//If node exists, read the node properties 
 		if(employeeProfileNode != null) {
 			employeeDataMap = QuarterlyBDOUtils.readNodeproperties(employeeProfileNode, false);
+		}
+		
+		if(adminSession != null && adminSession.isLive()) {
+			adminSession.logout();
 		}
 		
 		return employeeDataMap;
@@ -155,6 +171,10 @@ public class QuarterlyBDORepositoryClientImpl  implements QuarterlyBDORepository
 			int year = Integer.parseInt(yearNode.getName());
 			
 			minYear = Math.min(minYear,year);
+		}
+		
+		if(adminSession != null && adminSession.isLive()) {
+			adminSession.logout();
 		}
 		
 		return minYear;

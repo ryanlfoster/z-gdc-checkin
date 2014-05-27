@@ -4,10 +4,6 @@ import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.jcr.UnsupportedRepositoryOperationException;
 import javax.jcr.Value;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Service;
 import org.apache.jackrabbit.api.JackrabbitSession;
@@ -41,7 +37,7 @@ public class UserManagementServiceImpl implements UserManagementService{
 		UserManager userManager = getUserManager(session);
 		String manager;
 		final Authorizable authorizable = userManager.getAuthorizable(session.getUserID());
-		if(authorizable.hasProperty(QuartelyBDOConstants.PROFILE_MANAGER)) {
+		if(authorizable != null && authorizable.hasProperty(QuartelyBDOConstants.PROFILE_MANAGER)) {
 			manager =  authorizable.getProperty(QuartelyBDOConstants.PROFILE_MANAGER)[0].getString();
 			return QuarterlyBDOUtils.extractValueFromRawString(manager) + QuartelyBDOConstants.ADOBE_EMAIL_EXTENTION;
 		}
@@ -55,7 +51,7 @@ public class UserManagementServiceImpl implements UserManagementService{
 		String[] directReports = {};
 		Value[] directReportsValue = {};
 		final Authorizable authorizable = userManager.getAuthorizable(managersID);
-		if(authorizable.hasProperty(QuartelyBDOConstants.PROFILE_DIRECT_REPORTS)) {
+		if(authorizable != null && authorizable.hasProperty(QuartelyBDOConstants.PROFILE_DIRECT_REPORTS)) {
 			directReportsValue =  authorizable.getProperty(QuartelyBDOConstants.PROFILE_DIRECT_REPORTS);
 			directReports=new String[directReportsValue.length];
 			for(int i=0; i<directReportsValue.length; i++) {
@@ -71,7 +67,7 @@ public class UserManagementServiceImpl implements UserManagementService{
 		UserManager userManager = getUserManager(session);
 		Value[] memberOfValues = {};
 		final Authorizable authorizable = userManager.getAuthorizable(currentLdapID);
-		if(authorizable.hasProperty(QuartelyBDOConstants.PROFILE_MEMBER_OF)) {
+		if(authorizable != null && authorizable.hasProperty(QuartelyBDOConstants.PROFILE_MEMBER_OF)) {
 			memberOfValues = authorizable.getProperty(QuartelyBDOConstants.PROFILE_MEMBER_OF);
 			for(int i=0; i<memberOfValues.length; i++) {
 				String mailingGroup = QuarterlyBDOUtils.extractValueFromRawString(memberOfValues[i].getString());
@@ -90,7 +86,7 @@ public class UserManagementServiceImpl implements UserManagementService{
 		UserManager userManager = getUserManager(session);
 		String designation = QuartelyBDOConstants.EMPTY_STRING;
 		final Authorizable authorizable = userManager.getAuthorizable(userID);
-		if(authorizable.hasProperty(QuartelyBDOConstants.PROFILE_DESIGNATION))
+		if(authorizable != null && authorizable.hasProperty(QuartelyBDOConstants.PROFILE_DESIGNATION))
 			designation =  authorizable.getProperty(QuartelyBDOConstants.PROFILE_DESIGNATION)[0].getString();
 		
 		return designation;
@@ -101,9 +97,9 @@ public class UserManagementServiceImpl implements UserManagementService{
 		UserManager userManager = getUserManager(session);
 		String name = QuartelyBDOConstants.EMPTY_STRING;
 		final Authorizable authorizable = userManager.getAuthorizable(userID);
-		if(authorizable.hasProperty(QuartelyBDOConstants.PROFILE_GIVENNAME))
+		if(authorizable != null && authorizable.hasProperty(QuartelyBDOConstants.PROFILE_GIVENNAME))
 			name =  authorizable.getProperty(QuartelyBDOConstants.PROFILE_GIVENNAME)[0].getString();
-		if(authorizable.hasProperty(QuartelyBDOConstants.PROFILE_FAMILYNAME))
+		if(authorizable != null && authorizable.hasProperty(QuartelyBDOConstants.PROFILE_FAMILYNAME))
 			name = name + " " + authorizable.getProperty(QuartelyBDOConstants.PROFILE_FAMILYNAME)[0].getString();
 		
 		return name;
