@@ -79,16 +79,26 @@ public class QuarterlyBDOSaveSubmitOrCompleteServlet extends SlingAllMethodsServ
 		}
 		try {
 			Session session = getSession(request);
+			
+			if(userManagementService.isAnonymous(session)) {
+				result = false;
+				responseObject.put(QuartelyBDOConstants.ERROR, QuartelyBDOConstants.INVALID_SESSION);
+				log.error("Invalid session >> Terminating.");
+			}
+				
 			if (result) {
-				result = quarterlyBDORepositoryClient.createOrUpdateQuarterlyBDOData(action, params, session);
+				result = quarterlyBDORepositoryClient.createOrUpdateQuarterlyBDOData(action, params);
 				
 				if(action.equals(QuartelyBDOConstants.SAVE) || action.equals(QuartelyBDOConstants.SUBMIT)) {
 					//save or update the Employee Profile Data
-					result = quarterlyBDORepositoryClient.createOrUpdateEmployeeProfileData(params, session);
+					result = quarterlyBDORepositoryClient.createOrUpdateEmployeeProfileData(params);
 				}
 								
 			}
 
+			//Add result as success without counting on the email notification result
+			responseObject.put(QuartelyBDOConstants.SUCCESS, result);
+			
 			if (result && action.equals(QuartelyBDOConstants.SUBMIT)) {
 				//If the BDO form is self submitted- send notification to the manager
 				if( (userManagementService.getCurrentUser(session)).equals(params.get(QuartelyBDOConstants.USER_ID)[0])) {
@@ -96,7 +106,6 @@ public class QuarterlyBDOSaveSubmitOrCompleteServlet extends SlingAllMethodsServ
 				}
 			}
 			
-			responseObject.put(QuartelyBDOConstants.SUCCESS, result);
 
 		} catch (JSONException e) {
 			log.error("[JSONException]", e);

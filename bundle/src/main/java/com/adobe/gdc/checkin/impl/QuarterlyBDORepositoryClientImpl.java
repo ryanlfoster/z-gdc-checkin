@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import javax.jcr.Node;
 import javax.jcr.NodeIterator;
+import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 
 import org.apache.commons.lang.StringUtils;
@@ -16,6 +17,7 @@ import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Reference;
 import org.apache.felix.scr.annotations.Service;
 import org.apache.jackrabbit.commons.JcrUtils;
+import org.apache.sling.jcr.api.SlingRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,8 +41,11 @@ public class QuarterlyBDORepositoryClientImpl  implements QuarterlyBDORepository
 	@Reference
 	UserManagementService userManagementService;
 	
+	@Reference
+	SlingRepository repository;
+	
 	@Override
-	public boolean createOrUpdateQuarterlyBDOData(String action, Map<String, String[]> params,  Session session) throws Exception {
+	public boolean createOrUpdateQuarterlyBDOData(String action, Map<String, String[]> params) throws Exception {
 	
 		int quarterNumber = Integer.parseInt(params.get(QuartelyBDOConstants.QUARTER_NUMBER)[0]);
 		int annualYear = Integer.parseInt(params.get(QuartelyBDOConstants.ANNUAL_YEAR)[0]);
@@ -48,80 +53,96 @@ public class QuarterlyBDORepositoryClientImpl  implements QuarterlyBDORepository
 		//First get the repository base-path
 		String repositoryPath = QuarterlyBDOUtils.getQuarterlyBDORepositoryPath(annualYear, quarterNumber, userID);
 		
+		Session adminSession = getAdminSession();
+		
 		//Get or create the Quarterly BDO node to store data
-		Node quarterlyBDONode = JcrUtils.getOrCreateByPath(repositoryPath, JcrConstants.NT_UNSTRUCTURED, session);	
+		Node quarterlyBDONode = JcrUtils.getOrCreateByPath(repositoryPath, JcrConstants.NT_UNSTRUCTURED, adminSession);	
 		
 		//Now save the BDO data as the node properties
-		QuarterlyBDOUtils.setNodeProperties(quarterlyBDONode, getQuarterlyBDOProperties(action, params, session));
+		QuarterlyBDOUtils.setNodeProperties(quarterlyBDONode, getQuarterlyBDOProperties(action, params));
 		
-		if(session.hasPendingChanges()) {
-			session.save();
+		if(adminSession.hasPendingChanges()) {
+			adminSession.save();
 			return true;
 		}
+		
 		return false;
 	}
 
 	@Override
-	public boolean createOrUpdateEmployeeProfileData(Map<String, String[]> params,  Session session)  throws Exception {
+	public boolean createOrUpdateEmployeeProfileData(Map<String, String[]> params)  throws Exception {
 		
 		String userID = params.get(QuartelyBDOConstants.USER_ID)[0];
 		
 		String repositoryPath = QuarterlyBDOUtils.getEmployeeProfileBasePath(userID); 
 		
+		Session adminSession = getAdminSession();
+		
 		//Get or create the employee Profile node to store/update Employee profile data
-		Node employeeProfileNode = JcrUtils.getOrCreateByPath(repositoryPath, JcrConstants.NT_UNSTRUCTURED, session);
+		Node employeeProfileNode = JcrUtils.getOrCreateByPath(repositoryPath, JcrConstants.NT_UNSTRUCTURED, adminSession);
 		
 		//Now save the employee profile data as the node properties
-		QuarterlyBDOUtils.setNodeProperties(employeeProfileNode, getEmployeeProfileProperties(params, session));
+		QuarterlyBDOUtils.setNodeProperties(employeeProfileNode, getEmployeeProfileProperties(params));
 				
-		if(session.hasPendingChanges()) {
-			session.save();
+		if(adminSession.hasPendingChanges()) {
+			adminSession.save();
 			return true;
 		}
+		
 		return false;
 
 	}
 	
 	
 	@Override
-	public Map<String, String[]> getQuarterlyBDOData(int quarterNumber, int annualYear, String userID, Session session, boolean escapeNewline) throws Exception {
+	public Map<String, String[]> getQuarterlyBDOData(int quarterNumber, int annualYear, String userID, boolean escapeNewline) throws Exception {
 
 		Map<String, String[]> bdoDataMap = new HashMap<String, String[]>();
+		
 		String repositoryPath = QuarterlyBDOUtils.getQuarterlyBDORepositoryPath(annualYear, quarterNumber, userID);
+		
+		Session adminSession = getAdminSession();
+		
 		//Get the quarterly BDO node from the repository
-		Node quarterlyBDONode = JcrUtils.getNodeIfExists(repositoryPath, session);
+		Node quarterlyBDONode = JcrUtils.getNodeIfExists(repositoryPath, adminSession);
 		
 		//If node exists, read the node properties 
 		if(quarterlyBDONode != null) {
 			bdoDataMap = QuarterlyBDOUtils.readNodeproperties(quarterlyBDONode,escapeNewline);
 		} 
+		
 		return bdoDataMap;
 	}
 	
 	@Override
-	public Map<String, String[]> getEmployeeProfileData(String userID, Session session) throws Exception {
+	public Map<String, String[]> getEmployeeProfileData(String userID) throws Exception {
 
 		Map<String, String[]> employeeDataMap = new HashMap<String, String[]>();
 		String repositoryPath = QuarterlyBDOUtils.getEmployeeProfileBasePath(userID);
 		
+		Session adminSession = getAdminSession();
+		
 		//Get the Employee Profile node from the repository
-		Node employeeProfileNode = JcrUtils.getNodeIfExists(repositoryPath, session);
+		Node employeeProfileNode = JcrUtils.getNodeIfExists(repositoryPath, adminSession);
 		
 		//If node exists, read the node properties 
 		if(employeeProfileNode != null) {
 			employeeDataMap = QuarterlyBDOUtils.readNodeproperties(employeeProfileNode, false);
 		}
+		
 		return employeeDataMap;
 	}
 	
 	
 	@Override
-	public int getEmployeeProfileBeginYear(String userID, Session session) throws Exception {
+	public int getEmployeeProfileBeginYear(String userID) throws Exception {
 		
 		String repositoryPath = QuarterlyBDOUtils.getEmployeeProfileBasePath(userID); 
 		
+		Session adminSession = getAdminSession();
+		
 		//Get Employee Node
-		Node employeeNode = JcrUtils.getNodeIfExists(repositoryPath, session);
+		Node employeeNode = JcrUtils.getNodeIfExists(repositoryPath, adminSession);
 		
 		NodeIterator years = employeeNode.getNodes();
 		
@@ -140,7 +161,7 @@ public class QuarterlyBDORepositoryClientImpl  implements QuarterlyBDORepository
 	}
 	
 	
-	private Map<String, String[]> getQuarterlyBDOProperties(String action, Map<String, String[]> params, Session session) throws Exception
+	private Map<String, String[]> getQuarterlyBDOProperties(String action, Map<String, String[]> params) throws Exception
 	{
 		Map<String,String[]> properties = new HashMap<String,String[]>();
 		
@@ -194,7 +215,7 @@ public class QuarterlyBDORepositoryClientImpl  implements QuarterlyBDORepository
 	}
 
 	
-	private Map<String, String[]> getEmployeeProfileProperties(Map<String, String[]> params, Session session) throws Exception
+	private Map<String, String[]> getEmployeeProfileProperties(Map<String, String[]> params) throws Exception
 	{
 		Map<String,String[]> properties = new HashMap<String,String[]>();
 	
@@ -203,6 +224,10 @@ public class QuarterlyBDORepositoryClientImpl  implements QuarterlyBDORepository
 		properties.put(QuartelyBDOConstants.NAME, params.get(QuartelyBDOConstants.NAME));
 		
 		return properties; 
+	}
+
+	private Session getAdminSession() throws RepositoryException {
+		return repository.loginAdministrative(repository.getDefaultWorkspace());
 	}
 }
 

@@ -1,7 +1,11 @@
 <%@ page contentType="text/html; charset=utf-8" %>
 <%@include file="/libs/foundation/global.jsp" %>
 <%@page session="false" %>
-<%@page import="com.adobe.gdc.checkin.QuarterlyBDOCalendarService,com.adobe.gdc.checkin.UserManagementService,java.util.Calendar, java.util.Map, javax.jcr.Session" %>
+<%@page import="com.adobe.gdc.checkin.QuarterlyBDOCalendarService,
+                com.adobe.gdc.checkin.UserManagementService,
+                java.util.Calendar,
+                java.util.Map,
+                javax.jcr.Session" %>
 
 <c:set var="previous" value="previous" />
 <c:set var="current" value="current" />

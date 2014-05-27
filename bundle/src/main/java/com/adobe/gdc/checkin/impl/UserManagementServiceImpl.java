@@ -112,12 +112,13 @@ public class UserManagementServiceImpl implements UserManagementService{
 	@Override
 	public  boolean isAnonymous(Session session) {
 	
-		if(session == null || session.getUserID().equalsIgnoreCase("anonymous")) {
+		if(session == null || session.getUserID().equalsIgnoreCase("anonymous") || !session.isLive() ) {
 			return true;
 		}
 		
 		return false;
     }
+	
 	
 	private UserManager getUserManager(Session session) throws UnsupportedRepositoryOperationException, RepositoryException {
 		 UserManager userManager = ((JackrabbitSession) session).getUserManager();	

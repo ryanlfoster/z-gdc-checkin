@@ -138,7 +138,11 @@ GDC.bdo.form.saveSubmitOrCompleteBDO = function(selector,quarterNumber) {
                 GDC.bdo.form.updateFormFieldValues(requestParams, selector, quarterNumber);
         	}
         	else {
-
+        		
+        		if(data.error == "invalid_session") {
+        			location.reload();
+        		}
+        		
 				GDC.bdo.form.notifyError("Unable to process your request due to an unknown technical error. Please try after sometime",quarterNumber);
             }
            

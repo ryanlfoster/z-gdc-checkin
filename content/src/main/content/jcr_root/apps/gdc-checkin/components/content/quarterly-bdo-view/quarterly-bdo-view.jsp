@@ -2,9 +2,7 @@
 <%@include file="/libs/foundation/global.jsp" %>
 <%@page session="false" %>
 <%@page import="org.apache.commons.lang.StringUtils,
-                com.adobe.gdc.checkin.QuarterlyBDORepositoryClient,
-                com.adobe.gdc.checkin.UserManagementService,
-                java.util.Map, javax.jcr.Session" %>
+                java.util.Map" %>
 
 <c:choose>
  <c:when test="<%=StringUtils.isNotBlank(request.getParameter("name"))%>">
@@ -89,8 +87,6 @@
             <div class="col-md-12 col-xs-12 white-panel-small">
  </c:otherwise>
 </c:choose>
-
-
 
         <div class="row">
             <div class="col-md-1 col-xs-1"></div>

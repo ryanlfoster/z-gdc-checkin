@@ -67,8 +67,7 @@
 				             alert('Report download successfully'); 
 				         },  
              failCallback: function (html, url) {    
-                 alert('Your file download just failed for this URL:' + url + '\r\n' +     
-                       'Here was the resulting error HTML: \r\n' + html);    
+                 location.reload();
              }
 		      }); 
 		   }); 

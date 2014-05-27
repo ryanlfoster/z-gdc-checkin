@@ -52,9 +52,9 @@ int annualYear = (Integer)pageContext.getAttribute("annualYear");
 
 String userID = (String)pageContext.getAttribute("userID");
 Session session = resourceResolver.adaptTo(Session.class);
-Map<String, String[]> quarterlyBDODataMap = quarterlyBDORepositoryClient.getQuarterlyBDOData(quarterNumber,annualYear,userID,session,true);
+Map<String, String[]> quarterlyBDODataMap = quarterlyBDORepositoryClient.getQuarterlyBDOData(quarterNumber,annualYear,userID,true);
 
-Map<String, String[]> employeeProfileDataMap = quarterlyBDORepositoryClient.getEmployeeProfileData(userID,session);
+Map<String, String[]> employeeProfileDataMap = quarterlyBDORepositoryClient.getEmployeeProfileData(userID);
 
 boolean disableEmployeeID = false;
 
@@ -234,7 +234,7 @@ if(StringUtils.isNotBlank(request.getParameter("editBdoScore"))|| StringUtils.is
  </c:when>
 
  <c:otherwise>
-<% quarterlyBDODataMap = quarterlyBDORepositoryClient.getQuarterlyBDOData(quarterNumber,annualYear,userID,session,false); %>
+<% quarterlyBDODataMap = quarterlyBDORepositoryClient.getQuarterlyBDOData(quarterNumber,annualYear,userID,false); %>
  <c:set var="bdoObjectivesValues" value="<%=quarterlyBDODataMap.get("objectives")%>" scope="request"/>
  <c:set var="bdoAchievementsValues" value="<%=quarterlyBDODataMap.get("achievements")%>" scope="request"/>
     <cq:include path="quarterly-bdo-view" resourceType= "gdc-checkin/components/content/quarterly-bdo-view" />
@@ -287,7 +287,7 @@ if(StringUtils.isNotBlank(request.getParameter("editBdoScore"))|| StringUtils.is
 
 			   if(status == 'COMPLETED' && !isManager) {
 			          $('#quarterly-bdo-form-'+'${quarterNumber}').find('input, textarea, button, select').attr('disabled',true);
-			      }
+			   }
 
 
    $(".quarterly-bdo-form-"+'${quarterNumber}').on("click", ".btn-save",function() {

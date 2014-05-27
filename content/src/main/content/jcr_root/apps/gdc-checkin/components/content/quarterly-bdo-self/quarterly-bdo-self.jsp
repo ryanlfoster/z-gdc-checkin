@@ -65,8 +65,8 @@ String userID = userManagementService.getCurrentUser(session);
     <c:forEach var="i" begin="1" end="4">
        <% 
         Calendar quarterStartCalendarDate = allQuartersDateRangeMap.get("startDateQuarter"+pageContext.getAttribute("i"));
-  Calendar quarterEndCalendarDate = allQuartersDateRangeMap.get("endDateQuarter"+pageContext.getAttribute("i"));
-  %>
+        Calendar quarterEndCalendarDate = allQuartersDateRangeMap.get("endDateQuarter"+pageContext.getAttribute("i"));
+       %>
 
         <c:set var="quarterStatus" value="<%=quarterlyBDOService.getQuarterStatus(quarterStartCalendarDate, quarterEndCalendarDate)%>" />
         <c:set var="quarterOpenToEdit" value="<%=quarterlyBDOService.isOpenToEdit(quarterStartCalendarDate, quarterEndCalendarDate)%>" />

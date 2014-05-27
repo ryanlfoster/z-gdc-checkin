@@ -62,14 +62,14 @@ public class QuarterlyBDOReportServlet extends SlingAllMethodsServlet{
 			JSONArray directReportResultArray = new JSONArray();
 			for(int i=0; i< directReportees.length; i++) {
 				
-				Map<String, String[]> employeeProfileDataMap = quarterlyBDORepositoryClient.getEmployeeProfileData(directReportees[i], session);
+				Map<String, String[]> employeeProfileDataMap = quarterlyBDORepositoryClient.getEmployeeProfileData(directReportees[i]);
 				
 				//If employee exists in the repository
 				if(employeeProfileDataMap != null && employeeProfileDataMap.size() > 0 ) {
 					
-					Map<String, String[]> employeeBDODataMap = quarterlyBDORepositoryClient.getQuarterlyBDOData(quarterNumber, annualYear, directReportees[i], session, false);					
+					Map<String, String[]> employeeBDODataMap = quarterlyBDORepositoryClient.getQuarterlyBDOData(quarterNumber, annualYear, directReportees[i], false);					
 					int index = directReportResultArray.length() + 1;
-					JSONObject employeeBDODataJson = getEmployeeBDOJSON(index,employeeProfileDataMap,employeeBDODataMap,directReportees[i],session);
+					JSONObject employeeBDODataJson = getEmployeeBDOJSON(index,employeeProfileDataMap,employeeBDODataMap,directReportees[i]);
 					directReportResultArray.put(employeeBDODataJson);
 					
 				}
@@ -95,7 +95,7 @@ public class QuarterlyBDOReportServlet extends SlingAllMethodsServlet{
 	}
 	
 	
-	private JSONObject getEmployeeBDOJSON(int index, Map<String, String[]> employeeProfileDataMap, Map<String, String[]> employeeBDODataMap, String userID, Session session) throws Exception {
+	private JSONObject getEmployeeBDOJSON(int index, Map<String, String[]> employeeProfileDataMap, Map<String, String[]> employeeBDODataMap, String userID) throws Exception {
 		
 		JSONObject employeeBDODataJson = new JSONObject();
 		employeeBDODataJson.put(QuartelyBDOConstants.INDEX, index);

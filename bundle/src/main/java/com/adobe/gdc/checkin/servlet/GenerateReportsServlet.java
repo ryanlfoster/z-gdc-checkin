@@ -1,8 +1,6 @@
 package com.adobe.gdc.checkin.servlet;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -13,8 +11,6 @@ import java.util.Set;
 import java.util.TreeMap;
 import javax.jcr.Session;
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.felix.scr.annotations.Reference;
 import org.apache.felix.scr.annotations.sling.SlingServlet;
@@ -64,54 +60,61 @@ public class GenerateReportsServlet extends SlingSafeMethodsServlet {
 		log.info("Generating BDO Report for-> managersID="+ managersID+",quarterNumber="+ quarterNumber+ ",annualYear=" + annualYear);
 		
 		Session session = getSession(request);
+		
+		if(!userManagementService.isAnonymous(session)) {
     			 
-		//Generate data to be written in the file
-        Map<String, Object[]> resultData = new TreeMap<String, Object[]>();
-        resultData.put("1", new Object[] {
-							        		QuartelyBDOConstants.EMPLOYEE_ID_TITLE,
-							        		QuartelyBDOConstants.NAME_TITLE,
-							        		QuartelyBDOConstants.MANAGER_NAME_TITLE,
-							        		QuartelyBDOConstants.BDO_SCORE_FOR_Q_TITLE + quarterNumber,
-							        		QuartelyBDOConstants.NOTES_TITLE
-        								});
-       				
-		try {
-			//Get All Direct Reportees of the manager
-			String[] directReportees = userManagementService.getManagersDirectReportees(managersID,session);
-			
-			String managerName = userManagementService.getEmployeeName(managersID, session);
-	    	
-			for(int i=0; i<directReportees.length; i++) {
-				Map<String, String[]> employeeProfileDataMap = quarterlyBDORepositoryClient.getEmployeeProfileData(directReportees[i], session);
+			//Generate data to be written in the file
+	        Map<String, Object[]> resultData = new TreeMap<String, Object[]>();
+	        resultData.put("1", new Object[] {
+								        		QuartelyBDOConstants.EMPLOYEE_ID_TITLE,
+								        		QuartelyBDOConstants.NAME_TITLE,
+								        		QuartelyBDOConstants.MANAGER_NAME_TITLE,
+								        		QuartelyBDOConstants.BDO_SCORE_FOR_Q_TITLE + quarterNumber,
+								        		QuartelyBDOConstants.NOTES_TITLE
+	        								});
+	       				
+			try {
+				//Get All Direct Reportees of the manager
+				String[] directReportees = userManagementService.getManagersDirectReportees(managersID,session);
 				
-				//If employee exists in the repository
-				if(employeeProfileDataMap != null && employeeProfileDataMap.size() > 0 ) {
-					Map<String, String[]> employeeBDODataMap = quarterlyBDORepositoryClient.getQuarterlyBDOData(quarterNumber, annualYear, directReportees[i], session, false);					
-					int index = resultData.size() + 1;
-					String[] employeeBDOData = getEmployeeBDOData(employeeProfileDataMap, employeeBDODataMap, managerName);
-					resultData.put(index+"",employeeBDOData);
+				String managerName = userManagementService.getEmployeeName(managersID, session);
+		    	
+				for(int i=0; i<directReportees.length; i++) {
+					Map<String, String[]> employeeProfileDataMap = quarterlyBDORepositoryClient.getEmployeeProfileData(directReportees[i]);
+					
+					//If employee exists in the repository
+					if(employeeProfileDataMap != null && employeeProfileDataMap.size() > 0 ) {
+						Map<String, String[]> employeeBDODataMap = quarterlyBDORepositoryClient.getQuarterlyBDOData(quarterNumber, annualYear, directReportees[i], false);					
+						int index = resultData.size() + 1;
+						String[] employeeBDOData = getEmployeeBDOData(employeeProfileDataMap, employeeBDODataMap, managerName);
+						resultData.put(index+"",employeeBDOData);
+					}
 				}
+				response.setContentType("application/vnd.ms-excel");
+				response.setHeader("Expires:", "0"); // eliminates browser caching
+			    response.setHeader("Content-Disposition",  "attachment; filename=bdo_report.xlsx");
+				
+			    XSSFWorkbook workbook = writeDataMapToFile(resultData);
+			    
+			    ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
+			    workbook.write(outByteStream);
+			    byte [] outArray = outByteStream.toByteArray();
+			    response.setContentLength(outArray.length);
+			    OutputStream outStream = response.getOutputStream();
+			    outStream.write(outArray);
+			    outStream.flush();
+			    outStream.close();
 			}
-			response.setContentType("application/vnd.ms-excel");
-			response.setHeader("Expires:", "0"); // eliminates browser caching
-		    response.setHeader("Content-Disposition",  "attachment; filename=bdo_report.xlsx");
 			
-		    XSSFWorkbook workbook = writeDataMapToFile(resultData);
-		    
-		    ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
-		    workbook.write(outByteStream);
-		    byte [] outArray = outByteStream.toByteArray();
-		    response.setContentLength(outArray.length);
-		    OutputStream outStream = response.getOutputStream();
-		    outStream.write(outArray);
-		    outStream.flush();
-		    outStream.close();
-		}
-		catch(IOException e) {
-			log.error("[IOException]",e);
-		}
-		catch(Exception e) {
-			log.error("[Exception]",e);
+			catch(IOException e) {
+				log.error("[IOException]",e);
+			}
+			catch(Exception e) {
+				log.error("[Exception]",e);
+			}
+		} 
+		else {
+			response.getWriter().write("Session timed out >> Please login");
 		}
     }
     

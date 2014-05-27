@@ -24,6 +24,8 @@ public class QuartelyBDOConstants {
 	
 	//BDO form save/submit actions response
 	public static final String SUCCESS = "success";
+	public static final String ERROR = "error";
+	public static final String INVALID_SESSION = "invalid_session";
 	public static final String RESPONSE_TYPE = "application/json";
 	public static final String CHARACTER_ENCODING = "UTF-8";
 	
