@@ -1,4 +1,4 @@
-Subject: GDC BDO Submission notification
+Subject: GDC BDO Submission notification for - ${employeeName}
 CC: ${employeeEmail}
 
 <div style="font-size: 12px; font-weight: normal; color: #000000; font-family:Arial,Helvetica,Verdana,sans-serif;">
