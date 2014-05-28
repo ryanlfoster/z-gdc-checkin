@@ -1,86 +1,127 @@
-
-.profile-logout {
-	   padding-left: 45%;
+.adobe-logo {
+ position: absolute;
+ right: 50px;
+ top: 0;
 }
 
-.nav_login_container {
-    color: #FFFFFF;
-    float: left;
-    font-size: 13px;
-    margin-top: 5%; 
+.logo {
+ height: 220px;
+ width: auto;
+ float: left;
+ margin: 15px 0 15px 300px;
+}
+
+.container-page {
+ padding: 19% 0 0 0;
+}
+
+.container-logo {
+ height: 250px;
+ background: #fafafa;
+ box-shadow: 0 0 15px #999;
+ border-top: solid 1px #999;
+ border-bottom: solid 1px #999;
+ position: relative;
+}
+
+.container-form {
+ background: #000;
+ float: right;
+ width: 400px;
+ padding: 20px;
+ margin-top: -20px;
+}
+.container-form #login-error {
+ margin: 5px 20px;
+ border-radius: 0;
+ color: red;
+ padding-left: 30px;
+ font-size: 13px;
+}
+
+.err-visible {
+	position: relative;
+}
+
+.err-visible:before {
+	position: absolute;
+	content: "!";
+	border-radius: 60%;
+	padding-left: 8px;
+	padding-right: 8px;
+	color: white;
+	text-align: center;
+	font: 17px Arial, sans-serif;
+	background: #D00000;
+	left: 0;
+}
+
+.form-title {
+    color: #fff;
+    padding: 20px 0 0 20px;
+    margin: 0;
+ font-size: 25px;
+ text-align: left;
+    text-transform: uppercase;
+}
+
+.form-info {
+ font-size: 14px;
+ color: #ccc;
+ padding: 20px 0 0 20px;
+ margin: 0;
+}
+
+.login-form fieldset {
+    /*background: #fff;*/
+    border-radius: 0 0 5px 5px;
+    padding: 10px 20px 20px 20px;
+    position: relative;
+}
+
+.login-form input {
+    font-size: 14px;
+}
+.login-form input[type="text"],
+.login-form input[type="password"] {
+    border: 1px solid #dcdcdc;
+    padding: 4px 10px 0;
+    margin-bottom: 6px;
     width: 100%;
-	   border-radius: 8px;
-	   box-shadow: 0 0.3em 1em #999999;
-    padding: 15px 5px 0 5px;
-    background: url("../images/white_login.jpg") repeat scroll center bottom rgba(0, 0, 0, 0);
+    color: #999;
+    border-radius: 0;
+    height: 40px;
+    
 }
-
-
-.login_field {
-    border: 1px solid #234A91;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    padding: 5px;
-    width: auto;
-    background-color: white;
+.login-form input[type="text"] {
+    /*border-radius: 3px 3px 0 0;*/
 }
-
-
-.login_field img {
-    float: left;
-    margin: 0 8px 3px 3px;
-    vertical-align : middle;
+.login-form input[type="password"] {
+    /*border-top: none;*/
+    /*border-radius: 0px 0px 3px 3px;*/
 }
-
-.login_field input {
-    background-color: #E4EDFF;
-    border: medium none rgba(0, 0, 0, 0);
-    margin: 0;
-    outline: 0 none;
-    padding: 5px;
-    width: 84%;
-    color: black;
+.login-form input[type="submit"] {
+    background: #6d7d92;
+    color: #fff;
+				padding: 10px 20px;
+				border: 0;
+				width: 100%;
+				font-size: 14px;
+				text-transform: uppercase;
 }
-
-
-.login_check {
-    float: left;
+.login-form input[type="submit"]:hover { background: #428bca; }
+.login-form footer {
+    font-size: 12px;
+    margin-top: 16px;
 }
-
-
-.login_check input[type="checkbox"] {
-    margin-left: 0;
-}
-input[type="checkbox"] {
-    margin: -2px 8px 0 14px;
-    outline: 0 none;
-    vertical-align: middle;
-}
-
-
-.login_button_wrapper {
-    float: right;
+.login-form .info {
+    background: #e5e5e5;
+    border-radius: 50%;
+    display: inline-block;
+    height: 20px;
+    line-height: 20px;
+    margin: 0 10px 0 0;
     text-align: center;
-    width: 113px;
+    width: 20px;
 }
 
-
-.login_button_wrapper .login_button {
-    background: url("../images/loginbutton.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
-    border: medium none;
-    cursor: pointer;
-    font-size: 18px;
-    height: 42px;
-    margin: 0;
-    padding: 0 1px 3px 14px;
-    text-align: left;
-    text-shadow: 3px 0 4px #D0E59F;
-    width: 104px;
-}
-
-
-
-.login_button_wrapper .forget {
-    color: #FFFFFF;
-    text-decoration: none;
-}

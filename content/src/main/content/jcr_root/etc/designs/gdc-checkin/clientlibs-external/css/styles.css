@@ -18,37 +18,13 @@
 body{
     font-size:12px;
     background-color: #ccc;
-	font-family: 'AdobeClean'
+	   font-family: 'AdobeClean';
+	   background: url(../images/bg-watermark.jpg);
+    background-size: 40%;
    
 }
 
 /***************LOGIN - START***************************************/
-
-.login-panel {
-    margin-top: 250px;
-    border: 2px solid #007CB1;
-    border-radius: 8px;
-    width: 725px;
-    margin-left: 215px;
-    height: 195px;
-    background-color: #fff;
-    box-shadow: 0 0 6px 2px rgba(0, 0, 0, 0.1);
-}
-
-.login-form {
-    padding: 35px 40px 30px 35px;
-}
-
-.login-action-panel {
-    margin-top: 20px;
-}
-
-.login-bg {
-    height:191px;
-    border-right:2px solid #007CB1;
-    background-image:url(../images/login-logo.png);
-    background-repeat:no-repeat;
-}
 
 .gray-bg {
     background-color: #006dcc;
@@ -60,30 +36,6 @@ body{
     padding-right: 0px;
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
-}
-
-.login-panel-row {
-    margin-left:0px;
-    margin-right:0px;
-}
-
-.login-header {
-    position: absolute;
-    top: 77px;
-    left: 300px;
-    background: #fff;
-    font-size: 20px;
-    padding: 5px 10px 1px 10px;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-    border: 2px solid #007CB1;
-    border-bottom: 0px;
-    color: #007CB1;
-    -webkit-transform: rotate(-90deg);
-    -moz-transform: rotate(-90deg);
-    -ms-transform: rotate(-90deg);
-    -o-transform: rotate(-90deg);
-    transform: rotate(-90deg);
 }
 
 /***************LOGIN - END***************************************/

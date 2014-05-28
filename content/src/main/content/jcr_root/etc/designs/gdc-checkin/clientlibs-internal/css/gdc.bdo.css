@@ -57,9 +57,10 @@
 }
 
 #employeeID {
-	line-height: 18px;
  border-radius: 4px;
- font-family: cursive;
+ font-family: Arial, Helvetica, sans-serif;
+ padding: 0 0 0 10px;
+ height: 25px;
 }
 
 #bdoScore {
@@ -67,7 +68,7 @@
 	height: 25px;
 	border-radius: 4px;
 	text-align: center;
-	font-family: cursive;
+	font-family: Arial, Helvetica, sans-serif;
 }
 
 .bdo-form .success-msg {

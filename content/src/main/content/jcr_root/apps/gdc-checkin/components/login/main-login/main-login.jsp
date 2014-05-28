@@ -31,37 +31,30 @@ if (isAnonymous) {
     }
 %>
 
- <div class="container">
-  <div class="login-panel">
-   <div class="row login-panel-row">
-    <div class="col-md-6 col-xs-6 gray-bg">
-     <div class="login-bg">
-       <div class="login-header">LOGIN</div>
-     </div>
+<img src="/etc/designs/gdc-checkin/clientlibs-internal/images/logo.png" alt="" class="adobe-logo">
+   <div class="container-page">
+     <div class="container-logo">
+       <img src="/etc/designs/gdc-checkin/clientlibs-internal/images/logo-gdc.png" alt="" class="logo">
+
+       <div class="container-form">
+         <h4 class="form-title">Log In</h4>
+         <p class="form-info">Please log-in using your Adobe LDAP credential</p>
+									<div id="login-error" class="<%= jReason.length() > 0 ? "err-visible" : "err-hidden" %>">
+								  <%= xssAPI.encodeForHTML(i18n.getVar(jReason)) %>
+									</div>
+         <div class="login-form">
+            <fieldset>
+             <form id="<%= xssAPI.encodeForHTMLAttr(id) %>" name="<%= xssAPI.encodeForHTMLAttr(id) %>" method="POST" action="<%= xssAPI.getValidHref(action) %>" class="login-form" enctype="multipart/form-data" onsubmit="return validateLogin();">
+<input type="hidden" id="resource" name="resource" value="<%= xssAPI.encodeForHTMLAttr(redirectTo) %>">
+              <input id="<%= xssAPI.encodeForHTMLAttr(id + "_username")%>" class="form-control" type="text" placeholder="Your Username" name="j_username"/>
+              <input id="<%= xssAPI.encodeForHTMLAttr(id + "_password")%>" class="form-control" type="password" placeholder="Your password" autocomplete="off" oncopy="return false;" onpaste="return false;" oncut="return false;" name="j_password"/>
+              <input type="submit" value="Login"/>
+          </form>
+        </fieldset>
+      </div>
     </div>
-    <div class="col-md-6 col-xs-6">
-     <form id="<%= xssAPI.encodeForHTMLAttr(id) %>" name="<%= xssAPI.encodeForHTMLAttr(id) %>" method="POST" action="<%= xssAPI.getValidHref(action) %>" class="login-form" enctype="multipart/form-data" onsubmit="return validateLogin();">
-       <div id="login-error" class="<%= jReason.length() > 0 ? "err-visible" : "err-hidden" %>">
-        <%= xssAPI.encodeForHTML(i18n.getVar(jReason)) %>&nbsp;
-       </div>
-       <input type="hidden" id="resource" name="resource" value="<%= xssAPI.encodeForHTMLAttr(redirectTo) %>">
-       <div class="input-group login-input">
-        <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
-        <input id="<%= xssAPI.encodeForHTMLAttr(id + "_username")%>" class="form-control" type="text" placeholder="Your Username" name="j_username"/>
-       </div>
-       <p></p>
-       <div class="input-group login-input">
-        <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
-         <input id="<%= xssAPI.encodeForHTMLAttr(id + "_password")%>" class="form-control" type="password" placeholder="Your password" autocomplete="off" oncopy="return false;" onpaste="return false;" oncut="return false;" name="j_password"/>
-       </div>
-       <div class="pull-right login-action-panel">
-        <input class="btn btn-primary login" type="submit" value="Login"/>
-       </div>
-     </form>
-    </div>
-   </div>
   </div>
- </div>
+</div> 
 
  <script type="text/javascript">
 
