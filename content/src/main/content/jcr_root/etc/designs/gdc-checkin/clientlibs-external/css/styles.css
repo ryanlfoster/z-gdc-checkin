@@ -19,8 +19,7 @@ body{
     font-size:12px;
     background-color: #ccc;
     font-family: 'AdobeClean';
-    /*background: url(../images/bg-watermark.jpg);*/
-               background: #fff;
+    background: url(../images/bg-watermark.jpg);
     background-size: 40%;
    
 }
