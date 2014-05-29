@@ -19,7 +19,7 @@ MAIN LAYOUT
 #main-content {margin:0 0 0 180px;padding:0;color:#454545;}
 #main-content #inner{min-height:600px;position:relative;}
 #main-sidebar{position:absolute;left:0;top:0;width:180px;bottom:0;padding:0;}
-#main-sidebar .user-profile {height:65px;padding:5px;}
+#main-sidebar .user-profile {padding:5px;}
 #main-sidebar .user-profile h3{margin-top:10px;font-size:16px;}
 #main-sidebar .user-profile small{margin-top:-5px;display:block;}
 #footer {max-width:100%;min-width:960px;margin:0 10px 0 10px;padding-bottom:10px;border-top:1px solid #bbb;}
