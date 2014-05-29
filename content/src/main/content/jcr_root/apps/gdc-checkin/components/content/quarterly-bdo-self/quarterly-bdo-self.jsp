@@ -19,7 +19,7 @@ String userID = userManagementService.getCurrentUser(session);
 <c:set var="annualYear" value="<%=annualYear%>" scope="request" />
 
 <div class="row">
- <div class="col-md-9 col-xs-9">
+ <div class="col-md-12 col-xs-12">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">Set & Review your Quaterly BDO</h3>

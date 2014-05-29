@@ -1,8 +1,6 @@
-#fuelux-wizard {
-  margin-top: 60px;
-}
 
-.wizard-steps {
+
+.panel-body ul {
   list-style: none;
   display: block;
   width: 100%;
@@ -11,14 +9,14 @@
   position: relative;
   left: -40px;
 }
-.wizard-steps li {
+.panel-body ul li {
   display: block;
   text-align: center;
   float: left;
   min-width: 25%;
   max-width: 25%;
 }
-.wizard-steps li:before {
+.panel-body ul li:before {
   display: block;
   content: "";
   width: 100%;
@@ -30,22 +28,22 @@
   top: 12px;
   z-index: 1;
 }
-.wizard-steps li:first-child:before {
+.panel-body ul li:first-child:before {
   max-width: 50%;
   left: 50%;
 }
-.wizard-steps li:last-child:before {
+.panel-body ul li:last-child:before {
   max-width: 50%;
   width: 50%;
 }
-.wizard-steps li.active:before, .wizard-steps li.complete:before, .wizard-steps li.active .step, .wizard-steps li.complete .step {
+.panel-body ul li.complete:before, .panel-body li.active .step, .panel-body ul li.complete .step, .panel-body ul li.active:before {
   border-color: #cbdeee;
   color: #34a0ed;
   background-color: #f2f7fb;
   font-weight: bold;
   box-shadow: inset 0px 0px 15px 2px #fff;
 }
-.wizard-steps li .step {
+.panel-body ul li .step {
   text-align: center;
   border: 3px solid #e5e8ed;
   color: #fff;
@@ -58,10 +56,10 @@
   z-index: 2;
   display: inline;
 }
-.wizard-steps li.complete .title, .wizard-steps li.active .title {
+.panel-body ul li.complete .title, .panel-body ul li.active .title {
   color: #2b3d53;
 }
-.wizard-steps li .title {
+.panel-body ul li .title {
   display: block;
   max-width: 100%;
   color: #b1bcc5;
@@ -75,102 +73,125 @@
   line-height: 15px;
 }
 
-/* step content */
-.step-content {
-  margin-top: 40px;
-  margin-left: 60px;
-}
-.step-content .step-pane {
-  display: none;
-  min-height: 267px;
-}
-.step-content .active {
-  display: block;
+.adobe-logo {
+position: absolute;
+right: 50px;
+top: 0;
 }
 
-/* step forms */
-.form-wrapper .field-box {
-  margin-bottom: 25px;
-  margin-left: 0;
-  float: left;
-  width: 100%;
-}
-.form-wrapper .field-box:last-child {
-  margin-bottom: 0px;
-}
-.form-wrapper label {
-  display: inline-block;
-  float: left;
-  font-weight: 600;
-  cursor: auto;
-  font-size: 12px;
-  width: 120px;
-  text-align: left;
-  position: relative;
-  top: 2px;
-}
-.form-wrapper input[type="text"] {
-  width: 400px;
-}
-.form-wrapper.payment-info label {
-  width: 150px;
-}
-.form-wrapper .alert-msg {
-  display: block;
-  margin-left: 120px;
-  margin-bottom: -4px;
-  margin-top: 10px;
-}
-.form-wrapper .alert-msg i {
-  font-size: 14px;
+.logo {
+height: 220px;
+width: auto;
+float: left;
+margin: 15px 0 15px 300px;
 }
 
-/*** Form states ***/
-.form-wrapper .field-box {
-  /* error */
-  /* success */
-}
-.form-wrapper .field-box.error label,
-.form-wrapper .field-box.error .alert-msg {
-  color: #c73939;
-}
-.form-wrapper .field-box.error input {
-  border-color: #c73939;
-}
-.form-wrapper .field-box.success label,
-.form-wrapper .field-box.success .alert-msg {
-  color: #379e48;
-}
-.form-wrapper .field-box.success input {
-  border-color: #379e48;
+.container-page {
+padding: 19% 0 0 0;
 }
 
-/* actions */
-.wizard-actions {
-  float: right;
-  margin-top: 30px;
-  margin-right: 130px;
-}
-.wizard-actions .btn-next {
-  margin-left: 15px;
-}
-.wizard-actions .btn-finish {
-  display: none;
-  margin-left: 15px;
+.container-logo {
+height: 250px;
+background: #fafafa;
+box-shadow: 0 0 15px #999;
+border-top: solid 1px #999;
+border-bottom: solid 1px #999;
+position: relative;
 }
 
-/* responsive */
-@media (max-width: 979px) {
-  .step-content {
-    margin-left: 0px;
-  }
+.container-form {
+background: #000;
+float: right;
+width: 400px;
+padding: 20px;
+margin-top: -20px;
 }
-@media (max-width: 600px) {
-  .wizard-steps {
-    left: 0px;
-  }
+.container-form #login-error {
+margin: 5px 20px;
+border-radius: 0;
+color: red;
+padding-left: 30px;
+font-size: 13px;
+}
 
-  .form-wrapper input[type="text"] {
-    width: 200px;
-  }
+.err-visible {
+               position: relative;
+}
+
+.err-visible:before {
+     position: absolute;
+     content: "!";
+     border-radius: 60%;
+     padding-left: 8px;
+     padding-right: 8px;
+     color: white;
+     text-align: center;
+     font: 17px Arial, sans-serif;
+     background: #D00000;
+     left: 0;
+}
+
+.form-title {
+    color: #fff;
+    padding: 20px 0 0 20px;
+    margin: 0;
+    font-size: 25px;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.form-info {
+font-size: 14px;
+color: #ccc;
+padding: 20px 0 0 20px;
+margin: 0;
+}
+
+.login-form fieldset {
+    border-radius: 0 0 5px 5px;
+    padding: 10px 20px 20px 20px;
+    position: relative;
+}
+
+.login-form input {
+    font-size: 14px;
+}
+.login-form input[type="text"],
+.login-form input[type="password"] {
+    border: 1px solid #dcdcdc;
+    padding: 4px 10px 0;
+    margin-bottom: 6px;
+    width: 100%;
+    color: #999;
+    border-radius: 0;
+    height: 40px;
+    
+}
+.login-form input[type="text"] {
+}
+.login-form input[type="password"] {
+}
+.login-form input[type="submit"] {
+    background: #6d7d92;
+    color: #fff;
+    padding: 10px 20px;
+    border: 0;
+    width: 100%;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+.login-form input[type="submit"]:hover { background: #428bca; }
+.login-form footer {
+    font-size: 12px;
+    margin-top: 16px;
+}
+.login-form .info {
+    background: #e5e5e5;
+    border-radius: 50%;
+    display: inline-block;
+    height: 20px;
+    line-height: 20px;
+    margin: 0 10px 0 0;
+    text-align: center;
+    width: 20px;
 }

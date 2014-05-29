@@ -25,17 +25,17 @@
                     <c:choose>
                         <c:when test = "${isManager eq true}">
                             <li class="active">
-                                <a class="btn btn-success btn-block tab_title" href="#checkin_tab1" data-toggle="tab"><i class="icon-tasks"></i> BDO REPORT</a>
+                                <a class="btn btn-success btn-block tab_title" href="#checkin_tab1" data-toggle="tab"><i class="glyphicon glyphicon-signal"></i> BDO REPORT</a>
                             </li> 
                             <li>
-        <a class="btn btn-primary btn-block tab_title" href="#checkin_tab2" data-toggle="tab"><i class="icon-tasks"></i> MY QUARTERLY BDO</a>
+        <a class="btn btn-primary btn-block tab_title" href="#checkin_tab2" data-toggle="tab"><i class="glyphicon glyphicon-list"></i> MY QUARTERLY BDO</a>
        </li>
                         </c:when>
                         <c:otherwise>
        <li class="active">
         <div class="accordion-group">
          <div class="accordion-heading">
-          <a class="btn btn-success btn-block tab_title" href="#checkin_tab1" data-toggle="tab"><i class="icon-tasks"></i> MY QUARTERLY BDO</a>
+          <a class="btn btn-success btn-block tab_title" href="#checkin_tab1" data-toggle="tab"><i class="glyphicon glyphicon-list"></i> MY QUARTERLY BDO</a>
          </div>
         </div>
        </li>

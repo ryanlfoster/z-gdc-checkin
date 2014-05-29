@@ -1,164 +1,174 @@
 .bdo-objective-panel-row,.bdo-achievement-panel-row {
-	margin-bottom: 5px;
+               margin-bottom: 5px;
 }
 
 .align-right {
-	text-align: right;
+               text-align: right;
 }
 
-.bdo-form textarea,select {
-	-webkit-box-shadow: 0 0 7px rgba(0, 0, 0, 0.3) inset;
-	-moz-box-shadow: 0 0 7px rgba(0, 0, 0, 0.3) inset;
+.bdo-form textarea,.bdo-form select {
+               -webkit-box-shadow: 0 0 7px rgba(0, 0, 0, 0.3) inset;
+               -moz-box-shadow: 0 0 7px rgba(0, 0, 0, 0.3) inset;
 }
 
 .quarterly-bdo-tracker .panel-body {
-	padding: 0px;
+               padding: 0px;
 }
 
 .bdo-form select {
-	height: 30px;
-	border-radius: 3px;
+               height: 30px;
+               border-radius: 3px;
 }
 
 .bdo-form textarea {
-	height: 75px;
- resize: none;
- width: 49%;
- display: inline;
- margin-bottom: 5px;
+               height: 75px;
+resize: none;
+width: 100%;
+display: inline;
+margin-bottom: 5px;
+}
+
+.bdo-form .left-box {
+               float: left;
+    width: 49.5%;
+}
+
+.bdo-form .right-box {
+     width: 49.5%;
+               float: right;
 }
 
 .bdo-form .objective-desc {
-	color: #808080;
+               color: #808080;
 }
 
 .bdo-form .error-img {
-	border-radius: 50%;
-	padding-left: 8px;
-	padding-right: 8px;
-	color: white;
-	text-align: center;
-	font: 17px Arial, sans-serif;
-	background: #D00000;
+               border-radius: 50%;
+               padding-left: 8px;
+               padding-right: 8px;
+               color: white;
+               text-align: center;
+               font: 17px Arial, sans-serif;
+               background: #D00000;
 }
 
 .bdo-form .error {
-	font-style: italic;
-	font-weight: bold;
-	color: #D00000;
+               font-style: italic;
+               font-weight: bold;
+               color: #D00000;
 }
 
 #errmsg-employeeID {
- color: red;
+color: red;
 }
 
 #errmsg-bdoscore {
-	color: red;
+               color: red;
 }
 
 #employeeID {
- border-radius: 4px;
- font-family: Arial, Helvetica, sans-serif;
- padding: 0 0 0 10px;
- height: 25px;
+border-radius: 4px;
+font-family: Arial, Helvetica, sans-serif;
+padding: 0 0 0 10px;
+height: 25px;
 }
 
 #bdoScore {
-	width: 60px;
-	height: 25px;
-	border-radius: 4px;
-	text-align: center;
-	font-family: Arial, Helvetica, sans-serif;
+               width: 60px;
+               height: 25px;
+               border-radius: 4px;
+               text-align: center;
+               font-family: Arial, Helvetica, sans-serif;
 }
 
 .bdo-form .success-msg {
-	font-size: medium;
-	font-style: italic;
-	color: #339900;
+               font-size: medium;
+               font-style: italic;
+               color: #339900;
 }
 
 .button-wrapper {
-	padding-top: 15px;
-	padding-left: 0px;
+               padding-top: 15px;
+               padding-left: 0px;
 }
 
 .bdo-form .status-msg {
-	color: #d2322d;
-	font-style: italic;
+               color: #d2322d;
+               font-style: italic;
 }
 
 .bdo-form .status-msg .status {
-	font-weight: bold;
-	font-style: normal;
+               font-weight: bold;
+               font-style: normal;
 }
 
 .checkin_tabs .tab_title {
-	font-size: 18px;
-	line-height: 24px;
-	text-align: left;
+               font-size: 18px;
+               line-height: 24px;
+               text-align: left;
 }
 
 .numbering-blue {
-	font-weight: bold;
-	color: #3276b1;
+               font-weight: bold;
+               color: #3276b1;
 }
 
 .numbering-green {
-	font-weight: bold;
-	color: #51a351;
+               font-weight: bold;
+               color: #51a351;
 }
 
 .header-logo {
-	position: absolute;
-	right: 0px;
-	top: 0px;
-	z-index: 2;
+               position: absolute;
+               right: 0px;
+               top: 0px;
+               z-index: 2;
 }
 
 .bdo-self-content{
-	padding-left: 0px!important;
+               padding-left: 0px!important;
 }
 
 .no-margin{
-	margin-right: 0px;
+               margin-right: 0px;
     margin-left: 0px;
 }
 
 .white-panel-small{
-	background: white;
-	padding-left: -1px;
-	border-radius: 8px;
-	-webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
-	-moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
-	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
-	-webkit-border-radius: 0px 0px 6px 6px;
-	-moz-border-radius: 0px 0px 6px 6px;
-	border-radius: 6px;
-	 min-height: 500px;
+               background: white;
+               padding-left: 0;
+               border-radius: 8px;
+               -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+               -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+               box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+               -webkit-border-radius: 0px 0px 6px 6px;
+               -moz-border-radius: 0px 0px 6px 6px;
+               border-radius: 6px;
+               min-height: 500px;
      border: 1px solid #d4d4d4;
 }
 
 .border {
-	border: 1px solid #d4d4d4;
- }
+               border: 1px solid #d4d4d4;
+}
 
 .white-panel-large{
-	background: white;
-	padding-left: -1px;
-	border-radius: 8px;
-	-webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
-	-moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
-	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
-	-webkit-border-radius: 0px 0px 6px 6px;
-	-moz-border-radius: 0px 0px 6px 6px;
-	border-radius: 6px;
-	 min-height: 600px;
+               background: white;
+               padding-left: o;
+               border-radius: 8px;
+               -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+               -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+               box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+               -webkit-border-radius: 0px 0px 6px 6px;
+               -moz-border-radius: 0px 0px 6px 6px;
+               border-radius: 6px;
+               min-height: 600px;
 }
 
 .margin{
-	margin-top: 5%
- }
- 
+               margin-top: 4%;
+}
+
  .btn-edit {
- width: 70px;
- }
+              width: 70px;
+}

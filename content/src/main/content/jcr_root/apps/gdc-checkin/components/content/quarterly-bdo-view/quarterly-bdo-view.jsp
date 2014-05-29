@@ -91,8 +91,9 @@
         <div class="row">
             <div class="col-md-1 col-xs-1"></div>
             <div class="col-md-10 col-xs-10 margin">
-             ${name},<br/>
-             ${designation}<br/><br/>
+             <h4 class="title-name">${name},<br/>
+              <span class="desig-name">${designation}</span>
+             </h4> 
             </div>               
 
             <div class="col-md-1 col-xs-1"></div>

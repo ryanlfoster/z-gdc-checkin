@@ -34,6 +34,6 @@
         <h3><i class="fa fa-user fa-fw sign-in"></i> 
             <span>Welcome <%=userManagementService.getCurrentUserName(session)%> </span>
         </h3>
-        <span class="profile-logout"><a href="javascript:logout();"><i class="icon-signout icon-large"></i> Logout</a></span>
+        <span class="profile-logout"><a href="javascript:logout();"><i class="glyphicon glyphicon-log-out"></i> Logout</a></span>
     </div>
 </c:if>

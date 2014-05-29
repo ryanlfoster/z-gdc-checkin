@@ -80,7 +80,7 @@ if(StringUtils.isNotBlank(request.getParameter("editBdoScore"))|| StringUtils.is
         <div class="col-md-12 col-xs-12 white-panel-large">
     </c:when>
     <c:otherwise>
-        <div class="col-md-9 col-xs-9 white-panel-small">
+        <div class="col-md-12 col-xs-12 white-panel-small">
     </c:otherwise>
 </c:choose>
 
@@ -90,8 +90,9 @@ if(StringUtils.isNotBlank(request.getParameter("editBdoScore"))|| StringUtils.is
             <div class="row">
                 <div class="col-md-1 col-xs-1"></div>
                 <div class="col-md-10 col-xs-10 margin">
-                    ${name},<br/>
-                    ${designation}<br/><br/>
+                    <h4 class="title-name"> ${name},<br/>
+                      <span class="desig-name">${designation}</span>
+                     </h4> 
                 </div>               
                 <div class="col-md-1 col-xs-1"></div>
             </div>
@@ -147,9 +148,14 @@ if(StringUtils.isNotBlank(request.getParameter("editBdoScore"))|| StringUtils.is
                               </c:choose>
                         </label>
                         <div class="row ${quarterNumber}-bdo-active ${quarterNumber}-bdo-panel-row">
-                            <div class="col-sm-11  col-xs-11 col-md-11">
-                                <textarea id="${quarterNumber}-objective_1" name="objective" placeholder="Objective" class="form-control objective" rows="1" cols="20"></textarea>&nbsp;
-                                <textarea id="${quarterNumber}-achievement_1" name="achievement" placeholder="Achievement self-input" class="form-control achievement" rows="1" cols="20"></textarea>
+                            <div class="col-sm-11  col-xs-11 col-md-11">                                
+                                <div class="left-box">
+																																    <textarea id="${quarterNumber}-objective_1" name="objective" placeholder="Objective" class="form-control objective" rows="1" cols="20"></textarea>
+																																</div>
+																																<div class="right-box">
+																																    <textarea id="${quarterNumber}-achievement_1" name="achievement" placeholder="Achievement self-input" class="form-control achievement" rows="1" cols="20"></textarea>
+																																</div>
+                                
                             </div>
                             <div class="col-sm-1  col-xs-1 col-md-1 align-left button-wrapper">
                                 <button class="btn btn-danger btn-remove" type="button" style="display:none">

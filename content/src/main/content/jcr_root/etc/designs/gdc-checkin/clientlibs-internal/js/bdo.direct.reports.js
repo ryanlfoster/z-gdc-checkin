@@ -51,9 +51,8 @@ GDC.bdo.directReports.getParamArrayForQueryString = function(paramName, paramArr
 GDC.bdo.directReports.stylePagination = function() {
 
 	$('.dataTables_paginate').addClass("pagination green");
-    $('.pagination .prev a').html('<i class="icon-caret-left">');
-    $('.pagination .next a').html('<i class="icon-caret-right">');
-
+    $('.pagination .prev a').html('<i class="glyphicon glyphicon-chevron-left">');
+    $('.pagination .next a').html('<i class="glyphicon glyphicon-chevron-right">');
 }
 
 GDC.bdo.directReports.addStatusFilterDropdown = function(quarterNumber) {
