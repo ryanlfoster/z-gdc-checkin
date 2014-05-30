@@ -35,8 +35,8 @@ String selectedYearString = request.getParameter("selectedYear");
 </script>
 
 <c:set var="userID" value="<%=userID%>" scope="request" />
-<c:set var="selectedYear" value="<%=selectedYear%>" scope="request" />
-<c:set var="annualYear" value="<%=currentFiscalYear%>" scope="request" />
+<c:set var="annualYear" value="<%=selectedYear%>" scope="request" />
+<c:set var="fiscalYear" value="<%=currentFiscalYear%>" scope="request" />
 
 <div class="row">
  <div class="col-md-12 col-xs-12">
@@ -62,7 +62,7 @@ String selectedYearString = request.getParameter("selectedYear");
                            %>
                             <c:set var="quarterStatus" value="<%=quarterlyBDOService.getQuarterStatus(quarterStartCalendarDate, quarterEndCalendarDate)%>" />
                             <c:choose>
-                                <c:when test="${annualYear eq selectedYear}">
+                                <c:when test="${annualYear eq fiscalYear}">
                                     <c:choose>
                                         <c:when test="${quarterStatus eq previous}"> 
                                             <li class="done">
@@ -119,7 +119,7 @@ String selectedYearString = request.getParameter("selectedYear");
         <c:set var="quarterOpenToEdit" value="<%=quarterlyBDOService.isOpenToEdit(quarterStartCalendarDate, quarterEndCalendarDate)%>" />
 
         <c:choose>
-         <c:when test="${annualYear eq selectedYear}">
+         <c:when test="${annualYear eq fiscalYear}">
                 <c:choose>
                     <c:when test="${quarterStatus eq current}"> 
                         <div id="bdo_quarter${i}" class="tab-pane active">  

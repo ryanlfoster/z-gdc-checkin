@@ -39,7 +39,7 @@ public class QuarterlyBDOCalendarServiceImpl implements QuarterlyBDOCalendarServ
 		try {
 
 			adminSession = getAdminSession();
-			//Set a default calendar object - with an obsolete time to all the Quarter dates
+			//Set a default calendar object - with an obsolete time
 			Calendar obseleteDate = Calendar.getInstance(); 			
 			obseleteDate.set(1990, Calendar.JANUARY, 01); 
 

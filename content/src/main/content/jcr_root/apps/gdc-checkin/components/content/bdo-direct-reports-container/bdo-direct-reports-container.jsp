@@ -35,8 +35,8 @@
 </script>
 
 <c:set var="managersID" value="<%=managersID%>" scope="request" />
-<c:set var="selectedYear" value="<%=selectedYear%>" scope="request" />
-<c:set var="annualYear" value="<%=currentFiscalYear%>" scope="request" />
+<c:set var="annualYear" value="<%=selectedYear%>" scope="request" />
+<c:set var="fiscalYear" value="<%=currentFiscalYear%>" scope="request" />
 
 <div class="row">
  <div class="col-md-12 col-xs-12">
@@ -65,7 +65,7 @@
                             <c:set var="quarterStatus" value="<%=quarterlyBDOService.getQuarterStatus(quarterStartCalendarDate, quarterEndCalendarDate)%>" />
 
                             <c:choose>
-                                <c:when test="${annualYear eq selectedYear}">
+                                <c:when test="${annualYear eq fiscalYear}">
                                     <c:choose>
                                         <c:when test="${quarterStatus eq previous}"> 
                                             <li class="done">
@@ -123,7 +123,7 @@
                 <c:set var="quarterStatus" value="<%=quarterlyBDOService.getQuarterStatus(quarterStartCalendarDate, quarterEndCalendarDate)%>" />
         
                <c:choose>
-                    <c:when test="${annualYear eq selectedYear}">
+                    <c:when test="${annualYear eq fiscalYear}">
                         <c:choose>
                             <c:when test="${quarterStatus eq current}"> 
                                 <div id="bdo_reports_quarter${i}" class="tab-pane active">  
