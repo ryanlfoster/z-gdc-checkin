@@ -181,3 +181,7 @@ body{
 textarea {
 	font-family: AdobeClean;
 }
+
+.panel-title > span {
+ float: right;
+}

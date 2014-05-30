@@ -7,3 +7,4 @@ form-wizard.css
 styles.css
 dataTables.bootstrap.css
 jquery.fancybox.css
+jqueryCalendar.css

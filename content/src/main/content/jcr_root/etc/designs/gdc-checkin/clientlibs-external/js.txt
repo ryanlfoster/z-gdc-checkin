@@ -9,3 +9,4 @@ dataTables.bootstrap.js
 jquery.fileDownload.js
 jquery.fancybox.js
 jquery.fancybox.pack.js
+jquery-ui.js

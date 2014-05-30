@@ -18,9 +18,9 @@ import com.adobe.gdc.checkin.utils.QuarterlyBDOUtils;
 @Component(metatype = true)
 @Service(UserManagementService.class)
 public class UserManagementServiceImpl implements UserManagementService{
-	
+
 	Logger log = LoggerFactory.getLogger(UserManagementServiceImpl.class);
-	
+
 	@Override
 	public String getCurrentUser(Session session) {
 		return session.getUserID();
@@ -31,7 +31,7 @@ public class UserManagementServiceImpl implements UserManagementService{
 		String userID = getCurrentUser(session);
 		return getEmployeeName(userID, session) ;
 	}
-	
+
 	@Override
 	public String getManagersEmailId(Session session) throws Exception {
 		UserManager userManager = getUserManager(session);
@@ -41,7 +41,7 @@ public class UserManagementServiceImpl implements UserManagementService{
 			manager =  authorizable.getProperty(QuartelyBDOConstants.PROFILE_MANAGER)[0].getString();
 			return QuarterlyBDOUtils.extractValueFromRawString(manager) + QuartelyBDOConstants.ADOBE_EMAIL_EXTENTION;
 		}
-		
+
 		return QuartelyBDOConstants.EMPTY_STRING;
 	}
 
@@ -74,10 +74,10 @@ public class UserManagementServiceImpl implements UserManagementService{
 				if(mailingGroup.equalsIgnoreCase("ORG-"+currentLdapID+"-ALL")) {
 					return true;
 				}
-				
+
 			}
 		}
-		
+
 		return false;
 	}
 
@@ -88,10 +88,10 @@ public class UserManagementServiceImpl implements UserManagementService{
 		final Authorizable authorizable = userManager.getAuthorizable(userID);
 		if(authorizable != null && authorizable.hasProperty(QuartelyBDOConstants.PROFILE_DESIGNATION))
 			designation =  authorizable.getProperty(QuartelyBDOConstants.PROFILE_DESIGNATION)[0].getString();
-		
+
 		return designation;
 	}
-	
+
 	@Override
 	public String getEmployeeName(String userID, Session session) throws Exception {
 		UserManager userManager = getUserManager(session);
@@ -101,21 +101,27 @@ public class UserManagementServiceImpl implements UserManagementService{
 			name =  authorizable.getProperty(QuartelyBDOConstants.PROFILE_GIVENNAME)[0].getString();
 		if(authorizable != null && authorizable.hasProperty(QuartelyBDOConstants.PROFILE_FAMILYNAME))
 			name = name + " " + authorizable.getProperty(QuartelyBDOConstants.PROFILE_FAMILYNAME)[0].getString();
-		
+
 		return name;
 	}
-	
+
 	@Override
 	public  boolean isAnonymous(Session session) {
-	
+
 		if(session == null || session.getUserID().equalsIgnoreCase("anonymous") || !session.isLive() ) {
 			return true;
 		}
-		
+
 		return false;
     }
-	
-	
+
+	@Override
+	public boolean inAdminUser(Session session) throws Exception {
+
+		return false;
+	}
+
+
 	private UserManager getUserManager(Session session) throws UnsupportedRepositoryOperationException, RepositoryException {
 		 UserManager userManager = ((JackrabbitSession) session).getUserManager();	
 		 return userManager;

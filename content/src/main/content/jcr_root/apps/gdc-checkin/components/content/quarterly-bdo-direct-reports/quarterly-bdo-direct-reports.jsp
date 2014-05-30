@@ -40,58 +40,60 @@
 	var bdoReportServiceSrcPath = '';
 
 	$(document).ready(function() {
-		var managersID = '${managersID}';
+	   	var managersID = '${managersID}';
    		var quarterNumber = '${quarterNumber}';
    		var annualYear = '${annualYear}';
    		bdoReportServiceSrcPath = '<%=currentPage.getPath()%>.bdoreport.html?managersID='+managersID+'&quarterNumber='+quarterNumber+'&annualYear='+annualYear;
 
-   		var oTable =  GDC.bdo.directReports.initTable("#bdoReportList${quarterNumber}",quarterNumber,annualYear);
-
-	   	GDC.bdo.directReports.addStatusFilterDropdown(quarterNumber);
-	   	GDC.bdo.directReports.stylePagination();
-
-	   //Filter the datatable based on status coloumn- which is the 4th column in the table
-	   $('.bdo-status-filter${quarterNumber}').change(function () {
-	       if($(this).val() != "") {
-	           oTable.fnFilter("^"+$(this).val()+"$", 3, true);
-	       } else {
-	           //Reset the filter
-	           oTable.fnFilter('', 3, true);
-	       }
-	   });
-
-	   $('.btn-download-report${quarterNumber}').click( function() { 
-		      var url = "<%=currentPage.getPath()%>.managerreport.html?managersID="+managersID+"&quarterNumber="+quarterNumber+"&annualYear="+annualYear;
-        $.fileDownload(url, {  
-				         successCallback: function (url) {  
-				             alert('Report download successfully'); 
-				         },  
-             failCallback: function (html, url) {    
-                 location.reload();
-             }
-		      }); 
-		   }); 
-      
-
-	   $(".fancybox").fancybox({ 
-           'autoDimensions':false,
-           'type':'iframe',
-           'autoSize':false,
-           'width':'750',
-           'height':'600',
-
-           helpers   : { 
-               overlay : {closeClick: false} // prevents closing when clicking OUTSIDE fancybox 
-           },
-
-           afterClose : function() {
-			        	   if(quarterNumber == 4) {
-			        		    location.reload();
-			            }
-          }
-		});
-
-
+   		if( managersID!=undefined && managersID != null && managersID != "" ) {
+				   		var oTable =  GDC.bdo.directReports.initTable("#bdoReportList${quarterNumber}",quarterNumber,annualYear);
+				
+					   	GDC.bdo.directReports.addStatusFilterDropdown(quarterNumber);
+					   	GDC.bdo.directReports.stylePagination();
+				
+					   //Filter the datatable based on status coloumn- which is the 4th column in the table
+					   $('.bdo-status-filter${quarterNumber}').change(function () {
+					       if($(this).val() != "") {
+					           oTable.fnFilter("^"+$(this).val()+"$", 3, true);
+					       } else {
+					           //Reset the filter
+					           oTable.fnFilter('', 3, true);
+					       }
+					   });
+				
+					   $('.btn-download-report${quarterNumber}').click( function() { 
+						      var url = "<%=currentPage.getPath()%>.managerreport.html?managersID="+managersID+"&quarterNumber="+quarterNumber+"&annualYear="+annualYear;
+				        $.fileDownload(url, {  
+								         successCallback: function (url) {  
+								             alert('Report download successfully'); 
+								         },  
+				             failCallback: function (html, url) {    
+				                 location.reload();
+				             }
+						      }); 
+						   }); 
+				      
+				
+					   $(".fancybox").fancybox({ 
+				           'autoDimensions':false,
+				           'type':'iframe',
+				           'autoSize':false,
+				           'width':'750',
+				           'height':'600',
+				
+				           helpers   : { 
+				               overlay : {closeClick: false} // prevents closing when clicking OUTSIDE fancybox 
+				           },
+				
+				           afterClose : function() {
+							        	   if(quarterNumber == 4) {
+							        		    location.reload();
+							            }
+				          }
+						});
+					   
+  }
+   		
 });
 
 </script>
