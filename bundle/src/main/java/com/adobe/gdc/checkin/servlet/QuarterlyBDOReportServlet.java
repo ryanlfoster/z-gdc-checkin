@@ -58,7 +58,7 @@ public class QuarterlyBDOReportServlet extends SlingAllMethodsServlet{
 		
 		try {
 			//Get All Direct Reportees of the manager
-			String[] directReportees = userManagementService.getManagersDirectReportees(managersID,session);
+			String[] directReportees = userManagementService.getManagersDirectReportees(managersID);
 			JSONArray directReportResultArray = new JSONArray();
 			for(int i=0; i< directReportees.length; i++) {
 				

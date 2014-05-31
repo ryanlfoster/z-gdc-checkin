@@ -6,19 +6,19 @@ public interface UserManagementService {
 
 	String getCurrentUser(Session session);
 
-	String getCurrentUserName(Session session) throws Exception;
+	String getCurrentUserName(Session session);
 
-	String  getEmployeeName(String userID, Session session) throws Exception;
+	String  getEmployeeName(String userID);
 
-	String getManagersEmailId(Session session) throws Exception;
+	String getManagersEmailId(Session session);
 
-	String getEmployeeDesignation(String userID, Session session) throws Exception;
+	String getEmployeeDesignation(String userID);
 
-	String[] getManagersDirectReportees(String managersID, Session session) throws Exception;
+	String[] getManagersDirectReportees(String managersID);
 
-	boolean isManager(Session session) throws Exception;
+	boolean isManager(Session session);
 
-	boolean inAdminUser(Session session) throws Exception;
+	boolean isAdminUser(Session session);
 
 	boolean isAnonymous(Session session);
 }

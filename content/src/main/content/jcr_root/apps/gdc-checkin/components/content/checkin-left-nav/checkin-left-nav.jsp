@@ -10,7 +10,7 @@
 
 <c:set var="isLoggedIn" value="<%=!(userManagementService.isAnonymous(session))%>" />
 <c:set var="isManager" value="<%= userManagementService.isManager(session)%>" />
-<c:set var="isAdmin" value="<%=userManagementService.inAdminUser(session) %>" scope="request" />
+<c:set var="isAdmin" value="<%=userManagementService.isAdminUser(session) %>" scope="request" />
 
 <div id="page-wrap">
  <div id="main-sidebar">

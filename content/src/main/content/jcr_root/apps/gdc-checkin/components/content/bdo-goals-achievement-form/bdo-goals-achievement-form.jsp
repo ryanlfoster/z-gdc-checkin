@@ -67,8 +67,8 @@ if(StringUtils.isNotBlank(request.getParameter("editBdoScore"))|| StringUtils.is
 
 <c:set var="bdoScore" value="<%=quarterlyBDODataMap.get("bdoScore") != null ? quarterlyBDODataMap.get("bdoScore")[0] : ""%>" scope="request"/>
 <c:set var="status" value="<%=quarterlyBDODataMap.get("status") != null ? quarterlyBDODataMap.get("status")[0] : "NOT SUBMITTED"%>" scope="request"/>
-<c:set var="name" value="<%=employeeProfileDataMap.get("name") != null ? employeeProfileDataMap.get("name")[0] : userManagementService.getEmployeeName(userID, session)%>" scope="request"/>
-<c:set var="designation" value="<%=quarterlyBDODataMap.get("designation")!= null ? quarterlyBDODataMap.get("designation")[0]  : employeeProfileDataMap.get("designation")!= null  ? employeeProfileDataMap.get("designation")[0]    : userManagementService.getEmployeeDesignation(userID, session)%>" scope="request"/>
+<c:set var="name" value="<%=employeeProfileDataMap.get("name") != null ? employeeProfileDataMap.get("name")[0] : userManagementService.getEmployeeName(userID)%>" scope="request"/>
+<c:set var="designation" value="<%=quarterlyBDODataMap.get("designation")!= null ? quarterlyBDODataMap.get("designation")[0]  : employeeProfileDataMap.get("designation")!= null  ? employeeProfileDataMap.get("designation")[0]    : userManagementService.getEmployeeDesignation(userID)%>" scope="request"/>
 <c:set var="employeeID" value="<%=employeeID %>" scope="request"/>
 <c:set var="bdoObjectives" value="<%=quarterlyBDODataMap.get("objectives")%>" scope="request"/>
 <c:set var="bdoAchievements" value="<%=quarterlyBDODataMap.get("achievements")%>" scope="request"/>

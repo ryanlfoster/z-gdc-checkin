@@ -65,6 +65,9 @@ public class QuartelyBDOConstants {
 	public static final String PROFILE_FAMILYNAME = "profile/familyName";
 	public static final String PROFILE_DIRECT_REPORTS = "profile/directReports";
 	public static final String PROFILE_MEMBER_OF = "profile/memberOf";
+	
+	public static final String ADMIN_USER_GROUP = "gdcadmin";
+	public static final String ANONYMOUS = "anonymous";
 
 	//ADOBE_EMAIL_MAIL
 	public static final String ADOBE_EMAIL_EXTENTION = "@adobe.com";
@@ -84,10 +87,6 @@ public class QuartelyBDOConstants {
 	public static final String MANAGER_NAME_TITLE = "Manager Name";
 	public static final String BDO_SCORE_FOR_Q_TITLE = "BDO Score for Q";
 	public static final String NOTES_TITLE = "Notes";
-
-	//Cookie constants
-	public static final String GDC_USER_COOKIE = "gdc-user";
-
 
 	//Email notification constants
 	 /**

@@ -75,9 +75,9 @@ public class GenerateReportsServlet extends SlingSafeMethodsServlet {
 	       				
 			try {
 				//Get All Direct Reportees of the manager
-				String[] directReportees = userManagementService.getManagersDirectReportees(managersID,session);
+				String[] directReportees = userManagementService.getManagersDirectReportees(managersID);
 				
-				String managerName = userManagementService.getEmployeeName(managersID, session);
+				String managerName = userManagementService.getEmployeeName(managersID);
 		    	
 				for(int i=0; i<directReportees.length; i++) {
 					Map<String, String[]> employeeProfileDataMap = quarterlyBDORepositoryClient.getEmployeeProfileData(directReportees[i]);
