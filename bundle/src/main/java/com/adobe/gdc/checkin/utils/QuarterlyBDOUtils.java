@@ -210,7 +210,7 @@ public class QuarterlyBDOUtils {
 		Calendar cal = Calendar.getInstance();
 		if(StringUtils.isNotBlank(dateString)) {
 		    SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-		    cal.setTime(sdf.parse(dateString));// all done
+		    cal.setTime(sdf.parse(dateString));
 		}
 		
 		return cal;
