@@ -172,3 +172,12 @@ height: 25px;
  .btn-edit {
               width: 70px;
 }
+
+.contact-us {
+													font-size: 16px;
+													color: #fff;
+}
+
+a.contact-us:hover {
+             color: #fff;
+}

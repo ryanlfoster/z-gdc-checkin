@@ -6,7 +6,7 @@
     <div class="navbar navbar-blue">
         <div class="navbar-inner">
              <div class="pull-right header-logo">
-            	<a class="brand" href="/content/gdc-bdo/en/gdc-bdo-home.html">GDC BDO</a>
+            	   <a class="contact-us" href="mailto:DL-gdc-bdo@adobe.com?subject=GDC-BDO-%20Need%20assistance"  width=200 height=200>Contact us</a>
                 <img src="/etc/designs/gdc-checkin/clientlibs-internal/images/logo.png" />
             </div>
         </div>
