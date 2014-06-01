@@ -17,20 +17,20 @@ GDC.bdo.isEmptyArray = function(array) {
     return true;
 }
 
-GDC.bdo.form = function(bdoObjectives,bdoAchievements) {
+GDC.bdo.form = function(bdoObjectives,bdoAchievements,quarterNumber) {
 
-	GDC.bdo.form.multifield('.bdo-panel','.bdo-active'); 
+	GDC.bdo.form.multifield('.'+quarterNumber +'-bdo-panel','.'+quarterNumber+'-bdo-active',quarterNumber); 
 
    if(!GDC.bdo.isEmpty(bdoObjectives)  || !GDC.bdo.isEmpty(bdoAchievements)) {
-		GDC.bdo.form.addBdoRows(bdoObjectives, bdoAchievements, '.bdo-panel .bdo-active' );
+		GDC.bdo.form.addBdoRows(bdoObjectives, bdoAchievements, '.'+quarterNumber +'-bdo-panel .'+quarterNumber+'-bdo-active' );
    }
-	
+
 	if(!GDC.bdo.isEmpty(bdoObjectives) ) {
-		GDC.bdo.form.addFieldValue(bdoObjectives, 'objective');
+		GDC.bdo.form.addFieldValue(bdoObjectives, quarterNumber+'-objective');
 	}
 
     if(!GDC.bdo.isEmpty(bdoAchievements)) {
-    	GDC.bdo.form.addFieldValue(bdoAchievements, 'achievement');
+    	GDC.bdo.form.addFieldValue(bdoAchievements, quarterNumber+'-achievement');
     }
 
 }
@@ -71,11 +71,12 @@ GDC.bdo.form.compareArrays = function(array1, array2) {
 }
 
 
-GDC.bdo.form.detectAnyFormChange = function(bdoObjectives,bdoAchievements,employeeID) {
+GDC.bdo.form.detectAnyFormChange = function(bdoObjectives,bdoAchievements,employeeID,quarterNumber) {
 
-	if((GDC.bdo.form.compareArrays(bdoObjectives, GDC.bdo.form.getObjectives())) 
-        && (GDC.bdo.form.compareArrays(bdoAchievements, GDC.bdo.form.getAchievements()))
-        && (employeeID == GDC.bdo.form.getRequestParams().employeeID)) {
+
+	if((GDC.bdo.form.compareArrays(bdoObjectives, GDC.bdo.form.getObjectives(quarterNumber))) 
+        && (GDC.bdo.form.compareArrays(bdoAchievements, GDC.bdo.form.getAchievements(quarterNumber)))
+        && (employeeID == GDC.bdo.form.getRequestParams(quarterNumber).employeeID)) {
             return false;
         }
     else {
@@ -84,11 +85,11 @@ GDC.bdo.form.detectAnyFormChange = function(bdoObjectives,bdoAchievements,employ
 }
 
 
-GDC.bdo.form.detectAnyFormChangeOnComplete = function(bdoObjectives,bdoAchievements,bdoScore) {
+GDC.bdo.form.detectAnyFormChangeOnComplete = function(bdoObjectives,bdoAchievements,bdoScore,quarterNumber) {
 
-	if((GDC.bdo.form.compareArrays(bdoObjectives, GDC.bdo.form.getObjectives())) 
-        && (GDC.bdo.form.compareArrays(bdoAchievements, GDC.bdo.form.getAchievements())) 
-        && (bdoScore === GDC.bdo.form.getRequestParams().bdoScore)) {
+	if((GDC.bdo.form.compareArrays(bdoObjectives, GDC.bdo.form.getObjectives(quarterNumber))) 
+        && (GDC.bdo.form.compareArrays(bdoAchievements, GDC.bdo.form.getAchievements(quarterNumber))) 
+        && (bdoScore === GDC.bdo.form.getRequestParams(quarterNumber).bdoScore)) {
             return false;
         }
     else {
@@ -96,21 +97,21 @@ GDC.bdo.form.detectAnyFormChangeOnComplete = function(bdoObjectives,bdoAchieveme
     }
 }
 
-GDC.bdo.form.disableForm = function(button) {
+GDC.bdo.form.disableForm = function(button,quarterNumber) {
 	$(button).text('Please wait Processing');
-	$('#quarterly-bdo-form').find('input, textarea, button, select').attr('disabled',true);
+	$('#quarterly-bdo-form-'+quarterNumber).find('input, textarea, button, select').attr('disabled',true);
 }
 
-GDC.bdo.form.enableForm = function(button, buttonLabel) {
+GDC.bdo.form.enableForm = function(button, buttonLabel,quarterNumber) {
 	$(button).text(buttonLabel);
-    $('#quarterly-bdo-form').find('input, textarea, button, select').attr('disabled',false);
+    $('#quarterly-bdo-form-'+quarterNumber).find('input, textarea, button, select').attr('disabled',false);
 }
 
-GDC.bdo.form.saveSubmitOrCompleteBDO = function(selector) {
+GDC.bdo.form.saveSubmitOrCompleteBDO = function(selector,quarterNumber) {
 
-	 var targetURL = $('#quarterly-bdo-form').attr("action")+ "." +selector+ ".html?nocache=1";
-     var requestType= $('#quarterly-bdo-form').attr("method");
-	 var requestParams = GDC.bdo.form.getRequestParams();
+	 var targetURL = $('#quarterly-bdo-form-'+quarterNumber).attr("action")+ "." +selector+ ".html?nocache=1";
+     var requestType= $('#quarterly-bdo-form-'+quarterNumber).attr("method");
+	 var requestParams = GDC.bdo.form.getRequestParams(quarterNumber);
 
      $.ajax({
     	url: targetURL,
@@ -121,24 +122,24 @@ GDC.bdo.form.saveSubmitOrCompleteBDO = function(selector) {
 
         	if(data.success == true) {
         		if(selector == "save") {
-        			GDC.bdo.form.notifySuccess("Saved Successfully !");
+        			GDC.bdo.form.notifySuccess("Saved Successfully !",quarterNumber);
         		}
         		else if(selector == "submit") {
-        			GDC.bdo.form.notifySuccess("Submitted Successfully !");
+        			GDC.bdo.form.notifySuccess("Submitted Successfully !",quarterNumber);
         		}
         		else if(selector == "complete") {
-        			GDC.bdo.form.notifySuccess("Completed Successfully !");
+        			GDC.bdo.form.notifySuccess("Completed Successfully !",quarterNumber);
         		}
         		
                 //Refresh the status message
-                GDC.bdo.form.displayUpdatedStatus(selector);
+                GDC.bdo.form.displayUpdatedStatus(selector,quarterNumber);
 
                 //Update form values
-                GDC.bdo.form.updateFormFieldValues(requestParams, selector);
+                GDC.bdo.form.updateFormFieldValues(requestParams, selector, quarterNumber);
         	}
         	else {
 
-				GDC.bdo.form.notifyError("Unable to process your request due to an unknown technical error. Please try after sometime");
+				GDC.bdo.form.notifyError("Unable to process your request due to an unknown technical error. Please try after sometime",quarterNumber);
             }
            
         },
@@ -150,38 +151,37 @@ GDC.bdo.form.saveSubmitOrCompleteBDO = function(selector) {
 
 }
 
-GDC.bdo.form.updateFormFieldValues = function(updatedFormValues, newStatus) {
-	bdoObjectivesArray = updatedFormValues.objectives;
-    bdoAchievementsArray = updatedFormValues.achievements;
-    bdoScore = updatedFormValues.bdoScore;
+GDC.bdo.form.updateFormFieldValues = function(updatedFormValues, newStatus, quarterNumber) {
+	objectiveStorage[quarterNumber] = updatedFormValues.objectives;
+    achievementStorage[quarterNumber] = updatedFormValues.achievements;
+    bdoScoreStorage[quarterNumber] = updatedFormValues.bdoScore;
     employeeID = updatedFormValues.employeeID;
 
     if(newStatus == "save") {
-        status = 'NOT SUBMITTED';
+        statusStorage[quarterNumber] = 'NOT SUBMITTED';
     }
     else if(newStatus == "submit") {
-        status = 'SUBMITTED';
+        statusStorage[quarterNumber] = 'SUBMITTED';
     } 
     else if(newStatus == "complete") {
-        status = 'COMPLETED';
+        statusStorage[quarterNumber] = 'COMPLETED';
     }
 }
 
-GDC.bdo.form.displayUpdatedStatus = function(action) {
+GDC.bdo.form.displayUpdatedStatus = function(action,quarterNumber) {
     var message = (action == "submit") ? "SUBMITTED" : (action == "complete") ? "COMPLETED" : "NOT SUBMITTED";
-    $('.quarterly-bdo-form .status-msg .status').html(message);
+    $('.quarterly-bdo-form-'+quarterNumber+' .status-msg .status').html(message);
 }
 
-GDC.bdo.form.getRequestParams = function() {
-	var objectives  = GDC.bdo.form.getObjectives();
-    var achievements = GDC.bdo.form.getAchievements();
-    var bdoScore = $('.quarterly-bdo-form #bdoScore').val();
-    var designation = $('.quarterly-bdo-form #designation').val();
-	var quarterNumber = $('.quarterly-bdo-form #quarterNumber').val();
-	var userID = $('.quarterly-bdo-form #userID').val();
-	var annualYear = $('.quarterly-bdo-form #annualYear').val();
-	var name = $('.quarterly-bdo-form #name').val();
-	var employeeID = $('.quarterly-bdo-form #employeeID').val();
+GDC.bdo.form.getRequestParams = function(quarterNumber) {
+	var objectives  = GDC.bdo.form.getObjectives(quarterNumber);
+    var achievements = GDC.bdo.form.getAchievements(quarterNumber);
+    var bdoScore = $('.quarterly-bdo-form-'+quarterNumber+' #bdoScore').val();
+    var designation = $('.quarterly-bdo-form-'+quarterNumber+' #designation').val();
+	var userID = $('.quarterly-bdo-form-'+quarterNumber+' #userID').val();
+	var annualYear = $('.quarterly-bdo-form-'+quarterNumber+' #annualYear').val();
+	var name = $('.quarterly-bdo-form-'+quarterNumber+' #name').val();
+	var employeeID = $('.quarterly-bdo-form-'+quarterNumber+' #employeeID').val();
 
     var json = {"objectives" : objectives,
                 "achievements" : achievements,
@@ -197,9 +197,9 @@ GDC.bdo.form.getRequestParams = function() {
     return json;
 }
 
-GDC.bdo.form.getObjectives = function() {
+GDC.bdo.form.getObjectives = function(quarterNumber) {
 	var objectives = [];
-	$('.quarterly-bdo-form .bdo-panel .objective').each(function() {
+	$('.quarterly-bdo-form-'+quarterNumber +' .'+quarterNumber+'-bdo-panel .objective').each(function() {
         var value = $(this).val();
 
         if (!GDC.bdo.isEmpty(value)) {
@@ -214,9 +214,9 @@ GDC.bdo.form.getObjectives = function() {
 }
 
 
-GDC.bdo.form.getAchievements = function() {
+GDC.bdo.form.getAchievements = function(quarterNumber) {
 	var achievements = [];
-	$('.quarterly-bdo-form .bdo-panel .achievement').each(function() {
+	$('.quarterly-bdo-form-'+quarterNumber +' .'+quarterNumber+'-bdo-panel .achievement').each(function() {
         var value = $(this).val();
 
 
@@ -231,97 +231,97 @@ GDC.bdo.form.getAchievements = function() {
 }
 
 
-GDC.bdo.form.notifyError = function(errorMsg) {
-	var errDiv = document.getElementById("form-message");
+GDC.bdo.form.notifyError = function(errorMsg,quarterNumber) {
+	var errDiv = document.getElementById("form-message-"+quarterNumber);
     errDiv.innerHTML = '<div class="error"><span class="error-img">!</span>&nbsp;'+errorMsg+'</div>';
-    $("#form-message").show();
+    $("#form-message-"+quarterNumber).show();
 
 }
 
-GDC.bdo.form.notifySuccess = function(successMsg) {
-	var successDiv = document.getElementById("form-message");
+GDC.bdo.form.notifySuccess = function(successMsg,quarterNumber) {
+	var successDiv = document.getElementById("form-message-"+quarterNumber);
     successDiv.innerHTML = '<div class="success-msg">'+successMsg+'</div>';
-    $("#form-message").show();
+    $("#form-message-"+quarterNumber).show();
 
 }
 
 
-GDC.bdo.form.clearMessages = function() {
-	$("#form-message").hide();
+GDC.bdo.form.clearMessages = function(quarterNumber) {
+	$("#form-message-"+quarterNumber).hide();
 }
 
 
-GDC.bdo.form.validateOnSave = function() {
+GDC.bdo.form.validateOnSave = function(quarterNumber) {
 	var errorMsg="";
 
-	if(GDC.bdo.isEmptyArray(GDC.bdo.form.getObjectives()) ) {
+	if(GDC.bdo.isEmptyArray(GDC.bdo.form.getObjectives(quarterNumber)) ) {
     	errorMsg += 'Please set BDO Objective !<br>';
     }
 
-    if(GDC.bdo.isEmpty($('.quarterly-bdo-form #employeeID').val()) ) {
+    if(GDC.bdo.isEmpty($('.quarterly-bdo-form-'+quarterNumber+' #employeeID').val()) ) {
     	errorMsg += 'Please enter your employeeID !<br>';
     }
 
     if(errorMsg != "") {
-		GDC.bdo.form.notifyError(errorMsg);
+		GDC.bdo.form.notifyError(errorMsg,quarterNumber);
         return false;
     }
     else {
-		$("#form-message").hide();
+		$("#form-message-"+quarterNumber).hide();
         return true;
     }
 }
 
-GDC.bdo.form.validateOnSubmit = function() {
+GDC.bdo.form.validateOnSubmit = function(quarterNumber) {
 	var errorMsg="";
 
-    if(GDC.bdo.isEmptyArray(GDC.bdo.form.getObjectives()) ) {
+    if(GDC.bdo.isEmptyArray(GDC.bdo.form.getObjectives(quarterNumber)) ) {
     	errorMsg += 'Please set BDO Objective !<br>';
     }
 
-    if(GDC.bdo.isEmptyArray(GDC.bdo.form.getAchievements()) ) {
+    if(GDC.bdo.isEmptyArray(GDC.bdo.form.getAchievements(quarterNumber)) ) {
     	errorMsg += 'Please set BDO Achievement self-inputs !<br>';
     }
 
-	if(GDC.bdo.isEmpty($('.quarterly-bdo-form #employeeID').val()) ) {
+	if(GDC.bdo.isEmpty($('.quarterly-bdo-form-'+quarterNumber+' #employeeID').val()) ) {
     	errorMsg += 'Please enter your employeeID !<br>';
     }
     if(errorMsg != "") {
-		GDC.bdo.form.notifyError(errorMsg);            
+		GDC.bdo.form.notifyError(errorMsg,quarterNumber);            
         return false;
     }
 	 else {
-		$("#form-message").hide();
+		$("#form-message-"+quarterNumber).hide();
          return true;
     }
 }
 
 
-GDC.bdo.form.validateOnComplete = function() {
+GDC.bdo.form.validateOnComplete = function(quarterNumber) {
 	var errorMsg="";
 
-    if(GDC.bdo.isEmpty($('.quarterly-bdo-form #bdoScore').val()) ) {
+    if(GDC.bdo.isEmpty($('.quarterly-bdo-form-'+quarterNumber+' #bdoScore').val()) ) {
     	errorMsg += 'Please provide your score !<br>';
     }
     
-    if(($('.quarterly-bdo-form #bdoScore').val() < 0 ) ||  ($('.quarterly-bdo-form #bdoScore').val() >100)) {
+    if(($('.quarterly-bdo-form-'+quarterNumber+' #bdoScore').val() < 0 ) ||  ($('.quarterly-bdo-form-'+quarterNumber+' #bdoScore').val() >100)) {
     	errorMsg += 'Please enter a valid BDO Score (Between 0 to 100)<br>';
     }
     
     if(errorMsg != "") {
-		GDC.bdo.form.notifyError(errorMsg);            
+		GDC.bdo.form.notifyError(errorMsg,quarterNumber);            
         return false;
     }
 	 else {
-		$("#form-message").hide();
+		$("#form-message-"+quarterNumber).hide();
          return true;
     }
 }
 
 
-GDC.bdo.form.multifield = function(panelSelector, activeSelector) {
+GDC.bdo.form.multifield = function(panelSelector, activeSelector, quarterNumber) {
 
-	var UpdateId = function(elem) {
+		var UpdateId = function(elem) {
         var id = $(elem).attr("id");
         var increment = parseInt(id.split("_")[1]) + 1;
         var newId = id.split("_")[0] + "_" + increment;
@@ -333,7 +333,7 @@ GDC.bdo.form.multifield = function(panelSelector, activeSelector) {
 
     $(panelSelector).on("click", ".btn-add",function(){
 
-    	 GDC.bdo.form.clearMessages();
+    	 GDC.bdo.form.clearMessages(quarterNumber);
          var clonedRow = $(activeSelector).clone();
 
          $(activeSelector).find(".btn-remove").show();
@@ -350,7 +350,7 @@ GDC.bdo.form.multifield = function(panelSelector, activeSelector) {
 
     $(panelSelector).on("click", ".btn-remove",function() {
     	
-    	GDC.bdo.form.clearMessages();
+    	GDC.bdo.form.clearMessages(quarterNumber);
         var panelRow = panelSelector+ "-row";
         $(this).parents(panelRow).remove();
 
@@ -377,6 +377,7 @@ GDC.bdo.form.addBdoRows = function(bdoObjectives, bdoAchievements, activePanelSe
 	numberOfBdoRows = Math.max(objectiveArraySize, achievementArraySize);
 
     for(var i=1;i<numberOfBdoRows;i++){
+
 		$(activePanelSelector).find(".btn-add").trigger("click");
     }
 }

@@ -1,7 +1,11 @@
 <%@ page contentType="text/html; charset=utf-8" %>
 <%@include file="/libs/foundation/global.jsp" %>
 <%@page session="false" %>
-<%@page import="org.apache.commons.lang.StringUtils,com.adobe.gdc.checkin.QuarterlyBDORepositoryClient,com.adobe.gdc.checkin.UserManagementService,java.util.Map,javax.jcr.Session" %>
+<%@page import="org.apache.commons.lang.StringUtils,
+                com.adobe.gdc.checkin.QuarterlyBDORepositoryClient,
+                com.adobe.gdc.checkin.UserManagementService,
+                java.util.Map,
+                javax.jcr.Session" %>
 
 <c:choose>
     <c:when test="<%=StringUtils.isNotBlank(request.getParameter("quarterNumber"))%>">
@@ -60,13 +64,13 @@ if(StringUtils.isNotBlank(request.getParameter("editBdoScore"))|| StringUtils.is
 }
 
 %>
-<c:set var="bdoObjectives" value="<%=quarterlyBDODataMap.get("objectives")%>" scope="request"/>
-<c:set var="bdoAchievements" value="<%=quarterlyBDODataMap.get("achievements")%>" scope="request"/>
 <c:set var="bdoScore" value="<%=quarterlyBDODataMap.get("bdoScore") != null ? quarterlyBDODataMap.get("bdoScore")[0] : ""%>" scope="request"/>
 <c:set var="status" value="<%=quarterlyBDODataMap.get("status") != null ? quarterlyBDODataMap.get("status")[0] : "NOT SUBMITTED"%>" scope="request"/>
 <c:set var="name" value="<%=userManagementService.getEmployeeName(userID, session)%>" scope="request"/>
 <c:set var="designation" value="<%=quarterlyBDODataMap.get("designation")!= null ? quarterlyBDODataMap.get("designation")[0] : userManagementService.getEmployeeDesignation(userID, session)%>" scope="request"/>
 <c:set var="employeeID" value="<%=employeeID %>" scope="request"/>
+<c:set var="bdoObjectives" value="<%=quarterlyBDODataMap.get("objectives")%>" scope="request"/>
+<c:set var="bdoAchievements" value="<%=quarterlyBDODataMap.get("achievements")%>" scope="request"/>
 
 <div class="row no-margin">
 
@@ -93,15 +97,14 @@ if(StringUtils.isNotBlank(request.getParameter("editBdoScore"))|| StringUtils.is
 
             <div class="row">
                 <div class="col-md-1 col-xs-1"></div>
-                <div class="col-md-8 col-xs-8" id="form-message"></div>
+                <div class="col-md-8 col-xs-8" id="form-message-${quarterNumber}"></div>
             </div>
             
             <br/>
 
-            <form id="quarterly-bdo-form" class="quarterly-bdo-form" method="POST" action="<%=currentPage.getPath()%>.bdo">
+            <form id="quarterly-bdo-form-${quarterNumber}" class="quarterly-bdo-form-${quarterNumber}" method="POST" action="<%=currentPage.getPath()%>.bdo">
 
                 <input type="hidden" name="designation" id="designation" value="${designation}" />
-                <input type="hidden" name="quarterNumber" id="quarterNumber" value="${quarterNumber}" />
                 <input type="hidden" name="userID" id="userID" value="${userID}" />
                 <input type="hidden" name="annualYear" id="annualYear" value="${annualYear}" />
                 <input type="hidden" name="name" id="name" value="${name}" />
@@ -131,7 +134,7 @@ if(StringUtils.isNotBlank(request.getParameter("editBdoScore"))|| StringUtils.is
                 <div class="row">
                     <div class="col-md-1 col-xs-1"></div>
 
-                    <div class="col-md-10 col-xs-10  bdo-panel">
+                    <div class="col-md-10 col-xs-10  ${quarterNumber}-bdo-panel">
                         <label for="bdo-panel">
                              <c:choose>
                                  <c:when test="<%=StringUtils.isNotBlank(request.getParameter("editBdoScore"))%>">
@@ -142,10 +145,10 @@ if(StringUtils.isNotBlank(request.getParameter("editBdoScore"))|| StringUtils.is
                                  </c:otherwise>
                               </c:choose>
                         </label>
-                        <div class="row bdo-active bdo-panel-row">
+                        <div class="row ${quarterNumber}-bdo-active ${quarterNumber}-bdo-panel-row">
                             <div class="col-sm-11  col-xs-11 col-md-11">
-                                <textarea id="objective_1" name="objective" placeholder="Objective" class="form-control objective" rows="1" cols="20"></textarea>&nbsp;
-                                <textarea id="achievement_1" name="achievement" placeholder="Achievement self-input" class="form-control achievement" rows="1" cols="20"></textarea>
+                                <textarea id="${quarterNumber}-objective_1" name="objective" placeholder="Objective" class="form-control objective" rows="1" cols="20"></textarea>&nbsp;
+                                <textarea id="${quarterNumber}-achievement_1" name="achievement" placeholder="Achievement self-input" class="form-control achievement" rows="1" cols="20"></textarea>
                             </div>
                             <div class="col-sm-1  col-xs-1 col-md-1 align-left button-wrapper">
                                 <button class="btn btn-danger btn-remove" type="button" style="display:none">
@@ -231,12 +234,14 @@ if(StringUtils.isNotBlank(request.getParameter("editBdoScore"))|| StringUtils.is
  </c:when>
 
  <c:otherwise>
-     <cq:include path="quarterly-bdo-view" resourceType= "gdc-checkin/components/content/quarterly-bdo-view" />
+<% quarterlyBDODataMap = quarterlyBDORepositoryClient.getQuarterlyBDOData(quarterNumber,annualYear,userID,session,false); %>
+ <c:set var="bdoObjectivesValues" value="<%=quarterlyBDODataMap.get("objectives")%>" scope="request"/>
+ <c:set var="bdoAchievementsValues" value="<%=quarterlyBDODataMap.get("achievements")%>" scope="request"/>
+    <cq:include path="quarterly-bdo-view" resourceType= "gdc-checkin/components/content/quarterly-bdo-view" />
  </c:otherwise>
-
     </c:choose>
         </div>
-    </div>
+  </div>
 </div>
 
 
@@ -247,119 +252,151 @@ if(StringUtils.isNotBlank(request.getParameter("editBdoScore"))|| StringUtils.is
  var bdoScore = '';
  var status = '';
  var employeeID = '';
-
+ var quarterNumber = '';
+ var objectiveStorage = {};
+ var achievementStorage={};
+ var bdoScoreStorage = {};
+ var statusStorage={};
+ var isManager='';
  $(document).ready(function() {
-	 
+  
   if(${editForm} == true) {
    
       bdoObjectivesArray = [];
       bdoAchievementsArray = [];
+      quarterNumber = '${quarterNumber}';
       bdoScore = '${bdoScore}';
       status = '${status}';
       employeeID = '${employeeID}';
+      isManager = <%=StringUtils.isNotBlank(request.getParameter("editBdoScore"))%>;
 
    <c:forEach items="${bdoObjectives}" var="objective">
-        bdoObjectivesArray.push('${fn:escapeXml(objective)}'); 
+       bdoObjectivesArray.push('${fn:escapeXml(objective)}'); 
    </c:forEach>
- 
+       objectiveStorage[quarterNumber]=bdoObjectivesArray;
+
    <c:forEach items="${bdoAchievements}" var="achievement">
         bdoAchievementsArray.push('${fn:escapeXml(achievement)}'); 
    </c:forEach>
+        achievementStorage[quarterNumber]=bdoAchievementsArray;   
 
-   GDC.bdo.form(bdoObjectivesArray,bdoAchievementsArray);
+      bdoScoreStorage[quarterNumber]= bdoScore;
+      statusStorage[quarterNumber]= status;
+
+      GDC.bdo.form(bdoObjectivesArray,bdoAchievementsArray,quarterNumber);
+
+			   if(status == 'COMPLETED' && !isManager) {
+			          $('#quarterly-bdo-form-'+'${quarterNumber}').find('input, textarea, button, select').attr('disabled',true);
+			      }
 
 
-   $(".bdo-form").on("click", ".btn-save",function() {
+   $(".quarterly-bdo-form-"+'${quarterNumber}').on("click", ".btn-save",function() {
 
-       var changeInFormValues = GDC.bdo.form.detectAnyFormChange(bdoObjectivesArray,bdoAchievementsArray,employeeID);
-       
+       quarterNumber = '${quarterNumber}';
+
+       var changeInFormValues = GDC.bdo.form.detectAnyFormChange(objectiveStorage[quarterNumber],achievementStorage[quarterNumber],employeeID,quarterNumber);
+
        if(changeInFormValues) {
-           var validateForm = GDC.bdo.form.validateOnSave();
+           var validateForm = GDC.bdo.form.validateOnSave(quarterNumber);
            var buttonLabel = $(this).html();
-           
+
            if(validateForm == true) {
-               GDC.bdo.form.disableForm(this);
-               GDC.bdo.form.saveSubmitOrCompleteBDO("save");
-               
+               GDC.bdo.form.disableForm(this,quarterNumber);
+               GDC.bdo.form.saveSubmitOrCompleteBDO("save",quarterNumber);
+
            }
-           GDC.bdo.form.enableForm(this, buttonLabel);
-           if(!GDC.bdo.isEmpty($("#employeeID").val())) {
+           GDC.bdo.form.enableForm(this, buttonLabel,quarterNumber);
+           if(validateForm && !GDC.bdo.isEmpty($("#employeeID").val())) {
                $("#employeeID").prop('disabled', true);
            }
        } 
        else {
-           GDC.bdo.form.notifyError("Nothing to save");
+           GDC.bdo.form.notifyError("Nothing to save",quarterNumber);
        }
-       
+
       });  
 
-    $(".bdo-form").on("click", ".btn-submit",function() {  	    
+    $(".quarterly-bdo-form-"+'${quarterNumber}').on("click", ".btn-submit",function() {   
 
-        var changeInFormValues = GDC.bdo.form.detectAnyFormChange(bdoObjectivesArray,bdoAchievementsArray,employeeID);
-        
-        if(changeInFormValues || (!changeInFormValues && status == 'NOT SUBMITTED')) {
-            var validateForm = GDC.bdo.form.validateOnSubmit();
+         quarterNumber = '${quarterNumber}';
+
+        var changeInFormValues = GDC.bdo.form.detectAnyFormChange(objectiveStorage[quarterNumber],achievementStorage[quarterNumber],employeeID,quarterNumber);
+
+        if(changeInFormValues || (!changeInFormValues && statusStorage[quarterNumber] == 'NOT SUBMITTED')) {
+            var validateForm = GDC.bdo.form.validateOnSubmit(quarterNumber);
             var buttonLabel = $(this).html();
-            
+
             if(validateForm == true) {
-                GDC.bdo.form.disableForm(this);
-                GDC.bdo.form.saveSubmitOrCompleteBDO("submit");
-                
+                GDC.bdo.form.disableForm(this,quarterNumber);
+                GDC.bdo.form.saveSubmitOrCompleteBDO("submit",quarterNumber);
+
             }
-            GDC.bdo.form.enableForm(this, buttonLabel);
-            
-            if(!GDC.bdo.isEmpty($("#employeeID").val())) {
+            GDC.bdo.form.enableForm(this, buttonLabel,quarterNumber);
+
+            if(validateForm && !GDC.bdo.isEmpty($("#employeeID").val())) {
                 $("#employeeID").prop('disabled', true);
             }
             
         }  
         else {
-            GDC.bdo.form.notifyError("Already Submitted!");
+            GDC.bdo.form.notifyError("Already Submitted!",quarterNumber);
         }
      });  
-         
-      $(".bdo-form").on("click", ".btn-complete",function() {
 
-          var changeInFormValues = GDC.bdo.form.detectAnyFormChangeOnComplete(bdoObjectivesArray,bdoAchievementsArray,bdoScore);
-          
+      $(".quarterly-bdo-form-"+'${quarterNumber}').on("click", ".btn-complete",function() {
+
+          quarterNumber = '${quarterNumber}';
+
+
+          var changeInFormValues = GDC.bdo.form.detectAnyFormChangeOnComplete(objectiveStorage[quarterNumber],achievementStorage[quarterNumber],bdoScoreStorage[quarterNumber],quarterNumber);
+
           if(changeInFormValues) {
-              var validateForm = GDC.bdo.form.validateOnComplete();
+              var validateForm = GDC.bdo.form.validateOnComplete(quarterNumber);
               var buttonLabel = $(this).html();
-              
+
               if(validateForm == true) {
-                  GDC.bdo.form.disableForm(this);
-                  GDC.bdo.form.saveSubmitOrCompleteBDO("complete");
+                  GDC.bdo.form.disableForm(this,quarterNumber);
+                  GDC.bdo.form.saveSubmitOrCompleteBDO("complete",quarterNumber);
               }
-              GDC.bdo.form.enableForm(this, buttonLabel);
+              GDC.bdo.form.enableForm(this, buttonLabel,quarterNumber);
+              $("#employeeID").prop('disabled', true);
               
           }  
           else {
-              GDC.bdo.form.notifyError("Please update the form before COMPLETING your action !");
+              GDC.bdo.form.notifyError("Please update the form before COMPLETING your action !",quarterNumber);
           }
       });  
 
-      $("#employeeID").keypress(function (e) {
+      $('.quarterly-bdo-form-'+quarterNumber+' #employeeID').keypress(function (e) {
+       
+           quarterNumber = '${quarterNumber}';
           //if the letter is not digit then display error and don't type anything
           if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
               //display error message
-              $("#errmsg-employeeID").html("Digits Only!").show().fadeOut("slow");
+              $('.quarterly-bdo-form-'+quarterNumber+' #errmsg-employeeID').html("Digits Only!").show().fadeOut(2000);
               return false;
           }
       });
-      
+
+      $('.quarterly-bdo-form-'+quarterNumber+' #employeeID').bind('copy paste cut',function(e) { 
+          e.preventDefault(); //disable cut,copy,paste
+          $('.quarterly-bdo-form-'+quarterNumber+' #errmsg-employeeID').html("Not allowed!").show().fadeOut(2000);
+      });
+
       $("#bdoScore").keypress(function (e) {
+
             //if not a valid number between 1 to 100, then display error and don't type anything
             if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
                //display error message
                $("#errmsg-bdoscore").html("Only digits between 0 to 100!").show().fadeOut(2000);
-                     return false;
+               return false;
            }
       });
       
       $('#bdoScore').bind('copy paste cut',function(e) { 
           e.preventDefault(); //disable cut,copy,paste
-									 $("#errmsg-bdoscore").html("Not allowed!").show().fadeOut(2000);
-						});
+          $("#errmsg-bdoscore").html("Not allowed!").show().fadeOut(2000);
+      });
 
   }
  

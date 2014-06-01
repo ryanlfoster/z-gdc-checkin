@@ -17,49 +17,40 @@ public class QuarterlyBDOCalendarServiceImpl implements QuarterlyBDOCalendarServ
 	private static final Logger log = LoggerFactory.getLogger(QuarterlyBDOCalendarServiceImpl.class);
 	
 	@Override
-	public Map<String, Calendar> getAllQuartersDateRangeMap() {
+	public Map<String, Calendar> getAllQuartersDateRangeMap(int annualYear) {
 		
 		Map<String, Calendar> quarterlyDateRangeMap = new LinkedHashMap<String, Calendar>();
 		
-		Integer firstQuarterYear = null;
-		Calendar calendar = Calendar.getInstance(); 
-		
-		if(calendar.get(Calendar.MONTH) == Calendar.DECEMBER) {
-			firstQuarterYear = calendar.get(Calendar.YEAR);
-		} 
-		else {
-			firstQuarterYear = calendar.get(Calendar.YEAR) - 1;
-		}
-			
-		calendar.set(firstQuarterYear, Calendar.DECEMBER, 01); 	
+		Calendar calendar = Calendar.getInstance(); 			
+		calendar.set(annualYear-1, Calendar.DECEMBER, 01); 	
 		quarterlyDateRangeMap.put(QuartelyBDOConstants.START_DATE_QUARTER1, calendar);
 		
 		calendar = Calendar.getInstance();
-		calendar.set(firstQuarterYear+1, Calendar.FEBRUARY, (firstQuarterYear+1)%4 == 0 ? 29 : 28); 	
+		calendar.set(annualYear, Calendar.FEBRUARY, (annualYear)%4 == 0 ? 29 : 28); 	
 		quarterlyDateRangeMap.put(QuartelyBDOConstants.END_DATE_QUARTER1, calendar);
 		
 		calendar = Calendar.getInstance();
-		calendar.set(firstQuarterYear+1, Calendar.MARCH, 01); 	
+		calendar.set(annualYear, Calendar.MARCH, 01); 	
 		quarterlyDateRangeMap.put(QuartelyBDOConstants.START_DATE_QUARTER2, calendar);
 	
 		calendar = Calendar.getInstance();
-		calendar.set(firstQuarterYear+1, Calendar.MAY, 31); 	
+		calendar.set(annualYear, Calendar.MAY, 31); 	
 		quarterlyDateRangeMap.put(QuartelyBDOConstants.END_DATE_QUARTER2, calendar);
 		
 		calendar = Calendar.getInstance();
-		calendar.set(firstQuarterYear+1, Calendar.JUNE, 01); 	
+		calendar.set(annualYear, Calendar.JUNE, 01); 	
 		quarterlyDateRangeMap.put(QuartelyBDOConstants.START_DATE_QUARTER3, calendar);
 		
 		calendar = Calendar.getInstance();
-		calendar.set(firstQuarterYear+1, Calendar.AUGUST, 31); 	
+		calendar.set(annualYear, Calendar.AUGUST, 31); 	
 		quarterlyDateRangeMap.put(QuartelyBDOConstants.END_DATE_QUARTER3, calendar);
 		
 		calendar = Calendar.getInstance();
-		calendar.set(firstQuarterYear+1, Calendar.SEPTEMBER, 01); 	
+		calendar.set(annualYear, Calendar.SEPTEMBER, 01); 	
 		quarterlyDateRangeMap.put(QuartelyBDOConstants.START_DATE_QUARTER4, calendar);
 		
 		calendar = Calendar.getInstance();
-		calendar.set(firstQuarterYear+1, Calendar.NOVEMBER, 30); 	
+		calendar.set(annualYear, Calendar.NOVEMBER, 30); 	
 		quarterlyDateRangeMap.put(QuartelyBDOConstants.END_DATE_QUARTER4, calendar);
 		
 		return quarterlyDateRangeMap;
@@ -69,10 +60,17 @@ public class QuarterlyBDOCalendarServiceImpl implements QuarterlyBDOCalendarServ
 	public String getQuarterStatus(Calendar quarterStartDate, Calendar quarterEndDate) {
 		
 		String quarterStatus = QuartelyBDOConstants.EMPTY_STRING;
-		
+
 		Calendar today = Calendar.getInstance();
+	
+		today.set(Calendar.MILLISECOND, 0);
+		quarterStartDate.set(Calendar.MILLISECOND, 0);
+		quarterEndDate.set(Calendar.MILLISECOND, 0);
+		today.set(Calendar.SECOND, 0);
+		quarterStartDate.set(Calendar.SECOND, 0);
+		quarterEndDate.set(Calendar.SECOND, 0);
 		
-		if( (quarterStartDate.compareTo(today) < 0) && (quarterEndDate.compareTo(today) > 0) ) {
+		if( (quarterStartDate.compareTo(today) <= 0) && (quarterEndDate.compareTo(today) >= 0) ) {
 			quarterStatus = QuartelyBDOConstants.CURRENT_QUARTER;
 		} 
 		else if(quarterEndDate.compareTo(today) < 0) {
@@ -85,6 +83,31 @@ public class QuarterlyBDOCalendarServiceImpl implements QuarterlyBDOCalendarServ
 		return quarterStatus;
 	}
 
+	
+	@Override
+	public boolean isOpenToEdit(Calendar quarterStartDate, Calendar quarterEndDate) {
+		
+	    int bufferDays = 15;
+	    Calendar extendedQuarterEndDate = quarterEndDate;
+	    extendedQuarterEndDate.add(Calendar.DAY_OF_MONTH, bufferDays);
+	    
+		Calendar today = Calendar.getInstance();
+		
+		today.set(Calendar.MILLISECOND, 0);
+		quarterStartDate.set(Calendar.MILLISECOND, 0);
+		extendedQuarterEndDate.set(Calendar.MILLISECOND, 0);
+		today.set(Calendar.SECOND, 0);
+		quarterStartDate.set(Calendar.SECOND, 0);
+		extendedQuarterEndDate.set(Calendar.SECOND, 0);
+		
+		
+		if( (quarterStartDate.compareTo(today) <= 0) && (extendedQuarterEndDate.compareTo(today) >= 0) ) {
+			return true;
+		} 
+		
+		return false;
+	}
+	
 	@Override
 	public int getcurrentQuarterAnnualYear() {
 		Calendar calendar = Calendar.getInstance();
