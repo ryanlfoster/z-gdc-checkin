@@ -7,6 +7,8 @@ public interface QuarterlyBDORepositoryClient {
 	boolean createOrUpdateQuarterlyBDOData(String action, Map<String, String[]> params); 
 
 	boolean createOrUpdateEmployeeProfileData(Map<String, String[]> params);
+	
+	boolean createOrUpdateEmployeeProfileOnLogin(String userID);
 
 	boolean createOrUpdateGDCBDOConfiguration(Map<String, String> params);
 

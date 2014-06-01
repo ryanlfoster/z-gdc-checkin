@@ -117,6 +117,16 @@ public class QuarterlyBDORepositoryClientImpl  implements QuarterlyBDORepository
 
 	}
 
+	@Override
+	public boolean createOrUpdateEmployeeProfileOnLogin(String userID) {
+		
+		Map<String, String[]> params = new HashMap<String, String[]>();
+		params.put(QuartelyBDOConstants.USER_ID, new String[] { userID });
+		params.put(QuartelyBDOConstants.DESIGNATION, new String[] { userManagementService.getEmployeeDesignation(userID) });
+		params.put(QuartelyBDOConstants.NAME, new String[] { userManagementService.getEmployeeName(userID) });
+		
+		return createOrUpdateEmployeeProfileData(params);
+	}
 
 	@Override
 	public Map<String, String[]> getQuarterlyBDOData(int quarterNumber, int annualYear, String userID, boolean escapeNewline) {
@@ -300,7 +310,11 @@ public class QuarterlyBDORepositoryClientImpl  implements QuarterlyBDORepository
 		Map<String,String[]> properties = new HashMap<String,String[]>();
 
 		properties.put(QuartelyBDOConstants.DESIGNATION, params.get(QuartelyBDOConstants.DESIGNATION));
-		properties.put(QuartelyBDOConstants.EMPLOYEE_ID, params.get(QuartelyBDOConstants.EMPLOYEE_ID));
+		
+		//For the first login, employeeID is not present
+		if(params.get(QuartelyBDOConstants.EMPLOYEE_ID) != null && params.get(QuartelyBDOConstants.EMPLOYEE_ID).length > 0) {
+			properties.put(QuartelyBDOConstants.EMPLOYEE_ID, params.get(QuartelyBDOConstants.EMPLOYEE_ID));
+		}
 		properties.put(QuartelyBDOConstants.NAME, params.get(QuartelyBDOConstants.NAME));
 
 		return properties; 

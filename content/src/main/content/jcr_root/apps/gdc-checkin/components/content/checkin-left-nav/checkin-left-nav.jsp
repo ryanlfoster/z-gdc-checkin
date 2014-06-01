@@ -1,11 +1,16 @@
 <%@include file="/libs/foundation/global.jsp" %>
 <%@ page contentType="text/html; charset=utf-8" %>
-<%@ page import="com.adobe.gdc.checkin.UserManagementService,javax.jcr.Session" %>
+<%@ page import="com.adobe.gdc.checkin.UserManagementService,
+                 com.adobe.gdc.checkin.QuarterlyBDORepositoryClient,
+                 javax.jcr.Session" %>
 <%@page session="false" %>
 
 <%
  UserManagementService userManagementService = sling.getService(UserManagementService.class);
+ QuarterlyBDORepositoryClient quarterlyBDORepositoryClient = sling.getService(QuarterlyBDORepositoryClient.class);
  Session session = resourceResolver.adaptTo(Session.class);
+ 
+ quarterlyBDORepositoryClient.createOrUpdateEmployeeProfileOnLogin(userManagementService.getCurrentUser(session));
 %>
 
 <c:set var="isLoggedIn" value="<%=!(userManagementService.isAnonymous(session))%>" />
