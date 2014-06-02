@@ -3,7 +3,9 @@ CC: ${employeeEmail}
 
 <div style="font-size: 12px; font-weight: normal; color: #000000; font-family:Arial,Helvetica,Verdana,sans-serif;">
 
-This is a notification that ${employeeName} has submitted the BDO for this quarter.
+This is a notification that <i>${employeeName}</i> has submitted the BDO for this quarter.
+
+Login to https://gdcbdo.corp.adobe.com for more information.
 
 Thanks,
 Adobe GDC

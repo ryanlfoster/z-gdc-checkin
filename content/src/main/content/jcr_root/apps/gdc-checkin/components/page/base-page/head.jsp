@@ -20,6 +20,7 @@
     <meta name="description" content="<%= xssAPI.encodeForHTMLAttr(properties.get("jcr:description", "")) %>"<%=xs%>>
     <meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1"/>
     <cq:include script="headlibs.jsp"/>
+    <link href="/etc/designs/gdc-checkin/clientlibs-external/css/jqueryCalendar.css" type="text/css" rel="stylesheet"/>
     <cq:include script="/libs/wcm/core/components/init/init.jsp"/>
      <% if (favIcon != null) { %>
     <link rel="icon" type="image/vnd.microsoft.icon" href="<%= xssAPI.getValidHref(favIcon) %>"<%=xs%>>
