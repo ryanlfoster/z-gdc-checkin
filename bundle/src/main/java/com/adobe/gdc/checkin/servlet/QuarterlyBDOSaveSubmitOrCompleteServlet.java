@@ -102,7 +102,7 @@ public class QuarterlyBDOSaveSubmitOrCompleteServlet extends SlingAllMethodsServ
 			if (result && action.equals(QuartelyBDOConstants.SUBMIT)) {
 				//If the BDO form is self submitted- send notification to the manager
 				if( (userManagementService.getCurrentUser(session)).equals(params.get(QuartelyBDOConstants.USER_ID)[0])) {
-					sendEmailNotification(session);
+					sendEmailNotification(session, request.getParameter(QuartelyBDOConstants.QUARTER_NUMBER));
 				}
 			}
 			
@@ -129,12 +129,13 @@ public class QuarterlyBDOSaveSubmitOrCompleteServlet extends SlingAllMethodsServ
 	}
 
 	
-	private void sendEmailNotification(Session session) throws Exception {
+	private void sendEmailNotification(Session session, String quarterNumber) throws Exception {
 		
 		//first construct emailParams
 		String employeeName = userManagementService.getCurrentUserName(session);
 		Map<String, String> emailParams = new HashMap<String, String>();
 		emailParams.put(QuartelyBDOConstants.EMPLOYEE_NAME, employeeName);
+		emailParams.put(QuartelyBDOConstants.QUARTER_NUMBER, quarterNumber);
 		emailParams.put(QuartelyBDOConstants.EMPLOYEE_EMAIL, userManagementService.getCurrentUser(session) + QuartelyBDOConstants.ADOBE_EMAIL_EXTENTION);
 		
 		emailService.sendEmail(QuartelyBDOConstants.EMAIL_TEMPLATE_PATH, emailParams, userManagementService.getManagersEmailId(session));
