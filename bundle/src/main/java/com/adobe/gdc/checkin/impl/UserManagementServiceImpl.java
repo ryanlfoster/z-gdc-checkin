@@ -66,6 +66,34 @@ public class UserManagementServiceImpl implements UserManagementService {
 		return QuartelyBDOConstants.EMPTY_STRING;
 	}
 
+	
+	@Override
+	public String getManagersLdap(String userID) {
+		
+		Session adminSession = null;
+		
+		try {
+			adminSession = getAdminSession();
+			UserManager userManager = getUserManager(adminSession);
+			String manager;
+			final Authorizable authorizable = userManager.getAuthorizable(userID);
+			if(authorizable != null && authorizable.hasProperty(QuartelyBDOConstants.PROFILE_MANAGER)) {
+				manager =  authorizable.getProperty(QuartelyBDOConstants.PROFILE_MANAGER)[0].getString();
+				return QuarterlyBDOUtils.extractValueFromRawString(manager);
+			}
+		}
+		catch(Exception e) {
+			log.error("[Exception]", e);
+		}
+		finally {
+			if(adminSession != null && adminSession.isLive()) {
+				adminSession.logout();
+			}
+		}
+		return QuartelyBDOConstants.EMPTY_STRING;
+	}
+
+	
 	@Override
 	public String[] getManagersDirectReportees(String managersID) {
 		
@@ -132,6 +160,41 @@ public class UserManagementServiceImpl implements UserManagementService {
 		return false;
 	}
 
+	
+	@Override
+	public boolean isManager(String userID) {
+		
+		Session adminSession = null;
+		
+		try {
+			adminSession = getAdminSession();
+			
+			UserManager userManager = getUserManager(adminSession);
+			Value[] memberOfValues = {};
+			final Authorizable authorizable = userManager.getAuthorizable(userID);
+			if(authorizable != null && authorizable.hasProperty(QuartelyBDOConstants.PROFILE_MEMBER_OF)) {
+				memberOfValues = authorizable.getProperty(QuartelyBDOConstants.PROFILE_MEMBER_OF);
+				for(int i=0; i<memberOfValues.length; i++) {
+					String mailingGroup = QuarterlyBDOUtils.extractValueFromRawString(memberOfValues[i].getString());
+					if(mailingGroup.equalsIgnoreCase("ORG-"+userID+"-ALL")) {
+						return true;
+					}
+	
+				}
+			}
+		}
+		catch(Exception e) {
+			log.error("[Exception]", e);
+		}
+		finally {
+			if(adminSession != null && adminSession.isLive()) {
+				adminSession.logout();
+			}
+		}
+		return false;
+	}
+	
+	
 	@Override
 	public String getEmployeeDesignation(String userID) {
 		

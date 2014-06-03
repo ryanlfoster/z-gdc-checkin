@@ -15,4 +15,6 @@ public interface QuarterlyBDORepositoryClient {
 	Map<String, String[]> getQuarterlyBDOData(int quarterNumber, int annualYear, String userID, boolean escapeNewline);
 
 	public Map<String, String[]> getEmployeeProfileData(String userID);
+	
+	public String[] getDirectReportees(String userID);
 }

@@ -21,4 +21,8 @@ public interface UserManagementService {
 	boolean isAdminUser(Session session);
 
 	boolean isAnonymous(Session session);
-}
+	
+	boolean isManager(String userID);
+	
+	String getManagersLdap(String userID);
+} 

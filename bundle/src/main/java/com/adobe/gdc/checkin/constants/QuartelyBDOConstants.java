@@ -50,7 +50,10 @@ public class QuartelyBDOConstants {
 	public static final String STATUS = "status";
 	public static final String OBJECTIVES_ARRAY = "objectives[]";
 	public static final String ACHIEVEMENTS_ARRAY = "achievements[]";
-
+	public static final String MANAGER ="manager";
+	public static final String DIRECT_REPORTS ="directReports";
+	public static final String ALL_REPORT = "reportAll";
+	
 	//BDO Report JSON params
 	public static final String INDEX = "index";
 	public static final String TOTAL_RECORDS = "iTotalRecords";

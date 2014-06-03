@@ -124,6 +124,11 @@ public class QuarterlyBDORepositoryClientImpl  implements QuarterlyBDORepository
 		params.put(QuartelyBDOConstants.USER_ID, new String[] { userID });
 		params.put(QuartelyBDOConstants.DESIGNATION, new String[] { userManagementService.getEmployeeDesignation(userID) });
 		params.put(QuartelyBDOConstants.NAME, new String[] { userManagementService.getEmployeeName(userID) });
+		params.put(QuartelyBDOConstants.MANAGER, new String[] { userManagementService.getManagersLdap(userID) });
+		
+		if(userManagementService.isManager(userID)) {
+			params.put(QuartelyBDOConstants.DIRECT_REPORTS, userManagementService.getManagersDirectReportees(userID) );
+		}
 		
 		return createOrUpdateEmployeeProfileData(params);
 	}
@@ -190,6 +195,44 @@ public class QuarterlyBDORepositoryClientImpl  implements QuarterlyBDORepository
 		return employeeDataMap;
 	}
 
+	
+	
+	@Override
+	public String[] getDirectReportees(String userID) {
+
+		String [] directReportee = {};
+		String repositoryPath = QuarterlyBDOUtils.getEmployeeProfileBasePath(userID);
+
+		Session adminSession = null;
+
+		try {
+			adminSession = getAdminSession();
+
+			//Get the Employee Profile node from the repository
+			Node employeeProfileNode = JcrUtils.getNodeIfExists(repositoryPath, adminSession);
+
+			//If node exists, read the node properties 
+			if(employeeProfileNode != null) {
+				Map<String, String[]> employeeDataMap = QuarterlyBDOUtils.readNodeproperties(employeeProfileNode, false);
+				
+				if(employeeDataMap.containsKey(QuartelyBDOConstants.DIRECT_REPORTS)) {
+					directReportee = employeeDataMap.get(QuartelyBDOConstants.DIRECT_REPORTS);
+				}
+			}
+		}
+		catch(Exception e) {
+			log.error("[Exception]", e);
+		}
+		finally {
+			if(adminSession != null && adminSession.isLive()) {
+				adminSession.logout();
+			}
+		}
+
+		return directReportee;
+	}
+
+	
 	@Override
 	public boolean createOrUpdateGDCBDOConfiguration(Map<String, String> params) {
 
@@ -305,8 +348,7 @@ public class QuarterlyBDORepositoryClientImpl  implements QuarterlyBDORepository
 	}
 
 
-	private Map<String, String[]> getEmployeeProfileProperties(Map<String, String[]> params)
-	{
+	private Map<String, String[]> getEmployeeProfileProperties(Map<String, String[]> params) {
 		Map<String,String[]> properties = new HashMap<String,String[]>();
 
 		properties.put(QuartelyBDOConstants.DESIGNATION, params.get(QuartelyBDOConstants.DESIGNATION));
@@ -316,6 +358,14 @@ public class QuarterlyBDORepositoryClientImpl  implements QuarterlyBDORepository
 			properties.put(QuartelyBDOConstants.EMPLOYEE_ID, params.get(QuartelyBDOConstants.EMPLOYEE_ID));
 		}
 		properties.put(QuartelyBDOConstants.NAME, params.get(QuartelyBDOConstants.NAME));
+		
+		if(params.get(QuartelyBDOConstants.MANAGER) != null && params.get(QuartelyBDOConstants.MANAGER).length > 0) {
+			properties.put(QuartelyBDOConstants.MANAGER, params.get(QuartelyBDOConstants.MANAGER));
+		}
+		
+		if(params.get(QuartelyBDOConstants.DIRECT_REPORTS) != null && params.get(QuartelyBDOConstants.DIRECT_REPORTS).length > 0) {
+			properties.put(QuartelyBDOConstants.DIRECT_REPORTS, params.get(QuartelyBDOConstants.DIRECT_REPORTS));
+		}
 
 		return properties; 
 	}

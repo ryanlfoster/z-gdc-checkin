@@ -9,8 +9,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+
 import javax.jcr.Session;
 import javax.servlet.ServletException;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.felix.scr.annotations.Reference;
 import org.apache.felix.scr.annotations.sling.SlingServlet;
@@ -28,12 +30,13 @@ import org.apache.sling.api.servlets.SlingSafeMethodsServlet;
 import org.apache.sling.commons.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import com.adobe.gdc.checkin.QuarterlyBDORepositoryClient;
 import com.adobe.gdc.checkin.UserManagementService;
 import com.adobe.gdc.checkin.constants.QuartelyBDOConstants;
 
 /**
- * @author prajesh
+ * @author Upasana Chaube, 2014
  *         Date: 27/4/14
  *         Time: 9:50 PM
  */
@@ -49,6 +52,9 @@ public class GenerateReportsServlet extends SlingSafeMethodsServlet {
 	@Reference
 	QuarterlyBDORepositoryClient quarterlyBDORepositoryClient;
 
+	
+	private List<String> directReporteesList = new ArrayList<String>();
+	
     @Override
     protected void doGet(SlingHttpServletRequest request, SlingHttpServletResponse response) throws ServletException, IOException {
 
@@ -65,6 +71,7 @@ public class GenerateReportsServlet extends SlingSafeMethodsServlet {
     			 
 			//Generate data to be written in the file
 	        Map<String, Object[]> resultData = new TreeMap<String, Object[]>();
+	       
 	        resultData.put("1", new Object[] {
 								        		QuartelyBDOConstants.EMPLOYEE_ID_TITLE,
 								        		QuartelyBDOConstants.NAME_TITLE,
@@ -74,11 +81,17 @@ public class GenerateReportsServlet extends SlingSafeMethodsServlet {
 	        								});
 	       				
 			try {
-				//Get All Direct Reportees of the manager
-				String[] directReportees = userManagementService.getManagersDirectReportees(managersID);
+				//Get All Direct Reportees of the manager	
+				generateDirectReporteesList(managersID);
 				
-				String managerName = userManagementService.getEmployeeName(managersID);
-		    	
+				//Remove self from the list of direct-reportees
+				directReporteesList.remove(managersID);
+				
+				String[] directReportees = directReporteesList.toArray(new String[directReporteesList.size()]);
+				
+				//Now invalidate the global directReporteesList
+				directReporteesList = new ArrayList<String>();
+
 				for(int i=0; i<directReportees.length; i++) {
 					Map<String, String[]> employeeProfileDataMap = quarterlyBDORepositoryClient.getEmployeeProfileData(directReportees[i]);
 					
@@ -86,7 +99,8 @@ public class GenerateReportsServlet extends SlingSafeMethodsServlet {
 					if(employeeProfileDataMap != null && employeeProfileDataMap.size() > 0 ) {
 						Map<String, String[]> employeeBDODataMap = quarterlyBDORepositoryClient.getQuarterlyBDOData(quarterNumber, annualYear, directReportees[i], false);					
 						int index = resultData.size() + 1;
-						String[] employeeBDOData = getEmployeeBDOData(employeeProfileDataMap, employeeBDODataMap, managerName);
+						String[] employeeBDOData = getEmployeeBDOData(employeeProfileDataMap, employeeBDODataMap);
+						
 						resultData.put(index+"",employeeBDOData);
 					}
 				}
@@ -201,7 +215,7 @@ public class GenerateReportsServlet extends SlingSafeMethodsServlet {
     }
     
     
-	private String[] getEmployeeBDOData( Map<String, String[]> employeeProfileDataMap, Map<String, String[]> employeeBDODataMap, String managerName) throws JSONException {			
+	private String[] getEmployeeBDOData( Map<String, String[]> employeeProfileDataMap, Map<String, String[]> employeeBDODataMap) throws JSONException {			
 		
 			String[] employeeBDODataArray = new String[5];
 			employeeBDODataArray[0] = employeeProfileDataMap.get(QuartelyBDOConstants.EMPLOYEE_ID)!= null 
@@ -212,7 +226,9 @@ public class GenerateReportsServlet extends SlingSafeMethodsServlet {
 										? employeeProfileDataMap.get(QuartelyBDOConstants.NAME)[0]
 										: QuartelyBDOConstants.EMPTY_STRING;
 										
-			employeeBDODataArray[2]	= managerName;
+			employeeBDODataArray[2]	= employeeProfileDataMap.get(QuartelyBDOConstants.MANAGER) != null 
+										? userManagementService.getEmployeeName(employeeProfileDataMap.get(QuartelyBDOConstants.MANAGER)[0])
+										: QuartelyBDOConstants.EMPTY_STRING;
 			
 			employeeBDODataArray[3]	= employeeBDODataMap.get(QuartelyBDOConstants.BDO_SCORE) != null 
 										? employeeBDODataMap.get(QuartelyBDOConstants.BDO_SCORE)[0]
@@ -245,6 +261,22 @@ public class GenerateReportsServlet extends SlingSafeMethodsServlet {
 		}
 		return stringValue;
 	}
+	
+	
+	private String generateDirectReporteesList(String userID)
+	{
+		if(StringUtils.isBlank(userID)) return QuartelyBDOConstants.EMPTY_STRING;
+			
+		directReporteesList.add(userID);
+		String[] reporteesDirectReportees = quarterlyBDORepositoryClient.getDirectReportees(userID);
+		
+		for(String reportee : reporteesDirectReportees) {
+			 generateDirectReporteesList(reportee);
+		}
+	
+		return QuartelyBDOConstants.EMPTY_STRING;
+	}
+	
 	
     private Session getSession(SlingHttpServletRequest request) {
 		return request.getResourceResolver().adaptTo(Session.class);
