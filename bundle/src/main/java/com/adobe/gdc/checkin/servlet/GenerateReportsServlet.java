@@ -227,7 +227,7 @@ public class GenerateReportsServlet extends SlingSafeMethodsServlet {
 										: QuartelyBDOConstants.EMPTY_STRING;
 										
 			employeeBDODataArray[2]	= employeeProfileDataMap.get(QuartelyBDOConstants.MANAGER) != null 
-										? userManagementService.getEmployeeName(employeeProfileDataMap.get(QuartelyBDOConstants.MANAGER)[0])
+										? quarterlyBDORepositoryClient.getEmployeeName(employeeProfileDataMap.get(QuartelyBDOConstants.MANAGER)[0])
 										: QuartelyBDOConstants.EMPTY_STRING;
 			
 			employeeBDODataArray[3]	= employeeBDODataMap.get(QuartelyBDOConstants.BDO_SCORE) != null 

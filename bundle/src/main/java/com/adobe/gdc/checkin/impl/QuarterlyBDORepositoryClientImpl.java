@@ -233,6 +233,47 @@ public class QuarterlyBDORepositoryClientImpl  implements QuarterlyBDORepository
 	}
 
 	
+	
+	@Override
+	public String getEmployeeName(String userID) {
+
+		String name = QuartelyBDOConstants.EMPTY_STRING;
+		String repositoryPath = QuarterlyBDOUtils.getEmployeeProfileBasePath(userID);
+
+		Session adminSession = null;
+
+		try {
+			adminSession = getAdminSession();
+
+			//Get the Employee Profile node from the repository
+			Node employeeProfileNode = JcrUtils.getNodeIfExists(repositoryPath, adminSession);
+
+			//If node exists, read the node properties 
+			if(employeeProfileNode != null) {
+				Map<String, String[]> employeeDataMap = QuarterlyBDOUtils.readNodeproperties(employeeProfileNode, false);
+				
+				if(employeeDataMap.containsKey(QuartelyBDOConstants.NAME)) {
+					name = employeeDataMap.get(QuartelyBDOConstants.NAME)[0];
+				}
+			}
+		}
+		catch(Exception e) {
+			log.error("[Exception]", e);
+		}
+		finally {
+			if(adminSession != null && adminSession.isLive()) {
+				adminSession.logout();
+			}
+		}
+
+		return name;
+	}
+	
+	
+	
+	
+	
+	
 	@Override
 	public boolean createOrUpdateGDCBDOConfiguration(Map<String, String> params) {
 

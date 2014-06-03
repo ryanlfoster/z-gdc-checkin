@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Map;
-import javax.jcr.Session;
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 import org.apache.felix.scr.annotations.Component;
@@ -20,8 +19,8 @@ import org.apache.sling.commons.json.JSONException;
 import org.apache.sling.commons.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import com.adobe.gdc.checkin.QuarterlyBDORepositoryClient;
-import com.adobe.gdc.checkin.UserManagementService;
 import com.adobe.gdc.checkin.constants.QuartelyBDOConstants;
 
 @Component(label = "GDC Check-in Quarterly BDO Report Servlet", description = "GDC Check-in Quarterly BDO Report Servlet")
@@ -37,9 +36,6 @@ public class QuarterlyBDOReportServlet extends SlingAllMethodsServlet{
 	private static final Logger log = LoggerFactory.getLogger(QuarterlyBDOReportServlet.class);
 	
 	@Reference
-	UserManagementService userManagementService;
-	
-	@Reference
 	QuarterlyBDORepositoryClient quarterlyBDORepositoryClient;
 	
 	@Override
@@ -53,12 +49,11 @@ public class QuarterlyBDOReportServlet extends SlingAllMethodsServlet{
 		log.info("Processing [QuarterlyBDOReportServlet] with request params-> managersID="+ managersID+
 										",quarterNumber="+ quarterNumber+ ",annualYear=" + annualYear);
 		
-		Session session = getSession(request);
 		JSONObject responseObject = new JSONObject();
 		
 		try {
 			//Get All Direct Reportees of the manager
-			String[] directReportees = userManagementService.getManagersDirectReportees(managersID);
+			String[] directReportees = quarterlyBDORepositoryClient.getDirectReportees(managersID);
 			JSONArray directReportResultArray = new JSONArray();
 			for(int i=0; i< directReportees.length; i++) {
 				
@@ -127,8 +122,4 @@ public class QuarterlyBDOReportServlet extends SlingAllMethodsServlet{
 		return employeeBDODataJson;
 	}
 	
-	
-	private Session getSession(SlingHttpServletRequest request) {
-		return request.getResourceResolver().adaptTo(Session.class);
-	}
 }

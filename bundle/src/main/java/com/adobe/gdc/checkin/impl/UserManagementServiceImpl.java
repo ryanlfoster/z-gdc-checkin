@@ -42,28 +42,7 @@ public class UserManagementServiceImpl implements UserManagementService {
 
 	@Override
 	public String getManagersEmailId(Session session) {
-		
-		Session adminSession = null;
-		
-		try {
-			adminSession = getAdminSession();
-			UserManager userManager = getUserManager(adminSession);
-			String manager;
-			final Authorizable authorizable = userManager.getAuthorizable(session.getUserID());
-			if(authorizable != null && authorizable.hasProperty(QuartelyBDOConstants.PROFILE_MANAGER)) {
-				manager =  authorizable.getProperty(QuartelyBDOConstants.PROFILE_MANAGER)[0].getString();
-				return QuarterlyBDOUtils.extractValueFromRawString(manager) + QuartelyBDOConstants.ADOBE_EMAIL_EXTENTION;
-			}
-		}
-		catch(Exception e) {
-			log.error("[Exception]", e);
-		}
-		finally {
-			if(adminSession != null && adminSession.isLive()) {
-				adminSession.logout();
-			}
-		}
-		return QuartelyBDOConstants.EMPTY_STRING;
+		return getManagersLdap(getCurrentUser(session)) + QuartelyBDOConstants.ADOBE_EMAIL_EXTENTION;
 	}
 
 	
@@ -128,36 +107,7 @@ public class UserManagementServiceImpl implements UserManagementService {
 
 	@Override
 	public boolean isManager(Session session) {
-		
-		Session adminSession = null;
-		
-		try {
-			adminSession = getAdminSession();
-			
-			String currentLdapID = getCurrentUser(session);
-			UserManager userManager = getUserManager(adminSession);
-			Value[] memberOfValues = {};
-			final Authorizable authorizable = userManager.getAuthorizable(currentLdapID);
-			if(authorizable != null && authorizable.hasProperty(QuartelyBDOConstants.PROFILE_MEMBER_OF)) {
-				memberOfValues = authorizable.getProperty(QuartelyBDOConstants.PROFILE_MEMBER_OF);
-				for(int i=0; i<memberOfValues.length; i++) {
-					String mailingGroup = QuarterlyBDOUtils.extractValueFromRawString(memberOfValues[i].getString());
-					if(mailingGroup.equalsIgnoreCase("ORG-"+currentLdapID+"-ALL")) {
-						return true;
-					}
-	
-				}
-			}
-		}
-		catch(Exception e) {
-			log.error("[Exception]", e);
-		}
-		finally {
-			if(adminSession != null && adminSession.isLive()) {
-				adminSession.logout();
-			}
-		}
-		return false;
+		return isManager(getCurrentUser(session));
 	}
 
 	
