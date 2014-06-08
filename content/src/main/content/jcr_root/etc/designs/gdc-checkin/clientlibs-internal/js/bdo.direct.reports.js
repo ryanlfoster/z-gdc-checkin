@@ -5,17 +5,23 @@ GDC.bdo.directReports.initTable = function(selector,quarterNumber,annualYear) {
 
     return $(selector).dataTable({
 
-		"bSort": false,
-		"iDisplayLength": 10,
+        "bFilter": true, 
+		"bSort": false,     
+		"bPaginate": false,
       	"oLanguage": { 
    			 "sSearch": ""
 		},
-        "sAjaxSource": bdoReportServiceSrcPath,
-        "aoColumns": [{"mData":"name","sTitle": "Name","sWidth":"198px"},
+        "sAjaxSource": "/etc/designs/gdc-checkin/clientlibs-internal/json/sampleList.json",
+      //  "sAjaxSource": bdoReportServiceSrcPath,
+        "aoColumns": [
+					  {"mData":"class","sWidth":"5px","sClass": ""},
+            		  {"mData":"name","sTitle": "Name","sWidth":"198px"},
                       {"mData":"designation","sTitle": "Designation","sWidth":"178px"},
                       {"mData":"employeeID","sTitle": "Employee ID","sWidth":"103px","sClass":"center-aligned"},
+            		  {"mData":"manager","sTitle": "Manager","sWidth":"80px"},
                       {"mData":"status","sTitle": "Status","sWidth":"111px"},
                       {"mData":"bdoScore","sTitle": "BDO Score(%)","sWidth":"102px","sClass":"center-aligned"},
+            		  {"mData":"userID","sTitle": "","sWidth":"111px","sClass":"hide-td"},
                       {"mData":"userID","sTitle": "", "sWidth":"18px", "mRender":function(data,type,full){
 
 					  var html = "";
@@ -35,7 +41,40 @@ GDC.bdo.directReports.initTable = function(selector,quarterNumber,annualYear) {
                       html += '<a class="fancybox fancybox.iframe" href='+fancyboxSrc+'>View/Edit</a>';
 
                         return html;
-                      }}]
+                      }}],
+
+		 "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+             var className = $('td:eq(0)', nRow).text();
+            if(className == "") {
+                className = $('td:eq(0)', nRow).data('buffer');
+            }
+
+            $(nRow).addClass(className);
+
+             if($(nRow).hasClass("shown")) {
+				$(nRow).removeClass("shown")
+             }
+
+             if(className.indexOf("hide-row") >= 0) {
+                 $(nRow).addClass("hidden");
+             }
+
+             $('td:eq(0)', nRow).attr('class',className);
+        	 $('td:eq(0)', nRow).data('buffer',className);
+
+             if( (($("select.bdo-status-filter"+quarterNumber).val()) != "") || ($('#bdoReportList'+quarterNumber+'_filter input[type="text"]').val()) != "") {
+				 $(nRow).removeClass("hidden");
+
+                 if($('td:eq(0)', nRow).hasClass("manager")) {
+
+                     $('td:eq(0)',nRow).removeClass("manager");
+                     
+                 }
+
+             }
+
+             $('td:eq(0)', nRow).html("");
+     	}
     	});
 
 }
@@ -46,18 +85,6 @@ GDC.bdo.directReports.getParamArrayForQueryString = function(paramName, paramArr
         paramString=paramString+"&amp;"+paramName+"="+encodeURIComponent(paramArrayValue[i]);
     }
     return paramString;
-}
-
-GDC.bdo.directReports.stylePagination = function() {
-
-	$('.dataTables_paginate').addClass("pagination green");
-    $('.pagination .prev a').html('<i class="glyphicon glyphicon-chevron-left">');
-    $('.pagination .next a').html('<i class="glyphicon glyphicon-chevron-right">');
-}
-
-GDC.bdo.directReports.addStatusFilterDropdown = function(quarterNumber) {
-
-	$('#bdoReportList'+quarterNumber+'_length').html($('.bdo-status-filter-container'+quarterNumber).html());
 }
 
 $.fn.dataTableExt.oApi.fnReloadAjax = function ( oSettings, sNewSource, fnCallback, bStandingRedraw )

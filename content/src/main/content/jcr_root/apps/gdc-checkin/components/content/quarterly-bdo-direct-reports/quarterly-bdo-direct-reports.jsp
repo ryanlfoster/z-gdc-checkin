@@ -3,10 +3,11 @@
 <%@page session="false" %>
 
 <div class="well">
-    <div class="row">
-        <div class="col-md-3 col-xs-3 bdo-status-filter-container${quarterNumber}" style="display:none">
+
+    <div class="col-xs-6 table-filter">
+        <div id="bdoReportList${quarterNumber}_length" class="dataTables_length">
             <select class="form-control bdo-status-filter${quarterNumber}">
-                 <option value="">All</option>
+                <option value="">All</option>
                 <option value="SUBMITTED">Submitted</option>
                 <option value="NOT SUBMITTED">Not Submitted</option>
                 <option value="COMPLETED">Completed</option>
@@ -18,11 +19,14 @@
             <table id="bdoReportList${quarterNumber}" class="table table-bordered table-striped table-cth green">
                 <thead>
                     <tr>
+                        <th></th>
                         <th>Name</th>
                         <th>Designation</th>
                         <th>Employee ID</th>
+                        <th>Manager</th>
                         <th>Status</th>
                         <th>BDO Score(%)</th>
+                        <th></th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -49,17 +53,14 @@
      if( managersID!=undefined && managersID != null && managersID != "" ) {
          var oTable =  GDC.bdo.directReports.initTable("#bdoReportList${quarterNumber}",quarterNumber,annualYear);
          oTableStore[quarterNumber]= oTable;
-    
-         GDC.bdo.directReports.addStatusFilterDropdown(quarterNumber);
-         GDC.bdo.directReports.stylePagination();
-    
+
         //Filter the datatable based on status coloumn- which is the 4th column in the table
         $('.bdo-status-filter${quarterNumber}').change(function () {
             if($(this).val() != "") {
-                oTable.fnFilter("^"+$(this).val()+"$", 3, true);
+                oTable.fnFilter("^"+$(this).val()+"$", 5, true);
             } else {
                 //Reset the filter
-                oTable.fnFilter('', 3, true);
+                oTable.fnFilter('', 5, true);
             }
         });
 
@@ -82,7 +83,7 @@
                'autoSize':false,
                'width':'750',
                'height':'600',
-    
+
                helpers   : { 
                    overlay : {closeClick: false} // prevents closing when clicking OUTSIDE fancybox 
                },
@@ -97,8 +98,48 @@
                }
       });
 
-  }
-     
+
+ $('.table tbody ').off().on('click', 'td.manager', function (event) {
+
+         var row = $(this).closest('tr');
+         var table = $(this).closest('tbody');
+
+         var userID = row.children().eq(7).text();
+
+         if(row.hasClass('shown')) { 
+            row.removeClass('shown');
+
+             table.find("tr."+userID).each(function() {
+                 hideRows(table, this);
+             });
+         }
+        else {
+            row.addClass('shown');
+									   table.find("tr."+userID).each(function() {
+				            $(this).removeClass("hidden");
+				            $(this).removeClass("hide-row");
+									   });
+        }
+
+ });
+
+
+function hideRows(table, row) {
+
+    if($(row).hasClass("manager")) {
+        var userID = $(row).children().eq(7).text();
+        $(row).removeClass("shown");
+        table.find("tr."+userID).each(function() {
+            hideRows(table,this);
+        })
+    }
+    
+    $(row).addClass("hidden");
+
+ }
+
+}
+
 });
 
 </script>

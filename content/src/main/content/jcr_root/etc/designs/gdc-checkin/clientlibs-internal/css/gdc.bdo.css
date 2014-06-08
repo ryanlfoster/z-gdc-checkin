@@ -181,3 +181,23 @@ height: 25px;
 a.contact-us:hover {
              color: #fff;
 }
+
+td.manager {
+    background: url('../images/details_open.png') no-repeat center center;
+    cursor: pointer;
+}
+tr.shown td.manager {
+    background: url('../images/details_close.png') no-repeat center center;
+}
+
+ .hide-td {
+ display:none;
+}
+
+div.dataTables_length select {
+width: 150px;
+}
+
+.table-filter {
+ padding-left : 0;
+}

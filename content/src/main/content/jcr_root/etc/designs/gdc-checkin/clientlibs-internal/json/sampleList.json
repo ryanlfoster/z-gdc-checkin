@@ -3,193 +3,278 @@
     "aaData": [
             {
                 "index" : "1",
-                "name" : "Harry",
-                "designation" : "Technical Consultant",
+                "name" : "Umesh",
+                "designation" : "Senior Manager",
                 "employeeID" : "53490",
-                "percentageAchieved" : "80%",
+                "manager":"Rotem",
+                "bdoScore" : "80%",
                 "status" : "SUBMITTED",
-                "ldap" : "harry"
+                "userID" : "umesh",
+                "objectives" : [],
+                "achievements" : [],
+                "class" : "manager rotem"
 
             },
             {
                 "index" : "2",
-                "name" : "Rajesh",
-                "designation" : "Senior Technical Consultant",
+                "name" : "Sridhar",
+                "designation" : "Manager",
                 "employeeID" : "53003",
-                "percentageAchieved" : "70%",
+                "manager":"Umesh",
+                "bdoScore" : "70%",
                 "status" : "NOT SUBMITTED",
-                "ldap" : "rajesh"
+                "userID" : "sridhar",
+                "objectives" : [],
+                "achievements" : [],
+                "class" : "manager hide-row umesh"
             },
             {
                 "index" : "3",
-                "name" : "Tom",
+                "name" : "ups",
                 "designation" : "Technical Consultant",
                 "employeeID" : "53001",
-                "percentageAchieved" : "60%",
+                "manager":"Sridhar",
+                "bdoScore" : "60%",
                 "status" : "SUBMITTED",
-                "ldap" : "tom"
+                "userID" : "ups",
+                "objectives" : [],
+                "achievements" : [],
+                "class" : "hide-row sridhar"
             },
             {
                 "index" : "4",
-                "name" : "Ron",
+                "name" : "pp",
                 "designation" : "Senior Technical Consultant",
                 "employeeID" : "53000",
-                "percentageAchieved" : "50%",
+                "manager":"Sridhar",
+                "bdoScore" : "50%",
                 "status" : "NOT SUBMITTED",
-                "ldap" : "ron"
+                "userID" : "pp",
+                "objectives" : [],
+                "achievements" : [],
+                "class" : "hide-row sridhar"
             },
             {
                 "index" : "5",
-                "name" : "Shirley",
-                "designation" : "Assoicate Technical Consultant",
+                "name" : "Bhanu",
+                "designation" : "Manager",
                 "employeeID" : "50890",
-                "percentageAchieved" : "20%",
+                "manager":"umesh",
+                "bdoScore" : "20%",
                 "status" : "SUBMITTED",
-                "ldap" : "shirley"
+                "userID" : "bhanu",
+                "objectives" : [],
+                "achievements" : [],
+                "class": "manager hide-row umesh"
             },
             {
                 "index" : "6",
-                "name" : "Jones",
-                "designation" : "Assoicate Technical Consultant",
+                "name" : "pant",
+                "designation" : "Senior Technical Consultant",
                 "employeeID" : "53090",
-                "percentageAchieved" : "0%",
+                "manager":"Bhanu",
+                "bdoScore" : "0%",
                 "status" : "NOT SUBMITTED",
-                "ldap" : "jones"
+                "userID" : "pant",
+                "objectives" : [],
+                "achievements" : [],
+                "class" : "hide-row bhanu"
             },
             {
                 "index" : "7",
-                "name" : "Johnson",
-                "designation" : "Technical Consultant",
+                "name" : "chaya",
+                "designation" : "Senior Technical Consultant",
                 "employeeID" : "13890",
-                "percentageAchieved" : "10%",
+                "manager":"Bhanu",
+                "bdoScore" : "10%",
                 "status" : "SUBMITTED",
-                "ldap" : "johnson"
+                "userID" : "chaya",
+                "objectives" : [],
+                "achievements" : [],
+                "class" : "hide-row bhanu"
             },
             {
                 "index" : "8",
-               "name" : "Thomas",
-                "designation" : "Senior Technical Consultant",
+                "name" : "katra",
+                "designation" : "Technical Consultant",
                 "employeeID" : "13890",
-                "percentageAchieved" : "100%",
+                "manager":"Umesh",
+                "bdoScore" : "0%",
                 "status" : "NOT SUBMITTED",
-                "ldap" : "thomas"
+                "userID" : "katra",
+                "objectives" : [],
+                "achievements" : [],
+                "class": "hide-row umesh"
+
             },
             {
                 "index" : "9",
-               "name" : "Nigel",
+                "name" : "raja",
                 "designation" : "Technical Consultant",
                 "employeeID" : "33890",
-                "percentageAchieved" : "90%",
+                "manager":"Umesh",
+                "bdoScore" : "90%",
                 "status" : "SUBMITTED",
-                "ldap" : "nigel"
+                "userID" : "raja",
+                "objectives" : [],
+                "achievements" : [],
+                "class": "hide-row umesh"
             },
             {
                 "index" : "10",
-               "name" : "Jackey",
-                "designation" : "Senior Technical Consultant",
+               "name" : "Xingyang",
+                "designation" : "Senior Manager",
                 "employeeID" : "53190",
-                "percentageAchieved" : "80%",
+                "manager":"Rotem",
+                "bdoScore" : "80%",
                 "status" : "SUBMITTED",
-                "ldap" : "jackey"
+                "userID" : "xingyang",
+                "objectives" : [],
+                "achievements" : [],
+                "class" : "manager rotem"
             },
             {
                 "index" : "11",
-                "name" : "John",
-                "designation" : "Technical Consultant",
+                "name" : "Dan",
+                "designation" : "Manager",
                 "employeeID" : "53898",
-                "percentageAchieved" : "20%",
+                "manager":"Xingyang",
+                "bdoScore" : "20%",
                 "status" : "SUBMITTED",
-                "ldap" : "john"
+                "userID" : "dan",
+                "objectives" : [],
+                "achievements" : [],
+                "class": "manager hide-row xingyang"
             },
             {
                 "index" : "12",
                 "name" : "Kelly",
                 "designation" : "Senior Technical Consultant",
                 "employeeID" : "53899",
-                "percentageAchieved" : "100%",
+                "manager":"Dan",
+                "bdoScore" : "100%",
                 "status" : "NOT SUBMITTED",
-                "ldap" : "kelly"
+                "userID" : "kelly",
+                "objectives" : [],
+                "achievements" : [],
+                "class" : "hide-row dan"
             },
             {
                 "index" : "13",
-                "name" : "Kim",
-                "designation" : "Technical Consultant",
+                "name" : "Haitao",
+                "designation" : "Manager",
                 "employeeID" : "52890",
-                "percentageAchieved" : "80%",
+                "manager":"xingyang",
+                "bdoScore" : "80%",
                 "status" : "NOT SUBMITTED",
-                "ldap" : "kim"
+                "userID" : "haitao",
+                "objectives" : [],
+                "achievements" : [],
+                "class" : "manager hide-row xingyang"
             },
             {
                 "index" : "14",
                 "name" : "Dim",
                 "designation" : "Assoicate Technical Consultant",
                 "employeeID" : "53543",
-                "percentageAchieved" : "70%",
+                "manager":"Haitao",
+                "bdoScore" : "70%",
                 "status" : "SUBMITTED",
-                "ldap" : "dim"
+                "userID" : "dim",
+                "objectives" : [],
+                "achievements" : [],
+                "class" : "hide-row haitao"
             },
             {
                 "index" : "15",
                 "name" : "Pearson",
                 "designation" : "Technical Consultant",
                 "employeeID" : "53690",
-                "percentageAchieved" : "60%",
+                "manager":"Rotem",
+                "bdoScore" : "60%",
                 "status" : "SUBMITTED",
-                "ldap" : "pearson"
+                "userID" : "pearson",
+                "objectives" : [],
+                "achievements" : [],
+                "class" : "rotem"
             },
             {
                 "index" : "16",
                 "name" : "Radison",
                 "designation" : "Technical Consultant",
                 "employeeID" : "53890",
-                "percentageAchieved" : "50%",
+                "manager":"Rotem",
+                "bdoScore" : "50%",
                 "status" : "NOT SUBMITTED",
-                "ldap" : "radison"
+                "userID" : "radison",
+                "objectives" : [],
+                "achievements" : [],
+                "class" : "rotem"
             },
             {
                 "index" : "17",
                 "name" : "Toni",
                 "designation" : "Technical Consultant",
                 "employeeID" : "53730",
-                "percentageAchieved" : "40%",
+                "manager":"Rotem",
+                "bdoScore" : "40%",
                 "status" : "SUBMITTED",
-                "ldap" : "toni"
+                "userID" : "toni",
+                "objectives" : [],
+                "achievements" : [],
+                "class" : "rotem"
             },
-        	{
+         {
                 "index" : "18",
                 "name" : "Michel",
                 "designation" : "Technical Consultant",
                 "employeeID" : "53734",
-                "percentageAchieved" : "30%",
+                "manager":"Rotem",
+                "bdoScore" : "30%",
                 "status" : "NOT SUBMITTED",
-                "ldap" : "michel"
+                "userID" : "michel",
+                "objectives" : [],
+                "achievements" : [],
+                "class" : "rotem"
             },
-        	{
+         {
                 "index" : "19",
                 "name" : "James Carton",
                 "designation" : "Technical Consultant",
                 "employeeID" : "53766",
-                "percentageAchieved" : "30%",
+                "manager":"Rotem",
+                "bdoScore" : "30%",
                 "status" : "NOT SUBMITTED",
-                "ldap" : "james"
+                "userID" : "james",
+                "objectives" : [],
+                "achievements" : [],
+                "class" : "rotem"
             },
-        	{
+         {
                 "index" : "20",
                 "name" : "Scott",
                 "designation" : "Technical Consultant",
                 "employeeID" : "53734",
-                "percentageAchieved" : "30%",
+                "manager":"Rotem",
+                "bdoScore" : "30%",
                 "status" : "NOT SUBMITTED",
-                "ldap" : "scott"
+                "userID" : "scott",
+                "objectives" : [],
+                "achievements" : [],
+                "class" : "rotem"
             },
             {
                 "index" : "21",
                 "name" : "Abi",
                 "designation" : "Senior Consultant",
                 "employeeID" : "53134",
-                "percentageAchieved" : "30%",
+                "manager":"Rotem",
+                "bdoScore" : "30%",
                 "status" : "SUBMITTED",
-                "ldap" : "abi"
+                "userID" : "abi",
+                "objectives" : [],
+                "achievements" : [],
+                "class" : "rotem"
             }
         ]
 }
