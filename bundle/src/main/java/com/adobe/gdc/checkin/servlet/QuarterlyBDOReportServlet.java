@@ -54,6 +54,9 @@ public class QuarterlyBDOReportServlet extends SlingAllMethodsServlet{
 		try {
 			//Get All Direct Reportees of the manager
 			String[] directReportees = quarterlyBDORepositoryClient.getDirectReportees(managersID);
+			
+			
+			
 			JSONArray directReportResultArray = new JSONArray();
 			for(int i=0; i< directReportees.length; i++) {
 				
@@ -64,7 +67,7 @@ public class QuarterlyBDOReportServlet extends SlingAllMethodsServlet{
 					
 					Map<String, String[]> employeeBDODataMap = quarterlyBDORepositoryClient.getQuarterlyBDOData(quarterNumber, annualYear, directReportees[i], false);					
 					int index = directReportResultArray.length() + 1;
-					JSONObject employeeBDODataJson = getEmployeeBDOJSON(index,employeeProfileDataMap,employeeBDODataMap,directReportees[i]);
+					JSONObject employeeBDODataJson = getEmployeeBDOJSON(index,employeeProfileDataMap,employeeBDODataMap,directReportees[i],quarterNumber);
 					directReportResultArray.put(employeeBDODataJson);
 					
 				}
@@ -90,7 +93,7 @@ public class QuarterlyBDOReportServlet extends SlingAllMethodsServlet{
 	}
 	
 	
-	private JSONObject getEmployeeBDOJSON(int index, Map<String, String[]> employeeProfileDataMap, Map<String, String[]> employeeBDODataMap, String userID) throws Exception {
+	private JSONObject getEmployeeBDOJSON(int index, Map<String, String[]> employeeProfileDataMap, Map<String, String[]> employeeBDODataMap, String userID, int quarterNumber) throws Exception {
 		
 		JSONObject employeeBDODataJson = new JSONObject();
 		employeeBDODataJson.put(QuartelyBDOConstants.INDEX, index);
@@ -118,6 +121,16 @@ public class QuarterlyBDOReportServlet extends SlingAllMethodsServlet{
 																	? employeeBDODataMap.get(QuartelyBDOConstants.STATUS)[0]
 																	: QuartelyBDOConstants.NOT_SUBMITTED);
 		employeeBDODataJson.put(QuartelyBDOConstants.USER_ID, userID);
+		employeeBDODataJson.put(QuartelyBDOConstants.QUARTER_NUMBER, quarterNumber);
+		
+		String[] reporteesDirectReportees = quarterlyBDORepositoryClient.getDirectReportees(userID);
+		if(reporteesDirectReportees != null && reporteesDirectReportees.length >= 1) {
+			employeeBDODataJson.put(QuartelyBDOConstants.CLASS, QuartelyBDOConstants.MANAGER_CLASS);
+		}
+		else {
+			employeeBDODataJson.put(QuartelyBDOConstants.CLASS, QuartelyBDOConstants.EMPTY_STRING);
+		}
+		
 
 		return employeeBDODataJson;
 	}

@@ -196,7 +196,6 @@ public class QuarterlyBDORepositoryClientImpl  implements QuarterlyBDORepository
 	}
 
 	
-	
 	@Override
 	public String[] getDirectReportees(String userID) {
 
@@ -231,7 +230,6 @@ public class QuarterlyBDORepositoryClientImpl  implements QuarterlyBDORepository
 
 		return directReportee;
 	}
-
 	
 	
 	@Override
@@ -269,10 +267,7 @@ public class QuarterlyBDORepositoryClientImpl  implements QuarterlyBDORepository
 		return name;
 	}
 	
-	
-	
-	
-	
+
 	
 	@Override
 	public boolean createOrUpdateGDCBDOConfiguration(Map<String, String> params) {

@@ -26,14 +26,23 @@
   
 
 %>
+<c:set var="currentUser" value="<%=userManagementService.getCurrentUser(session)%>"  />
 
 <c:set var="isLoggedIn" value="<%=!isAnonymous%>" />
 
 <c:if test = "${isLoggedIn eq true}" >
     <div class="user-profile">
-        <h3><i class="fa fa-user fa-fw sign-in"></i> 
-            <span>Welcome <%=userManagementService.getCurrentUserName(session)%> </span>
-        </h3>
+        <c:choose>
+            <c:when test="${isAdmin eq true}">
+                <img src="/etc/designs/gdc-checkin/clientlibs-internal/images/admin-profile.jpg"  width="90" height="95">
+            </c:when>
+            <c:otherwise>
+                <img src="http://img-prod.corp.adobe.com:8080/is/image/${currentUser}.00.jpg?fm-jpg&wid=180&hei=241&op_sharpen=1"  width="90" height="95">
+            </c:otherwise>
+        </c:choose>
+        
+            <span class="profile-name"> <%=userManagementService.getCurrentUserName(session)%> </span>
+        
         <span class="profile-logout"><a href="javascript:logout();"><i class="glyphicon glyphicon-log-out"></i> Logout</a></span>
     </div>
 </c:if>

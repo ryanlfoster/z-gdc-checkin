@@ -201,3 +201,8 @@ width: 150px;
 .table-filter {
  padding-left : 0;
 }
+
+.profile-name {
+	position: absolute;
+ font-size: 18px;
+}

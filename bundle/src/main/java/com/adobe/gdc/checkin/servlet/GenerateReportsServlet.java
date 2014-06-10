@@ -9,10 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
-
 import javax.jcr.Session;
 import javax.servlet.ServletException;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.felix.scr.annotations.Reference;
 import org.apache.felix.scr.annotations.sling.SlingServlet;
@@ -30,7 +28,6 @@ import org.apache.sling.api.servlets.SlingSafeMethodsServlet;
 import org.apache.sling.commons.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import com.adobe.gdc.checkin.QuarterlyBDORepositoryClient;
 import com.adobe.gdc.checkin.UserManagementService;
 import com.adobe.gdc.checkin.constants.QuartelyBDOConstants;

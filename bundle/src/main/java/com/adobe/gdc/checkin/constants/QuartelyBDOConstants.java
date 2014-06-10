@@ -53,6 +53,8 @@ public class QuartelyBDOConstants {
 	public static final String MANAGER ="manager";
 	public static final String DIRECT_REPORTS ="directReports";
 	public static final String ALL_REPORT = "reportAll";
+	public static final String CLASS = "class";
+	public static final String MANAGER_CLASS = "manager";
 	
 	//BDO Report JSON params
 	public static final String INDEX = "index";
