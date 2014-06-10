@@ -15,11 +15,15 @@ import javax.jcr.Value;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.adobe.gdc.checkin.constants.QuartelyBDOConstants;
 
 public class QuarterlyBDOUtils {
 
+	
+	private static Logger log = LoggerFactory.getLogger(QuarterlyBDOUtils.class);
 	/**
 	 * This reads the request parameters and wrap it inside a HashMap
 	 * @param request
@@ -185,13 +189,13 @@ public class QuarterlyBDOUtils {
 		return repositoryBasePath;
 	}
 
-	public static String getEmployeeProfileBasePath(String user) {
-
-		String repositoryBasePath = QuartelyBDOConstants.GDC_CHECKIN_REPOSITORY_BASE_PATH + "/" + user.charAt(0) + "/" + user;
+	public static String getEmployeeProfileBasePath(String user) {	
+		String repositoryBasePath  = QuartelyBDOConstants.EMPTY_STRING;
+		if(StringUtils.isNotBlank(user)) {
+			repositoryBasePath = QuartelyBDOConstants.GDC_CHECKIN_REPOSITORY_BASE_PATH + "/" + user.charAt(0) + "/" + user;
+		}
 		return repositoryBasePath;
 	}
-
-
 
 	public static String extractValueFromRawString(String rawString) {
 

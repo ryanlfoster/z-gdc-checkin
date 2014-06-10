@@ -8,11 +8,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Reference;
@@ -21,7 +19,6 @@ import org.apache.jackrabbit.commons.JcrUtils;
 import org.apache.sling.jcr.api.SlingRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import com.adobe.gdc.checkin.QuarterlyBDOCalendarService;
 import com.adobe.gdc.checkin.QuarterlyBDORepositoryClient;
 import com.adobe.gdc.checkin.UserManagementService;
@@ -88,7 +85,8 @@ public class QuarterlyBDORepositoryClientImpl  implements QuarterlyBDORepository
 
 		String repositoryPath = QuarterlyBDOUtils.getEmployeeProfileBasePath(userID); 
 		Session adminSession = null;
-
+		boolean result = false;
+		
 		try {
 			adminSession = getAdminSession();
 
@@ -100,12 +98,12 @@ public class QuarterlyBDORepositoryClientImpl  implements QuarterlyBDORepository
 
 			if(adminSession.hasPendingChanges()) {
 				adminSession.save();
-				return true;
+				result = true;
 			}
 		}
 		catch(Exception e) {
 			log.error("[Exception]", e);
-
+			
 		}
 		finally {
 			if(adminSession != null && adminSession.isLive()) {
@@ -113,7 +111,7 @@ public class QuarterlyBDORepositoryClientImpl  implements QuarterlyBDORepository
 			}
 		}
 
-		return false;
+		return result;
 
 	}
 
@@ -241,17 +239,20 @@ public class QuarterlyBDORepositoryClientImpl  implements QuarterlyBDORepository
 		Session adminSession = null;
 
 		try {
-			adminSession = getAdminSession();
-
-			//Get the Employee Profile node from the repository
-			Node employeeProfileNode = JcrUtils.getNodeIfExists(repositoryPath, adminSession);
-
-			//If node exists, read the node properties 
-			if(employeeProfileNode != null) {
-				Map<String, String[]> employeeDataMap = QuarterlyBDOUtils.readNodeproperties(employeeProfileNode, false);
-				
-				if(employeeDataMap.containsKey(QuartelyBDOConstants.NAME)) {
-					name = employeeDataMap.get(QuartelyBDOConstants.NAME)[0];
+			
+			if(StringUtils.isNotBlank(repositoryPath)) {
+				adminSession = getAdminSession();
+	
+				//Get the Employee Profile node from the repository
+				Node employeeProfileNode = JcrUtils.getNodeIfExists(repositoryPath, adminSession);
+	
+				//If node exists, read the node properties 
+				if(employeeProfileNode != null) {
+					Map<String, String[]> employeeDataMap = QuarterlyBDOUtils.readNodeproperties(employeeProfileNode, false);
+					
+					if(employeeDataMap.containsKey(QuartelyBDOConstants.NAME)) {
+						name = employeeDataMap.get(QuartelyBDOConstants.NAME)[0];
+					}
 				}
 			}
 		}

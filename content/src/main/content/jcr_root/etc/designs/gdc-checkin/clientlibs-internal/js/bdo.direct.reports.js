@@ -11,8 +11,8 @@ GDC.bdo.directReports.initTable = function(selector,quarterNumber,annualYear) {
       	"oLanguage": { 
    			 "sSearch": ""
 		},
-        "sAjaxSource": "/etc/designs/gdc-checkin/clientlibs-internal/json/sampleList.json",
-      //  "sAjaxSource": bdoReportServiceSrcPath,
+		// "sAjaxSource": "/etc/designs/gdc-checkin/clientlibs-internal/json/sampleList.json",
+        "sAjaxSource": bdoReportServiceSrcPath,
         "aoColumns": [
 					  {"mData":"class","sWidth":"5px","sClass": ""},
             		  {"mData":"name","sTitle": "Name","sWidth":"198px"},

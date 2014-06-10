@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -50,7 +52,7 @@ public class GenerateReportsServlet extends SlingSafeMethodsServlet {
 	QuarterlyBDORepositoryClient quarterlyBDORepositoryClient;
 
 	
-	private List<String> directReporteesList = new ArrayList<String>();
+	private List<String> directReporteesList = new LinkedList<String>();
 	
     @Override
     protected void doGet(SlingHttpServletRequest request, SlingHttpServletResponse response) throws ServletException, IOException {
@@ -67,7 +69,7 @@ public class GenerateReportsServlet extends SlingSafeMethodsServlet {
 		if(!userManagementService.isAnonymous(session)) {
     			 
 			//Generate data to be written in the file
-	        Map<String, Object[]> resultData = new TreeMap<String, Object[]>();
+	        Map<String, Object[]> resultData = new LinkedHashMap<String, Object[]>();
 	       
 	        resultData.put("1", new Object[] {
 								        		QuartelyBDOConstants.EMPLOYEE_ID_TITLE,
@@ -260,8 +262,7 @@ public class GenerateReportsServlet extends SlingSafeMethodsServlet {
 	}
 	
 	
-	private String generateDirectReporteesList(String userID)
-	{
+	private String generateDirectReporteesList(String userID) {
 		if(StringUtils.isBlank(userID)) return QuartelyBDOConstants.EMPTY_STRING;
 			
 		directReporteesList.add(userID);

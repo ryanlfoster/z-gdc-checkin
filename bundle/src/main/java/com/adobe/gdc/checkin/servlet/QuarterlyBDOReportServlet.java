@@ -2,10 +2,15 @@ package com.adobe.gdc.checkin.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
+
+import org.apache.commons.lang.StringUtils;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Properties;
 import org.apache.felix.scr.annotations.Property;
@@ -38,6 +43,8 @@ public class QuarterlyBDOReportServlet extends SlingAllMethodsServlet{
 	@Reference
 	QuarterlyBDORepositoryClient quarterlyBDORepositoryClient;
 	
+	private List<String> directReporteesList = new LinkedList<String>();
+	
 	@Override
 	protected void doGet(SlingHttpServletRequest request, SlingHttpServletResponse response) throws ServletException, IOException {
 	
@@ -52,10 +59,20 @@ public class QuarterlyBDOReportServlet extends SlingAllMethodsServlet{
 		JSONObject responseObject = new JSONObject();
 		
 		try {
-			//Get All Direct Reportees of the manager
-			String[] directReportees = quarterlyBDORepositoryClient.getDirectReportees(managersID);
 			
+			//Get All Reportees of this manager	
+			generateDirectReporteesList(managersID);
 			
+			//Remove self from the list of reportees
+			directReporteesList.remove(managersID);
+			
+			String[] directReportees = directReporteesList.toArray(new String[directReporteesList.size()]);
+			
+			//Now invalidate the global directReporteesList
+			directReporteesList = new ArrayList<String>();
+			
+			//Get the list of immediate direct Reportees of this manager
+			String[] managersDirectReportees = quarterlyBDORepositoryClient.getDirectReportees(managersID);
 			
 			JSONArray directReportResultArray = new JSONArray();
 			for(int i=0; i< directReportees.length; i++) {
@@ -67,7 +84,7 @@ public class QuarterlyBDOReportServlet extends SlingAllMethodsServlet{
 					
 					Map<String, String[]> employeeBDODataMap = quarterlyBDORepositoryClient.getQuarterlyBDOData(quarterNumber, annualYear, directReportees[i], false);					
 					int index = directReportResultArray.length() + 1;
-					JSONObject employeeBDODataJson = getEmployeeBDOJSON(index,employeeProfileDataMap,employeeBDODataMap,directReportees[i],quarterNumber);
+					JSONObject employeeBDODataJson = getEmployeeBDOJSON(index,employeeProfileDataMap,employeeBDODataMap,directReportees[i],managersDirectReportees);
 					directReportResultArray.put(employeeBDODataJson);
 					
 				}
@@ -93,46 +110,68 @@ public class QuarterlyBDOReportServlet extends SlingAllMethodsServlet{
 	}
 	
 	
-	private JSONObject getEmployeeBDOJSON(int index, Map<String, String[]> employeeProfileDataMap, Map<String, String[]> employeeBDODataMap, String userID, int quarterNumber) throws Exception {
+	private JSONObject getEmployeeBDOJSON(int index, Map<String, String[]> employeeProfileDataMap, Map<String, String[]> employeeBDODataMap, String userID, String[] managersDirectReportees) throws Exception {
 		
 		JSONObject employeeBDODataJson = new JSONObject();
 		employeeBDODataJson.put(QuartelyBDOConstants.INDEX, index);
 		employeeBDODataJson.put(QuartelyBDOConstants.NAME, employeeProfileDataMap.get(QuartelyBDOConstants.NAME) != null 
 															? employeeProfileDataMap.get(QuartelyBDOConstants.NAME)[0]
 															: QuartelyBDOConstants.EMPTY_STRING);
-		employeeBDODataJson.put(QuartelyBDOConstants.EMPLOYEE_ID, employeeProfileDataMap.get(QuartelyBDOConstants.EMPLOYEE_ID) != null
-																	? employeeProfileDataMap.get(QuartelyBDOConstants.EMPLOYEE_ID)[0]
-																    : QuartelyBDOConstants.EMPTY_STRING);
 		employeeBDODataJson.put(QuartelyBDOConstants.DESIGNATION, employeeBDODataMap.get(QuartelyBDOConstants.DESIGNATION) != null
-																	? employeeBDODataMap.get(QuartelyBDOConstants.DESIGNATION)[0]
-																	: employeeProfileDataMap.get(QuartelyBDOConstants.DESIGNATION) != null
-																	? employeeProfileDataMap.get(QuartelyBDOConstants.DESIGNATION)[0]
-																	: QuartelyBDOConstants.EMPTY_STRING);
+															? employeeBDODataMap.get(QuartelyBDOConstants.DESIGNATION)[0]
+															: employeeProfileDataMap.get(QuartelyBDOConstants.DESIGNATION) != null
+															? employeeProfileDataMap.get(QuartelyBDOConstants.DESIGNATION)[0]
+															: QuartelyBDOConstants.EMPTY_STRING);
+		employeeBDODataJson.put(QuartelyBDOConstants.EMPLOYEE_ID, employeeProfileDataMap.get(QuartelyBDOConstants.EMPLOYEE_ID) != null
+															? employeeProfileDataMap.get(QuartelyBDOConstants.EMPLOYEE_ID)[0]
+														    : QuartelyBDOConstants.EMPTY_STRING);
+		
+		employeeBDODataJson.put(QuartelyBDOConstants.MANAGER, employeeProfileDataMap.get(QuartelyBDOConstants.MANAGER) != null
+															? quarterlyBDORepositoryClient.getEmployeeName(employeeProfileDataMap.get(QuartelyBDOConstants.MANAGER)[0])
+															: QuartelyBDOConstants.EMPTY_STRING);		
+		employeeBDODataJson.put(QuartelyBDOConstants.BDO_SCORE, employeeBDODataMap.get(QuartelyBDOConstants.BDO_SCORE) != null 
+															? employeeBDODataMap.get(QuartelyBDOConstants.BDO_SCORE)[0]
+															: QuartelyBDOConstants.EMPTY_STRING);
+		employeeBDODataJson.put(QuartelyBDOConstants.STATUS, employeeBDODataMap.get(QuartelyBDOConstants.STATUS) != null 
+															? employeeBDODataMap.get(QuartelyBDOConstants.STATUS)[0]
+															: QuartelyBDOConstants.NOT_SUBMITTED);
+		employeeBDODataJson.put(QuartelyBDOConstants.USER_ID, userID);
+		
 		employeeBDODataJson.put(QuartelyBDOConstants.OBJECTIVES, employeeBDODataMap.get(QuartelyBDOConstants.OBJECTIVES)!= null 
 																	? new JSONArray(Arrays.asList(employeeBDODataMap.get(QuartelyBDOConstants.OBJECTIVES)))
 																	: new JSONArray());
 		employeeBDODataJson.put(QuartelyBDOConstants.ACHIEVEMENTS, employeeBDODataMap.get(QuartelyBDOConstants.ACHIEVEMENTS) != null
 																	? new JSONArray(Arrays.asList(employeeBDODataMap.get(QuartelyBDOConstants.ACHIEVEMENTS)))
 																	: new JSONArray());
-		employeeBDODataJson.put(QuartelyBDOConstants.BDO_SCORE, employeeBDODataMap.get(QuartelyBDOConstants.BDO_SCORE) != null 
-																	? employeeBDODataMap.get(QuartelyBDOConstants.BDO_SCORE)[0]
-																	: QuartelyBDOConstants.EMPTY_STRING);
-		employeeBDODataJson.put(QuartelyBDOConstants.STATUS, employeeBDODataMap.get(QuartelyBDOConstants.STATUS) != null 
-																	? employeeBDODataMap.get(QuartelyBDOConstants.STATUS)[0]
-																	: QuartelyBDOConstants.NOT_SUBMITTED);
-		employeeBDODataJson.put(QuartelyBDOConstants.USER_ID, userID);
-		employeeBDODataJson.put(QuartelyBDOConstants.QUARTER_NUMBER, quarterNumber);
-		
+			
 		String[] reporteesDirectReportees = quarterlyBDORepositoryClient.getDirectReportees(userID);
+		
+		//Add the manager's Ldap in the class param for the employee
+		String className = employeeProfileDataMap.get(QuartelyBDOConstants.MANAGER) != null
+											? employeeProfileDataMap.get(QuartelyBDOConstants.MANAGER)[0]
+											: QuartelyBDOConstants.EMPTY_STRING;
+		
 		if(reporteesDirectReportees != null && reporteesDirectReportees.length >= 1) {
-			employeeBDODataJson.put(QuartelyBDOConstants.CLASS, QuartelyBDOConstants.MANAGER_CLASS);
-		}
-		else {
-			employeeBDODataJson.put(QuartelyBDOConstants.CLASS, QuartelyBDOConstants.EMPTY_STRING);
+			className = className + " " + QuartelyBDOConstants.MANAGER_CLASS;
 		}
 		
-
+		if(!(Arrays.asList(managersDirectReportees).contains(userID))) {
+			className = className + " " + QuartelyBDOConstants.HIDE_ROW; 
+		}
+		employeeBDODataJson.put(QuartelyBDOConstants.CLASS, className);
 		return employeeBDODataJson;
 	}
 	
+	private String generateDirectReporteesList(String userID) {
+		if(StringUtils.isBlank(userID)) return QuartelyBDOConstants.EMPTY_STRING;
+			
+		directReporteesList.add(userID);
+		String[] reporteesDirectReportees = quarterlyBDORepositoryClient.getDirectReportees(userID);
+		
+		for(String reportee : reporteesDirectReportees) {
+			 generateDirectReporteesList(reportee);
+		}
+	
+		return QuartelyBDOConstants.EMPTY_STRING;
+	}
 }
