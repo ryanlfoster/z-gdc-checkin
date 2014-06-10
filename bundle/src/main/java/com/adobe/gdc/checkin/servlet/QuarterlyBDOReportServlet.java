@@ -155,9 +155,10 @@ public class QuarterlyBDOReportServlet extends SlingAllMethodsServlet{
 			className = className + " " + QuartelyBDOConstants.MANAGER_CLASS;
 		}
 		
-		if(!(Arrays.asList(managersDirectReportees).contains(userID))) {
+		if(!(Arrays.asList(managersDirectReportees).contains(userID)) || StringUtils.isBlank(className)) {
 			className = className + " " + QuartelyBDOConstants.HIDE_ROW; 
 		}
+		
 		employeeBDODataJson.put(QuartelyBDOConstants.CLASS, className);
 		return employeeBDODataJson;
 	}
