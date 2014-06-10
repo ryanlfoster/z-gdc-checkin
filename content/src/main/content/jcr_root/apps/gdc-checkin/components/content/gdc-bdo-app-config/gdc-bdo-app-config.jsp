@@ -40,8 +40,8 @@
                                 <div class="col-md-2 col-xs-2">
                                     <label for="fiscalYear"> Current Fiscal Year </label>
                                 </div>
-                                <div class="col-md-8 col-xs-8">
-                                    <input type="text" name="fiscalYear" id="fiscalYear" value="" />&nbsp;&nbsp;&nbsp;<span id="errmsg-fiscalYear" style="color:red"></span>
+                                <div class="col-md-8 col-xs-8"> 
+                                    <input type="text" name="fiscalYear" id="fiscalYear" value="<%=quarterlyBDOCalendarService.getFiscalYearFromCalendarNode() %>" />&nbsp;&nbsp;&nbsp;<span id="errmsg-fiscalYear" style="color:red"></span>
                                 </div>
                                 <div class="col-md-1 col-xs-1"></div>
                             </div>
@@ -58,7 +58,7 @@
                                     <label for="bufferDays"> Buffer Period Days </label>
                                 </div>
                                 <div class="col-md-8 col-xs-8">
-                                    <input type="text" name="bufferDays" id="bufferDays" value="<%= 15%>" />&nbsp;&nbsp;&nbsp;<span id="errmsg-bufferDays" style="color:red"></span>
+                                    <input type="text" name="bufferDays" id="bufferDays" value="<%=quarterlyBDOCalendarService.getBufferDaysFromCalendarNode()%>" />&nbsp;&nbsp;&nbsp;<span id="errmsg-bufferDays" style="color:red"></span>
                                 </div>
                                 <div class="col-md-1 col-xs-1"></div>
                             </div>

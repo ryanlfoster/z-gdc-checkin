@@ -8,6 +8,8 @@ public interface QuarterlyBDOCalendarService {
 	 Map<String, Calendar> getAllQuartersDateRangeMap();
 	 String getQuarterStatus(Calendar quarterStartDate, Calendar quarterEndDate);
 	 int getcurrentQuarterAnnualYear();
+	 public String getFiscalYearFromCalendarNode();
+	 public String getBufferDaysFromCalendarNode();
 	 public int getEmployeeProfileBeginYear(String userID);
 	 boolean isOpenToEdit(Calendar quarterStartCalendarDate, Calendar quarterEndCalendarDate);
 }

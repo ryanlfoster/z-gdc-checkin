@@ -179,6 +179,80 @@ public class QuarterlyBDOCalendarServiceImpl implements QuarterlyBDOCalendarServ
 	}
 
 	@Override
+	public String getFiscalYearFromCalendarNode() {
+		
+		String currentFiscalYear = QuartelyBDOConstants.EMPTY_STRING;
+		
+		Session adminSession = null;
+
+		try {
+
+			adminSession = getAdminSession();
+
+			String repositoryPath = QuartelyBDOConstants.GDC_CHECKIN_REPOSITORY_CALENDAR_BASE_PATH;
+
+			//Get BDO Calendar Node from the JCR repository
+			Node gdcBdoCalendarNode = JcrUtils.getNodeIfExists(repositoryPath, adminSession);	
+			
+			if(gdcBdoCalendarNode != null && gdcBdoCalendarNode.hasProperty(QuartelyBDOConstants.FISCAL_YEAR)) {
+				Property currentFiscalYearProperty = gdcBdoCalendarNode.getProperty(QuartelyBDOConstants.FISCAL_YEAR);
+				if(StringUtils.isNotBlank(currentFiscalYearProperty.getValue().getString())) {
+					currentFiscalYear = currentFiscalYearProperty.getValue().getString();
+				}
+			}
+
+		}
+		catch(Exception e) {
+			log.error("[Exception]", e);
+		}
+		finally {
+			if(adminSession != null && adminSession.isLive()) {
+				adminSession.logout();
+			}
+		}
+		
+		return currentFiscalYear; 
+	}
+	
+	
+	@Override
+	public String getBufferDaysFromCalendarNode() {
+		
+		String bufferDays = "15";
+		
+		Session adminSession = null;
+
+		try {
+
+			adminSession = getAdminSession();
+
+			String repositoryPath = QuartelyBDOConstants.GDC_CHECKIN_REPOSITORY_CALENDAR_BASE_PATH;
+
+			//Get BDO Calendar Node from the JCR repository
+			Node gdcBdoCalendarNode = JcrUtils.getNodeIfExists(repositoryPath, adminSession);	
+			
+			if(gdcBdoCalendarNode != null && gdcBdoCalendarNode.hasProperty(QuartelyBDOConstants.BUFFER_DAYS)) {
+				Property currentFiscalYearProperty = gdcBdoCalendarNode.getProperty(QuartelyBDOConstants.BUFFER_DAYS);
+				if(StringUtils.isNotBlank(currentFiscalYearProperty.getValue().getString())) {
+					bufferDays = currentFiscalYearProperty.getValue().getString();
+				}
+			}
+
+		}
+		catch(Exception e) {
+			log.error("[Exception]", e);
+		}
+		finally {
+			if(adminSession != null && adminSession.isLive()) {
+				adminSession.logout();
+			}
+		}
+		
+		return bufferDays; 
+	}
+	
+	
+	@Override
 	public int getcurrentQuarterAnnualYear() {
 
 		Calendar calendar = Calendar.getInstance();
@@ -194,8 +268,8 @@ public class QuarterlyBDOCalendarServiceImpl implements QuarterlyBDOCalendarServ
 			//Get BDO Calendar Node from the JCR repository
 			Node gdcBdoCalendarNode = JcrUtils.getNodeIfExists(repositoryPath, adminSession);	
 
-			if(gdcBdoCalendarNode != null && gdcBdoCalendarNode.hasProperty(QuartelyBDOConstants.CURRENT_FISCAL_YEAR)) {
-				Property currentFiscalYearProperty = gdcBdoCalendarNode.getProperty(QuartelyBDOConstants.CURRENT_FISCAL_YEAR);
+			if(gdcBdoCalendarNode != null && gdcBdoCalendarNode.hasProperty(QuartelyBDOConstants.FISCAL_YEAR)) {
+				Property currentFiscalYearProperty = gdcBdoCalendarNode.getProperty(QuartelyBDOConstants.FISCAL_YEAR);
 				if(StringUtils.isNotBlank(currentFiscalYearProperty.getValue().getString())) {
 					currentYear = Integer.parseInt(currentFiscalYearProperty.getValue().getString());
 				}
