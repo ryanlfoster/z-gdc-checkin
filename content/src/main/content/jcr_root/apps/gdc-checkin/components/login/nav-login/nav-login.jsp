@@ -34,7 +34,7 @@
     <div class="user-profile">
         <c:choose>
             <c:when test="${isAdmin eq true}">
-                <img src="/etc/designs/gdc-checkin/clientlibs-internal/images/admin-profile.jpg"  width="90" height="95">
+                <img src="/etc/designs/gdc-checkin/clientlibs-internal/images/admin-profile.jpg"  width="90" height="90">
             </c:when>
             <c:otherwise>
                 <img src="http://img-prod.corp.adobe.com:8080/is/image/${currentUser}.00.jpg?fm-jpg&wid=180&hei=241&op_sharpen=1"  width="90" height="95">
