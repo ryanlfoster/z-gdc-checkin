@@ -7,18 +7,26 @@
 --%>
 <%@include file="/libs/foundation/global.jsp"%>
 <%@page session="false" %>
+<%@page import="com.adobe.gdc.checkin.QuarterlyBDOCalendarService,
+                java.text.SimpleDateFormat,
+                java.util.Map,
+                java.util.Calendar,
+                javax.jcr.Session" %>
 <%
-	// TODO add you code here
+ QuarterlyBDOCalendarService quarterlyBDOCalendarService = sling.getService(QuarterlyBDOCalendarService.class);
+ Map<String, Calendar> allQuartersDateRangeMap = quarterlyBDOCalendarService.getAllQuartersDateRangeMap();
+
+ SimpleDateFormat date_format = new SimpleDateFormat("MM/dd/yyyy");
 %>
 
 <div class="row">
- 	<div class="col-md-9 col-xs-9">
+  <div class="col-md-9 col-xs-9">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">Set Fiscal Year Configuration</h3>
             </div>
             <div class="panel-body">
-				<div class="row no-margin">
+    <div class="row no-margin">
                     <div class="config-form">
                         <div class="row">
                             <div class="col-md-1 col-xs-1"></div>
@@ -38,8 +46,8 @@
                                 <div class="col-md-1 col-xs-1"></div>
                             </div>
                             <div class="row" style="height:25px">
-								<div class="col-md-1 col-xs-1"></div>
-								<div class="col-md-8 col-xs-8">
+        <div class="col-md-1 col-xs-1"></div>
+        <div class="col-md-8 col-xs-8">
                                     <span> Note:: Please Enter the current fiscal year in given example format (example:: 2014)</span>
                                 </div>
                             </div>
@@ -55,25 +63,25 @@
                                 <div class="col-md-1 col-xs-1"></div>
                             </div>
                             <div class="row" style="height:25px"></div>
-							<div class="row">
+       <div class="row">
                                 <div class="col-md-1 col-xs-1"></div>
                                 <div class="col-md-2 col-xs-2">
                                     <label for="Q1StartDate"> Quarter1 Start Date </label>
                                 </div>
                                 <div class="col-md-2 col-xs-2">
-                                    <input type="text" readonly="true" placeholder="Choose Date..." name="Q1StartDate" id="Q1StartDate" value="" />
+                                    <input type="text" readonly="true" placeholder="Choose Date..." name="Q1StartDate" id="Q1StartDate" value="<%=date_format.format(allQuartersDateRangeMap.get("startDateQuarter1").getTime())%>" />
                                 </div>
                                 <div class="col-md-2 col-xs-2">
                                     <label for="Q1EndDate"> Quarter1 End Date </label>
                                 </div>
                                 <div class="col-md-2 col-xs-2">
-                                    <input type="text" readonly="true" placeholder="Choose Date..." name="Q1EndDate" id="Q1EndDate" value="" />
+                                    <input type="text" readonly="true" placeholder="Choose Date..." name="Q1EndDate" id="Q1EndDate" value="<%=date_format.format(allQuartersDateRangeMap.get("endDateQuarter1").getTime())%>" />
                                 </div>
                                 <div class="col-md-1 col-xs-1"></div>
                             </div>
                             <div class="row" style="height:25px">
                                 <div class="col-md-1 col-xs-1"></div>
-								<div class="col-md-4 col-xs-4">
+        <div class="col-md-4 col-xs-4">
                                     <span id="errmsg-Q1StartDate" style="color:red"></span>
                                 </div>
                                 <div class="col-md-4 col-xs-4">
@@ -87,19 +95,19 @@
                                     <label for="Q2StartDate"> Quarter2 Start Date </label>
                                 </div>
                                 <div class="col-md-2 col-xs-2">
-                                    <input type="text" readonly="true" placeholder="Choose Date..." name="Q2StartDate" id="Q2StartDate" value="" />
+                                    <input type="text" readonly="true" placeholder="Choose Date..." name="Q2StartDate" id="Q2StartDate" value="<%=date_format.format(allQuartersDateRangeMap.get("startDateQuarter2").getTime())%>" />
                                 </div>
                                 <div class="col-md-2 col-xs-2">
                                     <label for="Q2EndDate"> Quarter2 End Date </label>
                                 </div>
                                 <div class="col-md-2 col-xs-2">
-                                    <input type="text" readonly="true" placeholder="Choose Date..." name="Q2EndDate" id="Q2EndDate" value="" />
+                                    <input type="text" readonly="true" placeholder="Choose Date..." name="Q2EndDate" id="Q2EndDate" value="<%=date_format.format(allQuartersDateRangeMap.get("endDateQuarter2").getTime())%>" />
                                 </div>
                                 <div class="col-md-1 col-xs-1"></div>
                             </div>
                             <div class="row" style="height:25px">
                                 <div class="col-md-1 col-xs-1"></div>
-								<div class="col-md-4 col-xs-4">
+        <div class="col-md-4 col-xs-4">
                                     <span id="errmsg-Q2StartDate" style="color:red"></span>
                                 </div>
                                 <div class="col-md-4 col-xs-4">
@@ -113,19 +121,19 @@
                                     <label for="Q3StartDate"> Quarter3 Start Date </label>
                                 </div>
                                 <div class="col-md-2 col-xs-2">
-                                    <input type="text" readonly="true" placeholder="Choose Date..." name="Q3StartDate" id="Q3StartDate" value="" />
+                                    <input type="text" readonly="true" placeholder="Choose Date..." name="Q3StartDate" id="Q3StartDate" value="<%=date_format.format(allQuartersDateRangeMap.get("startDateQuarter3").getTime())%>" />
                                 </div>
                                 <div class="col-md-2 col-xs-2">
                                     <label for="Q3EndDate"> Quarter3 End Date </label>
                                 </div>
                                 <div class="col-md-2 col-xs-2">
-                                    <input type="text" readonly="true" placeholder="Choose Date..." name="Q3EndDate" id="Q3EndDate" value="" />
+                                    <input type="text" readonly="true" placeholder="Choose Date..." name="Q3EndDate" id="Q3EndDate" value="<%=date_format.format(allQuartersDateRangeMap.get("endDateQuarter3").getTime())%>" />
                                 </div>
                                 <div class="col-md-1 col-xs-1"></div>
                             </div>
                             <div class="row" style="height:25px">
                                 <div class="col-md-1 col-xs-1"></div>
-								<div class="col-md-4 col-xs-4">
+        <div class="col-md-4 col-xs-4">
                                     <span id="errmsg-Q3StartDate" style="color:red"></span>
                                 </div>
                                 <div class="col-md-4 col-xs-4">
@@ -133,25 +141,25 @@
                                 </div>
                                 <div class="col-md-1 col-xs-1"></div>
                             </div>
-                            <div class="row">
+                            <div class="row"> 
                                 <div class="col-md-1 col-xs-1"></div>
                                 <div class="col-md-2 col-xs-2">
                                     <label for="Q4StartDate"> Quarter4 Start Date </label>
                                 </div>
                                 <div class="col-md-2 col-xs-2">
-                                    <input type="text" readonly="true" placeholder="Choose Date..." name="Q4StartDate" id="Q4StartDate" value="" />
+                                    <input type="text" readonly="true" placeholder="Choose Date..." name="Q4StartDate" id="Q4StartDate" value="<%=date_format.format(allQuartersDateRangeMap.get("startDateQuarter4").getTime())%>" />
                                 </div>
                                 <div class="col-md-2 col-xs-2">
                                     <label for="Q4EndDate"> Quarter4 End Date </label>
                                 </div>
                                 <div class="col-md-2 col-xs-2">
-                                    <input type="text" readonly="true" placeholder="Choose Date..." name="Q4EndDate" id="Q4EndDate" value="" />
+                                    <input type="text" readonly="true" placeholder="Choose Date..." name="Q4EndDate" id="Q4EndDate" value="<%=date_format.format(allQuartersDateRangeMap.get("endDateQuarter4").getTime())%>" />
                                 </div>
                                 <div class="col-md-1 col-xs-1"></div>
                             </div>
                             <div class="row" style="height:25px">
                                 <div class="col-md-1 col-xs-1"></div>
-								<div class="col-md-4 col-xs-4">
+        <div class="col-md-4 col-xs-4">
                                     <span id="errmsg-Q4StartDate" style="color:red"></span>
                                 </div>
                                 <div class="col-md-4 col-xs-4">
@@ -159,21 +167,21 @@
                                 </div>
                                 <div class="col-md-1 col-xs-1"></div>
                             </div>
-							<div class="row">
-                           		<div class="col-md-4 col-xs-4"></div>
-                           		<div class="col-md-7 col-xs-7 align-right">
-                               		<div class="col-sm-10  col-xs-10 col-md-10">
-                                		<button type="button" class="btn btn-primary btn-submit">Submit</button>
-									</div>
-                               		<div class="col-sm-2  col-xs-2 col-md-2  align-left"></div>
-                           		</div>
-                           		<div class="col-md-1 col-xs-1"></div>
-                       		</div>
+       <div class="row">
+                             <div class="col-md-4 col-xs-4"></div>
+                             <div class="col-md-7 col-xs-7 align-right">
+                                 <div class="col-sm-10  col-xs-10 col-md-10">
+                                  <button type="button" class="btn btn-primary btn-submit">Submit</button>
+         </div>
+                                 <div class="col-sm-2  col-xs-2 col-md-2  align-left"></div>
+                             </div>
+                             <div class="col-md-1 col-xs-1"></div>
+                         </div>
                             <div class="row" style="height:25px"></div>
                         </form>
                     </div>
                 </div>
-			</div>
+   </div>
         </div>
     </div>
 </div>
