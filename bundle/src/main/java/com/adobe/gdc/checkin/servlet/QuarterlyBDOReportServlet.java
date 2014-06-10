@@ -2,14 +2,12 @@ package com.adobe.gdc.checkin.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Properties;
@@ -41,15 +39,17 @@ public class QuarterlyBDOReportServlet extends SlingAllMethodsServlet{
 	private static final Logger log = LoggerFactory.getLogger(QuarterlyBDOReportServlet.class);
 	
 	@Reference
-	QuarterlyBDORepositoryClient quarterlyBDORepositoryClient;
+	private QuarterlyBDORepositoryClient quarterlyBDORepositoryClient;
 	
-	private List<String> directReporteesList = new LinkedList<String>();
+	private List<String> allReporteesList = new LinkedList<String>();
+	
+	private String managersID = QuartelyBDOConstants.EMPTY_STRING;
 	
 	@Override
 	protected void doGet(SlingHttpServletRequest request, SlingHttpServletResponse response) throws ServletException, IOException {
 	
 		// Read the request parameters
-		String managersID = request.getParameter(QuartelyBDOConstants.MANAGERS_ID);
+	    managersID = request.getParameter(QuartelyBDOConstants.MANAGERS_ID);
 		int quarterNumber = Integer.parseInt(request.getParameter(QuartelyBDOConstants.QUARTER_NUMBER));
 		int annualYear = Integer.parseInt(request.getParameter(QuartelyBDOConstants.ANNUAL_YEAR));
 		
@@ -62,14 +62,11 @@ public class QuarterlyBDOReportServlet extends SlingAllMethodsServlet{
 			
 			//Get All Reportees of this manager	
 			generateDirectReporteesList(managersID);
-			
-			//Remove self from the list of reportees
-			directReporteesList.remove(managersID);
-			
-			String[] directReportees = directReporteesList.toArray(new String[directReporteesList.size()]);
+						
+			String[] directReportees = allReporteesList.toArray(new String[allReporteesList.size()]);
 			
 			//Now invalidate the global directReporteesList
-			directReporteesList = new ArrayList<String>();
+			allReporteesList = new LinkedList<String>();
 			
 			//Get the list of immediate direct Reportees of this manager
 			String[] managersDirectReportees = quarterlyBDORepositoryClient.getDirectReportees(managersID);
@@ -163,10 +160,13 @@ public class QuarterlyBDOReportServlet extends SlingAllMethodsServlet{
 		return employeeBDODataJson;
 	}
 	
-	private String generateDirectReporteesList(String userID) {
+	
+	private synchronized String generateDirectReporteesList(String userID) {
 		if(StringUtils.isBlank(userID)) return QuartelyBDOConstants.EMPTY_STRING;
-			
-		directReporteesList.add(userID);
+		
+		if(!userID.equalsIgnoreCase(managersID)) {
+			allReporteesList.add(userID);
+		}
 		String[] reporteesDirectReportees = quarterlyBDORepositoryClient.getDirectReportees(userID);
 		
 		for(String reportee : reporteesDirectReportees) {
