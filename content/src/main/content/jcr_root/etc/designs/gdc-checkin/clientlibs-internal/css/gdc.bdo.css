@@ -205,4 +205,5 @@ width: 150px;
 .profile-name {
 	position: absolute;
  font-size: 18px;
+ line-height: 1em;
 }

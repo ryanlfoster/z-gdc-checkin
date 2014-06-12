@@ -96,4 +96,9 @@
    </div>
         </div>
     </div>
+    
+     <div id="brand-image" style="position: fixed; top: 78%;">
+         <img src="/etc/designs/gdc-checkin/clientlibs-internal/images/logo-gdc.png" height="90" width="100">
+     </div>
+    
 </div>

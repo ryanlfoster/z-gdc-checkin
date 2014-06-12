@@ -90,7 +90,7 @@
 
         <div class="row">
             <div class="col-md-1 col-xs-1"></div>
-            <div class="col-md-10 col-xs-10 margin">
+            <div class="col-md-10 col-xs-10 margin profile-container">
 				            <c:if test="<%=StringUtils.isNotBlank(request.getParameter("editForm"))%>">
 				                       <img src="http://img-prod.corp.adobe.com:8080/is/image/${userID}.00.jpg?fm-jpg&wid=180&hei=241&op_sharpen=1" onerror="this.src='/etc/designs/gdc-checkin/clientlibs-internal/images/admin-profile.jpg'" width="90" height="95">
 				             </c:if>
