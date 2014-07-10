@@ -23,7 +23,7 @@
 </c:choose>
 
 <c:choose>
- <c:when test="<%=StringUtils.isNotBlank(request.getParameter("bdoObjectives"))%>">
+ <c:when test="<%=request.getParameter("bdoObjectives") !=null %>">
   <c:set var="bdoObjectives" value="<%=request.getParameterValues("bdoObjectives")%>" />
  </c:when>
  <c:otherwise>
@@ -32,7 +32,7 @@
 </c:choose>
 
 <c:choose>
- <c:when test="<%=StringUtils.isNotBlank(request.getParameter("bdoAchievements"))%>">
+ <c:when test="<%=request.getParameter("bdoAchievements") != null%>">
   <c:set var="bdoAchievements" value="<%=request.getParameterValues("bdoAchievements")%>" />
  </c:when>
  <c:otherwise>
